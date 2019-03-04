@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Maximum Entropy Inverse Reinforcement Learning"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Maximum Entropy Inverse Reinforcement Learning - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>Maximum Entropy Inverse Reinforcement Learning</h1>
+					
+					<h2 class="post-subheading">
+						Inverse RL 4번째 논문
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 이동민 on
+						
+						
+							2019-02-10
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/프로젝트/">#프로젝트</a> <a href="/tags/GAIL하자/">#GAIL하자!</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/프로젝트/">프로젝트</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<center> <img src="../../../../img/irl/maxent_1.png" width="850"> </center>
+
+<p>Author : Brian D. Ziebart, Andrew Maas, J.Andrew Bagnell, Anind K. Dey<br>Paper Link : <a href="http://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf" target="_blank" rel="noopener">http://www.aaai.org/Papers/AAAI/2008/AAAI08-227.pdf</a><br>Proceeding : Proceedings of the Twenty-Third AAAI Conference on Artificial Intelligence 2008</p>
+<hr>
+<h1 id="0-Abstract"><a href="#0-Abstract" class="headerlink" title="0. Abstract"></a>0. Abstract</h1><p>2008년 당시의 최근 연구는 imitation learning의 문제를 Markov Decision Problems(MDP)로 해결함으로써 모방 학습에 대한 장점을 보였습니다. 이러한 접근법은 optimal policy에 가깝도록 유도된 learner’s behavior이 expert’s demonstrated behavior를 모방하도록 recovering하는 문제에 대한 학습으로 다룰 수 있습니다.</p>
+<p>이 논문에서는 <strong>the principle of maximum entropy</strong>에 기반한 확률적인 접근을 이용할 것입니다. 이 접근을 통해 decision sequences에 대해 잘 정의된 normalized distribution을 만들 것입니다.</p>
+<p>뒤이어 실험 부분에서는 수집된 data가 본질적으로 noisy하고 imperfect할 때의 real-world navigation, driving behaviors들을 modeling하는 technique를 제시하였습니다. 또한 확률적인 접근법을 이용하여 route preference의 modeling하는 것 뿐만 아니라 부분 trajectories 기반인 routes 및 destinations를 reasoning하는 새로운 접근법을 가능하게 하였습니다.</p>
+<p><br><br></p>
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>Imitation learning의 목표는 agent가 선택할 행동 및 의사결정을 예측하는 것을 배우는 것입니다. 예를 들어 사람이 물체를 잡기위한 motion 혹은 운전자가 집에서 직장으로 가기위한 경로 등이 있습니다.</p>
+<p>Imitation learning의 문제에 접근하기 위한 최근 아이디어는 search, planning, or 더 일반적으로 MDP의 solution으로 학습된 poliy의 space를 구성하는 것입니다. 여기서의 핵심 개념은 <strong>agent가 알려지지 않은 reward function(특징이 선형이라 가정)을 최적화하고, demostrated behavior을 (near)-optimal으로 보이게 만드는 reward weight를 찾아야 하는 것입니다.</strong></p>
+<p><br></p>
+<h2 id="1-1-Pose-a-problem"><a href="#1-1-Pose-a-problem" class="headerlink" title="1.1 Pose a problem"></a>1.1 Pose a problem</h2><p>이 논문에서는 imitation learning에서의 uncertainty에 대해 reasoning하는 확률적 접근을 이용합니다. <strong>demonstrated behavior의 reward function을 매칭하는 constraint가 있을 때, decision에 대한 distribution를 선택할 때의 ambiguity를 해결하기 위해 the principle of maximum entropy를 사용합니다.</strong> (이 부분은 다음 section에 더 자세히 풀어서 적어두었습니다.) 또한 Deterministic MDPs에 대해 learning 및 reasoning하는 효율적인 algorithm을 제안하고, 추가적으로 non-deterministic MDP에 대해서도 tractable(다룰 수 있는)하도록 만들 것입니다. 결과로 나타나는 분포는 behaviors에 대해 normalize된 probabilistic model입니다.</p>
+<p>여기서 중요하게 다룰 것은 demonstrated behavior이 noise하고 imperfect behavior을 하기 쉽다는 것입니다. 하지만 maximum entropy 접근법을 통해 이러한 uncertainty를 다루는 방법을 제공합니다.</p>
+<p><br><br></p>
+<h1 id="2-Background"><a href="#2-Background" class="headerlink" title="2. Background"></a>2. Background</h1><p>먼저 imitation learning setting을 하겠습니다.</p>
+<p>$\zeta$ is a trajectory or path.</p>
+<p>$s_i$ is states.</p>
+<p>$a_i$ is actions.</p>
+<p>$f_{s_j} \in \mathfrak{R}^k$ is mapping features of each state.</p>
+<p>$\theta$ is reward weights parameterizing reward function.</p>
+<p>$f_{\zeta} = \sum_{s_j \in \zeta} f_{s_j}$ is sum of the state features along the trajectory (or path) = <strong>Learner’s expected feature counts</strong></p>
+<p>reward$(f_{\zeta}) = \theta^T f_{\zeta} = \sum_{s_j \in \zeta} \theta^T f_{s_j}$ is reward function.</p>
+<p>$\tilde{f} = \frac{1}{m} \sum_i f_{\tilde{\zeta_i}}$ is <strong>Expert’s expected feature counts</strong> based on many (m) demonstrated trajectories. $\tilde{\zeta_i}$ is expert’s demonstrated single trajectories.</p>
+<p><br></p>
+<h2 id="2-1-MMP와-APP"><a href="#2-1-MMP와-APP" class="headerlink" title="2.1 MMP와 APP"></a>2.1 MMP와 APP</h2><p>이 논문에서는 본격적으로 들어가기에 앞서 MMP 논문과 APP 논문을 다시 한 번 정리해주는 단락이 있습니다. 개인적으로 remind해주는 단락이 있어서 논문을 더 편하게 읽었던 것 같습니다.</p>
+<h3 id="MMP"><a href="#MMP" class="headerlink" title="MMP"></a>MMP</h3><p>expert에 대해 정확한 reward weight을 recovering하는 것은 앞서 Linear IRL에서도 말했듯이 <strong>ill-posed problem</strong> 입니다.</p>
+<p>MMP 논문에서는 structured maximum margin prediction으로 이 문제를 다룹니다. Expert와 learner’s learned policy 사이의 불일치를 직접적으로 측정한 loss function들을 이용하였고, Structured margin method를 이용하여 reward fucntion을 효율적으로 학습하였습니다.</p>
+<p>하지만 MMP는 아주 중요한 <strong>단점</strong> 이 있습니다. 바로 single reward function이 대체 가능한 다른 (더 좋은) demonstrated behavior보다 최적(optimal)의 또는 더 좋은 demonstrated behavior을 만들 수 없다는 것입니다. 예를 들어 expert’s demonstrated behavior이 imperfect하거나 planning algorithm이 관련 state space의 일부만 포착하여 observed behavior을 완벽하게 설명할 수 없을 때 이러한 단점이 상당히 자주 발생합니다.</p>
+<h3 id="APP"><a href="#APP" class="headerlink" title="APP"></a>APP</h3><p>APP는 Linear IRL에 기반하여 다른 접근을 보입니다. Abbeel은 expert’s policy와 learner’s behavior 간의 feature expectation (Equationation 1)을 matching하는 전략을 제안합니다.</p>
+<p>$$\sum_{Path \space \zeta_i} P(\zeta_i) f_{\zeta_i} = \tilde{f} \,\,\,\,\,\,\,\,\,\, (1)$$</p>
+<p>하지만 불행하게도, IRL 개념과 feature count의 matching은 <strong>ambiguous</strong> 합니다. 각각의 policy는 많은 reward function (e.g., all zeros)에 대해 optimal 할 수 있고, 이에 따라 많은 policy들은 같은 feature count들을 유도하기 때문입니다. 위에서 말했던 것처럼 ill-posed problem이기 때문에 이러한 ambiguity가 발생하게 됩니다. 따라서 이 논문에서는 the principle of maximum entropy 이론을 통해 이러한 ambiguity를 해결하려고 하는 것입니다.</p>
+<p><br></p>
+<h2 id="2-2-The-principle-of-Maximum-Entropy"><a href="#2-2-The-principle-of-Maximum-Entropy" class="headerlink" title="2.2 The principle of Maximum Entropy"></a>2.2 The principle of Maximum Entropy</h2><p>다음으로 이 논문에서 중요한 개념인 <strong>principle of maximum entropy</strong> 에 대해서 알아 보겠습니다.</p>
+<p>정보이론 관련 이론들이 처음이신 분들은 아래의 링크를 보시고 계속 따라와주세요!</p>
+<ul>
+<li><a href="https://ratsgo.github.io/statistics/2017/09/22/information/" target="_blank" rel="noopener">정보이론 기초</a></li>
+<li><a href="https://ratsgo.github.io/machine%20learning/2017/10/26/MEMs/" target="_blank" rel="noopener">최대 엔트로피 모델(Maximum Entropy Models)</a></li>
+</ul>
+<p>이 이론이 처음 나온 것은 1957에 Jaynes라는 분이 다음과 같이 제시하였습니다. <a href="http://compbio.biosci.uq.edu.au/mediawiki/upload/b/b3/Jaynes_PhysRev1957-1.pdf" target="_blank" rel="noopener">Jaynes 1957</a></p>
+<p><strong>Maximizing the entropy of the distribution</strong> over paths subject to the feature constraints from observed data implies that we <strong>maximize the likelihood of the observed data under the maximum entropy distribution</strong></p>
+<p>이어서 <a href="https://en.wikipedia.org/wiki/Principle_of_maximum_entropy" target="_blank" rel="noopener">Wikipedia</a>와 <a href="http://www.andrew.cmu.edu/course/10-703/slides/Lecture_IRL_GAIL.pdf" target="_blank" rel="noopener">CMU 10703 Fall 2018</a> 에는 다음과 같이 나와있습니다.</p>
+<p>The principle of maximum entropy states that <strong>the probability distribution which best represents the current state of knowledge is the one with largest entropy, in the context of precisely stated prior data</strong></p>
+<p>결국 하고 싶은 것은 어떠한 distribution이 있을 때, 이 distribution의 entropy를 maximization하고 싶은 것입니다. 이것을 바꿔말하면 maximum entropy distribution에서의 observed data의 likelihood를 maximization하고 싶은 것이고, 더 풀어서 말해보면 current state of knowledge를 가장 잘 나타내는 확률 분포를 찾고 싶은 것입니다.</p>
+<p>왜 이렇게 하고싶은 걸까요? 왜 entropy를 최대로 해야 좋을까요? ziebart가 쓴 thesis에 있는 theorem을 통해서 알아보겠습니다. <a href="http://reports-archive.adm.cs.cmu.edu/anon/anon/home/ftp/usr/ftp/ml2010/CMU-ML-10-110.pdf" target="_blank" rel="noopener">thesis ziebart 2010</a></p>
+<center> <img src="../../../../img/irl/maxent_2.png" width="900"> </center>
+
+<center> <img src="../../../../img/irl/maxent_3.png" width="900"> </center>
+
+<p>IRL 관점에서 해석을 해보자면, feature expection이 MMP부터 나오던 state visitation frequency의 개념이 되면서 policy에 대해서 worst case guarantee가 된다는 것입니다. 다시 말해 우리가 가지고 있는 제한적인 expert’s demonstrations를 만족하면서 나머지 unseen region을 포함하는 어떠한 policy를 찾는 것이 목적이라고 했을 때, “악의적으로 최악의 policy를 고를 확률”을 minimization로 만드는 효과가 있는 것입니다.</p>
+<p><strong>정리해보면, 어떠한 distribution의 entropy를 maximization할수록 최악의 policy를 고를 확률을 minimization하는 효과가 있는 것입니다.</strong></p>
+<p>The principle of maximum entropy 관련하여 더 궁금하신 분들은 ziebart가 쓴 thesis에서 “chapter 5 : The Principle of Maximum Causal Entropy”를 읽어보시길 바랍니다.</p>
+<p>그러면 이제 본격적으로 the principle of maximum entropy을 이용한 Maximum Entropy IRL에 대해서 알아보겠습니다.</p>
+<p><br><br></p>
+<h1 id="3-Maximum-Entropy-IRL"><a href="#3-Maximum-Entropy-IRL" class="headerlink" title="3. Maximum Entropy IRL"></a>3. Maximum Entropy IRL</h1><p>이 논문의 저자는 feature counts를 matching할 때 ambiguity를 다루기 위한 다른 접근법을 이용합니다. 다시 말해 어떠한 distribution 선택할 때 ambiguities를 해결하기 위해 the principle of maximum entropy를 사용한다는 것입니다.</p>
+<p><br></p>
+<h2 id="3-1-Deterministic-Path-Distributions"><a href="#3-1-Deterministic-Path-Distributions" class="headerlink" title="3.1 Deterministic Path Distributions"></a>3.1 Deterministic Path Distributions</h2><center> <img src="../../../../img/irl/maxent_4.png" width="500"> </center>
+
+<p>Policy들에 대해 reasoning하는 이전 연구와는 달리, 이 논문에서는 가능한 behavior의 전체 class에 대한 distribution을 고려합니다. 이것은 deterministic MDPs(Figure 1a)에 대한 variable length(Figure 1b)의 경로에 해당합니다.</p>
+<p>위에서 부터 계속 말했듯이, 이 논문에서는 <strong>feature expectation(Equation 1)과 matching되는 것 이상의 추가적인 preference를 나타내지 않는 분포를 선택하여 ambiguity를 해결하는 the principle of maximum entropy를 이용합니다.</strong> Deterministic MDPs의 path에 대해 결과로 나타나는 distribution은 reward weight $\theta$ (Equation 2)에 의해 parameterizing됩니다.</p>
+<center> <img src="../../../../img/irl/maxent_5.png" width="400"> </center>
+
+<p>위의 수식은 저자가 the principle of maximum entropy 이론을 적용할 distribution으로 사용하겠다는 뜻입니다. 오른쪽에 나오는 수식들을 깊게 파다보면 partition function($Z(\theta)$)이라는 것이 나오고 더 깊게 파다보면 energy에 대해서 나오기 때문에 위의 수식에 대해서는 깊게 다루지 않겠습니다. 여기서 기억해야할 것은, 결국 이 논문에서는 expert와 learner 사이의 expected state feature counts를 matching하기 위해서 <strong>the principle of maximum entropy 이론을 적용할 distribution에서의 parameter인 $P(\zeta_i|\theta)$를 최대로 하는 $\theta$를 잡아나가겠다는 것입니다.</strong></p>
+<p><br></p>
+<h2 id="3-2-Non-Deterministic-Path-Distributions"><a href="#3-2-Non-Deterministic-Path-Distributions" class="headerlink" title="3.2 Non-Deterministic Path Distributions"></a>3.2 Non-Deterministic Path Distributions</h2><p>앞서 다룬 것은 deterministic MDPs에 대한 내용이었고, 일반적인 non-deterministic MDP에서는 어떻게 구성되는지 살펴보겠습니다. action은 state transition distribution($T$)에 따른 state(Figure 1c)간의 non-deterministic transition을 만듭니다. 이러한 MDP(Figure 1d)에서 path들은 agent의 action 선택과 MDP의 random 결과에 의해 결정됩니다. 또한 transition distribution($T$)와 feature expectation(Equation 1)을 matching하도록 제한된 path에 대해 maximum entropy distribution을 사용할 것입니다.</p>
+<p>모든 action에 대한 다음 state를 생각해볼 때, 먼저 action 결과의 space를 $\mathcal{T}$, action 하나의 결과에 대한 sample을 $o$라고 해보겠습니다. $o$는 action을 한 최종 결과이고, $\mathcal{T}$는 action의 선택 집합이라고 할 수 있습니다. 이 두개가 같으면 deterministic하다고 볼 수 있습니다.</p>
+<p>이어서 non-deterministic Path에 대한 the principle of maximum entropy 이론을 적용할 distribution은 다음과 같습니다.</p>
+<center> <img src="../../../../img/irl/maxent_6.png" width="400"> </center>
+
+<p>위의 수식에서 $I_{\zeta \in o}$은 Indicator function으로서 $\zeta$가 $o$와 compatible할 때 1이고 다른 경우에는 모두 0입니다.</p>
+<p>하지만 위의 수식에서 Equation (3)에 있는 수식인 distribution을 계산하는 것은 일반적으로 intractable합니다. 따라서, 만약 transition randomness가 행동에 제한된 영향을 미치고 모든 $o \in T$에 대해 partition function이 상수라면, path에 대한 tractable approximate distribution(Equation 4)을 얻을 수 있습니다.</p>
+<p><br></p>
+<h2 id="3-3-Stochastic-Policies"><a href="#3-3-Stochastic-Policies" class="headerlink" title="3.3 Stochastic Policies"></a>3.3 Stochastic Policies</h2><p>Path에 대한 distribution은 Equation (4)의 partition function이 수렴할 때 stochastic policy(i.e., 각 state의 이용가능한 action에 따른 distribution)를 제공합니다.</p>
+<center> <img src="../../../../img/irl/maxent_7.png" width="400"> </center>
+
+<p><br></p>
+<h2 id="3-4-Learning-from-Demonstrated-Behavior"><a href="#3-4-Learning-from-Demonstrated-Behavior" class="headerlink" title="3.4 Learning from Demonstrated Behavior"></a>3.4 Learning from Demonstrated Behavior</h2><p>앞에서 다룬 the principle of maximum entropy를 생각하면서 $\theta$를 어떤 식으로 잡아나가는지, 이에 따른 loss($L(\theta)$)를 어떻게 정의하는지 살펴보겠습니다.</p>
+<center> <img src="../../../../img/irl/maxent_8.png" width="400"> </center>
+
+<p>위의 수식은 deterministic MDP에 대해 convex이고 optima는 gradient-based optimization을 사용하여 얻어집니다. 또한 위의 수식과 같이 $P(\tilde{\zeta}|\theta, T)$를 최대로 하는 $\theta$를 잡아나갈 것이며, 바꿔말하면 결국 expert와 learner의 expected state feature count를 matching하도록 하는 최대의 $\theta$를 찾고 싶은 것입니다. 그리고 이것이 가운데 있는 수식처럼 gradient로서 우리가 줄여나가야할 loss $L(\theta)$가 됩니다. 이것을 expected state visitation frequencies($D_{s_i}$) 관점에서 다시 표현해보면 아래와 같습니다.</p>
+<center> <img src="../../../../img/irl/maxent_9.png" width="400"> </center>
+
+<p>그렇다면 expected state visitation frequencies $D_{s_i}$는 어떻게 효과적으로 구할까요?</p>
+<p><br></p>
+<h2 id="3-5-Efficient-State-Frequency-Calculations"><a href="#3-5-Efficient-State-Frequency-Calculations" class="headerlink" title="3.5 Efficient State Frequency Calculations"></a>3.5 Efficient State Frequency Calculations</h2><p>아래의 expected state visitation frequencies $D_{s_i}$를 구하는 방법은 <strong>dynamics $P(s_{t+1}|a_t, s_t)$가 알려져 있을 때</strong> 에 구하는 방법입니다.</p>
+<center> <img src="../../../../img/irl/maxent_10.png" width="500"> </center>
+
+<p>위의 algorithm은 large fixed time horizon을 사용하여 infinite time horizon에 대한 state visitation frequencies를 approximate합니다.</p>
+<p>각 step에 대해서 직관적으로 말하자면, step (1)과 (2)의 경우 쉽게 말해 value iteration이라고 보시면 되고, Z를 state visitation frequency count로 생각하시면 됩니다. 이어서 step (3)에서는 전체 state에 대해 각 action이 얼마나 방문했는지 count의 개념으로 나눠주고, step (4)에서 initial state에 대한 count를 setting한 뒤에, step (5)에서는 각 time step마다 앞서 계산해두었던 state visitation frequency count와 dynamics $P(s_k|a_{i,j}, s_i)$를 통해 recursive하게 계산해줍니다. 마지막으로 step (6)에서는 총 state visitation frequency count를 합산합니다.</p>
+<p>위의 algorithm은 보통 dynamics model을 알 때 사용하는 것이므로 일반적으로 <strong>sampling을 이용한 방법</strong> 에서는 사용하지 않아도 됩니다. sampling을 이용한 방법에서는 expert의 expected state feature counts을 구하는 수식처럼 learner도 똑같이 RL step을 진행하여 (sampling 방법이기 때문에 꽤 많이 돌려야합니다.) expected state feature counts를 구해줍니다. 더 자세한 내용은 code를 봐주시면 감사하겠습니다. <a href="https://github.com/reinforcement-learning-kr/lets-do-irl/blob/master/mountaincar/maxent/train.py#L69" target="_blank" rel="noopener">MaxEnt code - learner_feature_expectations</a></p>
+<p>지금까지 이론적인 부분들을 다뤄봤고, 다음으로 실험 부분에 대해서 살펴보겠습니다.</p>
+<p><br><br></p>
+<h1 id="4-Driver-Route-Modeling"><a href="#4-Driver-Route-Modeling" class="headerlink" title="4. Driver Route Modeling"></a>4. Driver Route Modeling</h1><ul>
+<li>IRL에 대한 최대 엔트로피 접근법에 대한 연구는 운전자 경로 선택에 대한 imitation learning에 적용</li>
+<li>주행 행동을 예측하고 경로 추천을 위해 유용한 유틸리티 기능(function)을 복구하는데 목적이 있음</li>
+<li>당시를 기준으로 demon-strated 데이터의 크기면에서 가장 큰 규모의 IRL 문제</li>
+</ul>
+<p><br></p>
+<h2 id="4-1-Route-Choice-as-an-MDP"><a href="#4-1-Route-Choice-as-an-MDP" class="headerlink" title="4.1 Route Choice as an MDP"></a>4.1 Route Choice as an MDP</h2><ul>
+<li>도로 네트워크는 알려진 구조로 대규모 계획 공간을 제시</li>
+<li>300,000 개가 넘는 state(road segment)와 900,000개의 action(transitionsa at intersaction)이 있는 deterministic MDP인 Pennsylvania의 Pittsburgh를 둘러싼 도로망에 대해 모델링.</li>
+<li>도로 네트워크 내에서 계획을 실행하는 운전자는 <em>시간, 안전, 스트레스, 연료비, 유지 보수 비용 및 기타 요인</em> 사이의 균형을 효율적으로 최적화하면서 목표에 도달하려고 시도한다고 가정.운전자는 비용과 관련된 목표를 최적화하는 전문가임.</li>
+<li>목적지를 추가 비용이 발생하지 않는 상태인 MDP로 표현</li>
+<li>trip들마다 목적지가 다르고 해당 MDP가 조금씩 다름</li>
+<li>reward weight가 goal state와는 독립적이고 그렇기 때문에 단일 보상 가중치는 다른 MDP에서 단일 보상 가중치를 학습 할 수 있다고 가정</li>
+</ul>
+<p><br></p>
+<h2 id="4-2-Collecting-and-Processing-GPS-Data"><a href="#4-2-Collecting-and-Processing-GPS-Data" class="headerlink" title="4.2 Collecting and Processing GPS Data"></a>4.2 Collecting and Processing GPS Data</h2><ul>
+<li>하루 12시간 동안 25 명의 Yellow Cab 택시운전자에게서 GPS 추적 데이터를 수집. 10만 mile 이상의 데이터 세트를 사용. 피츠버그 주변의 지역을 운행하고 3,000시간을 운전한 내역</li>
+<li>GPS 데이터를 도로 네트워크에 맞추기 위해 particle filter를 사용함. 이 때 time-based threshold를 이용해서 13000 개의 별개의 trips을 분할 된 지점을 결정</li>
+<li>짧거나 (10개 미만의 도로 구간)나 cyclic하거나 noisy한 데이터는 제거(약 30%에 해당). 이후 남은 데이터에서 20%은 training set으로 사용하고 나머지 80%는 test set으로 사용함(test set의 크기는 7403개)</li>
+</ul>
+<p><br></p>
+<h2 id="4-3-Path-Features"><a href="#4-3-Path-Features" class="headerlink" title="4.3 Path Features"></a>4.3 Path Features</h2><ul>
+<li>도로망 데이터는 각 도로 세그먼트를 설명하는 상세한 특성 집합을 포함.</li>
+<li>특성은 4가지를 고려 : road type, speed, lanes, transitions<ul>
+<li>road type은 각 크기 (고속도로에서 지방 도로, 고속에서 저속, 1 차선에서 여러 차선)로 분류</li>
+<li>transitions은 straight, left, right, hard left, hard right</li>
+<li>path는 각 road segmentation의 miles 수 와 각 transition 유형의 숫자로 설명.</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h2 id="4-4-IRL-Models"><a href="#4-4-IRL-Models" class="headerlink" title="4.4 IRL Models"></a>4.4 IRL Models</h2><ul>
+<li>도로 네트워크의 경로를 설명하는 택시 운전자의 집단 utility function를 학습하는 task에 MaxEnt을 적용하여 접근</li>
+<li>가능한 모든 경로의 클래스가 고정 길이보다 상대적으로 양호한 경로의 작은 고정 클래스 내에서 입증된 경로의 확률을 최대화.</li>
+<li>알고리즘은 두 가지 class 모두에 효과적이고 상당한 속도 증가를 제공한다(비정확성 최적화를 도입하지 않고).</li>
+<li>두 가지 다른 IRL 모델과 비교함<ul>
+<li>첫 번째는 새로운 경로를 예측할 수 있지만 밀도 추정이 불가능한 MMP</li>
+<li>두 번째 모델은 베이지안 IRL (Ramachandran &amp; Amir 2007)과 하이브리드 IRL (Neu &amp; Szepesvri 2007)에 사용된 action-based distribution model(Action)을 사용<ul>
+<li>어떤 특정한 상태에서 행동 선택은 행동을 취한 후에 최선의 정책에 대한 미래의 기대 보상에 따라 분배되는 것으로 가정됨 $Q^* (S, a)$. <img src="../../../../img/irl/maxent_11.png" width="400"></li>
+<li>현재의 task에서의 값은 단순히 특정 행동을 취한 후 목표에 대한 최적 경로 비용</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="action-based와-MaxEnt의-차이"><a href="#action-based와-MaxEnt의-차이" class="headerlink" title="action-based와 MaxEnt의 차이"></a>action-based와 MaxEnt의 차이</h3><center> <img src="../../../../img/irl/maxent_12.png" width="500"> </center>
+
+<ul>
+<li>A에서 B까지 3개의 경로가 존재함</li>
+<li>MaxEnt에서 각 경로가 동일한 보상을 제공한다고 가정하면, 각 경로는 동일한 확률을 갖음</li>
+<li>action-based model에서 경로 3은 50%의 확률이고, 경로 1과 2는 25%의 확률를 갖음.<ul>
+<li>action-based distribution의 경로는 action level에서 다른 경로를 가진 확률 mass과 경쟁할 뿐이며, 이전에 발생한 다른 경로와는 경쟁할 수 없음.</li>
+<li>이 문제는 CRF의 label bias라는 것과 같고 성능에 좋지 않은 영향을 미친다고 하며 종국에 IRL에 부정적인 결과를 야기시킴.<br>  ex) 가장 높은 보상 정책은 모형에서 가장 가능성이 높은 정책이 아닐 수 있으며, 동일한 기대 보상을 갖는 정책은 서로 다른 확률을 가질 수 있음.</li>
+<li>최대 엔트로피 분포와 비교할 때이 모델은 더 낮은 분기 계수와 더 낮은 확률 계수를 가진 경로에 더 높은 확률 질량을 제공</li>
+<li>B에서 A로의 왕복 trip의 결과는 다를 수 있음.</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h2 id="4-5-Comparative-Evaluation"><a href="#4-5-Comparative-Evaluation" class="headerlink" title="4.5 Comparative Evaluation"></a>4.5 Comparative Evaluation</h2><center> <img src="../../../../img/irl/maxent_13.png" width="500"> </center>
+
+<ul>
+<li>이제 경로의 출발지와 도착지를 train set에 학습을 수행한 이후에 test set경로를 모델링할 수 있는 각 모델의 능력을 평가</li>
+<li><strong>세 가지 지표</strong>를 사용하여 확인<ol>
+<li>모델의 가장 가능성이 높은 경로 추정치를 실제 입증 경로와 공유한 경로 거리 양.</li>
+<li>테스트 경로의 백분율이 최소한 90%(거리)와 모델의 예측 경로와 일치하는지를 평가.</li>
+<li>경로의 평균 로그 확률</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li>Feature Matching의 경우, action-based model에서 학습한 가중치를 사용하여 action-based model 내에서 가장 가능성이 높은 경로와 가장 낮은 비용 경로를 모두 평가.</li>
+<li>예상 이동 시간에 기초해서 도로의 <em>단위 거리 비용</em>을 도로의 속도에 반비례하는 가중치를 부여하고, 이러한 비용을 고려할 때 가장 빠른 경로(즉, 최저 비용)를 예측.</li>
+</ul>
+<center> <img src="../../../../img/irl/maxent_14.png" width="500"> </center>
+
+<ul>
+<li>MaxEnt 모델을 사용하여 학습한 비용 값. 많은 짧은 도로로 구성된 경로를 penalize하는데 사용할 수 있는 1.4초의 고정 엣지당 비용을 배움.</li>
+</ul>
+<p><br></p>
+<h2 id="4-6-Applications"><a href="#4-6-Applications" class="headerlink" title="4.6 Applications"></a>4.6 Applications</h2><ul>
+<li>Bayes의 이론을 경로 선호 모델에 적용함으로써 목적지에 대해 쉽게 추론할 수 있게 됨</li>
+</ul>
+<center> <img src="../../../../img/irl/maxent_15.png" width="500"> </center>
+
+<center> <img src="../../../../img/irl/maxent_16.png" width="500"> </center>
+
+<ul>
+<li>대상 분포(5개 대상) 및 일부 이동 경로가 지정된 나머지 경로 분포</li>
+<li>그림 4는 특정 목적지 예측 문제를 보여주는 그림.</li>
+<li>관측된 총 경로의 비율을 기반으로 도시 주변의 5개 위치 중 한 곳에서 종료되는 경로를 예측하는 모델의 능력을 평가함</li>
+<li>train set를 사용해서 목적지를 미리 형성하고 test set에서 모델을 평가</li>
+</ul>
+<p><br><br></p>
+<h1 id="5-Conclusions-and-Future-Work"><a href="#5-Conclusions-and-Future-Work" class="headerlink" title="5. Conclusions and Future Work"></a>5. Conclusions and Future Work</h1><p>이 논문에서는 이전에 있던 ambiguities를 해결하고, optimization에 대해 convex, computationally efficient procedure를 제공하며, 중요한 performance guarantees을 유지하는 inverse RL과 imitation learning에 대한 새로운 접근을 보였습니다. </p>
+<p>또한 modeling route preferences의 문제에 대해 논문에서 제시한 방법을 적용했지만, 아쉽게도 주로 작은 feature space를 사용하여 논문에서의 model과 다른 imitation learning의 model들 사이의 차이점을 설명하고 평가하는 데 초점을 맞추었습니다.</p>
+<p>더 나아가 연구되어야 할 점은 contextual factors(상황 요인) (e.g., time of day, weather)을 feature space에 포함하고, rush hour 중에만 특정한 도로를 피한다거나 winter weather의 가파른 길을 회피하는 것과 같이 설명할 수 있는 지역 기반 또는 특정 기반 도로의 feature들을 유도하여 논문에서의 model을 더 향상시키고자 합니다.</p>
+<p><br><br></p>
+<h1 id="처음으로"><a href="#처음으로" class="headerlink" title="처음으로"></a>처음으로</h1><h2 id="Let’s-do-Inverse-RL-Guide"><a href="#Let’s-do-Inverse-RL-Guide" class="headerlink" title="Let’s do Inverse RL Guide"></a><a href="https://reinforcement-learning-kr.github.io/2019/01/22/0_lets-do-irl-guide/">Let’s do Inverse RL Guide</a></h2><p><br></p>
+<h1 id="이전으로"><a href="#이전으로" class="headerlink" title="이전으로"></a>이전으로</h1><h2 id="MMP-여행하기"><a href="#MMP-여행하기" class="headerlink" title="MMP 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2019/02/07/3_mmp/">MMP 여행하기</a></h2><p><br></p>
+<h1 id="다음으로"><a href="#다음으로" class="headerlink" title="다음으로"></a>다음으로</h1><h2 id="MaxEnt-Code"><a href="#MaxEnt-Code" class="headerlink" title="MaxEnt Code"></a><a href="">MaxEnt Code</a></h2><h2 id="GAIL-여행하기"><a href="#GAIL-여행하기" class="headerlink" title="GAIL 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2019/02/13/5_gail/">GAIL 여행하기</a></h2>
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>

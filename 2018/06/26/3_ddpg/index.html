@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Deep Determinstic Policy Gradient (DDPG)"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Deep Determinstic Policy Gradient (DDPG) - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>Deep Determinstic Policy Gradient (DDPG)</h1>
+					
+					<h2 class="post-subheading">
+						피지여행 3번째 논문
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 양혁렬, 이동민, 차금강 on
+						
+						
+							2018-06-26
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/프로젝트/">#프로젝트</a> <a href="/tags/피지여행/">#피지여행</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/프로젝트/">프로젝트</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<center> <img src="https://www.dropbox.com/s/zv8rk0uf87ipiaj/Screenshot%202018-06-23%2010.01.48.png?dl=1" width="600"> </center>
+
+<p>논문 저자 : Timothy P. Lillicrap, Jonathan J. Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver &amp; Daan Wierstra<br>논문 링크 : <a href="https://arxiv.org/pdf/1509.02971.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1509.02971.pdf</a><br>Proceeding : International Conference on Learning Representations (ICLR) 2016<br>정리 : 양혁렬, 이동민, 차금강</p>
+<hr>
+<h1 id="1-들어가며…"><a href="#1-들어가며…" class="headerlink" title="1. 들어가며…"></a>1. 들어가며…</h1><p><br></p>
+<h2 id="1-1-Success-amp-Limination-of-DQN"><a href="#1-1-Success-amp-Limination-of-DQN" class="headerlink" title="1.1 Success &amp; Limination of DQN"></a>1.1 Success &amp; Limination of DQN</h2><ul>
+<li>Success<ul>
+<li>sensor로부터 나오는 전처리를 거친 input 대신에 raw pixel input을 사용합니다. 이렇게 함으로써 High dimensional observation space 문제를 풀어냅니다.</li>
+</ul>
+</li>
+<li>Limitation<ul>
+<li>discrete &amp; low dimensional action space만 다룰 수 있습니다. Continuous action space를 다루기 위해서는 매 스텝 이를 위한 iterative optimization process를 거쳐야 합니다.</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h2 id="1-2-Problems-of-discritization"><a href="#1-2-Problems-of-discritization" class="headerlink" title="1.2 Problems of discritization"></a>1.2 Problems of discritization</h2><center> <img src="https://www.dropbox.com/s/nulhzxs8bak2fn6/Screenshot%202018-06-23%2012.22.20.png?dl=1" width="450px"> </center>
+
+<ul>
+<li>만약 7개의 관절을 가진 로봇 팔이 있다면, 가장 간단한 discretization은 각 관절을 다음과 같이 $a_{i}\in \{ -k, 0, k \}$ 3개의 값을 가지도록 하는 것입니다.</li>
+<li>그렇다면 $3 \times 3 \times 3 \times 3 \times 3 \times 3 \times 3 = 3^{7} = 2187$ 가지의 dimension을 가진 action space가 만들어집니다. 이와같이 Discretization을 하면 action space가 exponential하게 늘어납니다.</li>
+<li>충분히 큰 action space 임에도 discretization으로 인한 정보의 손실이 있을 수 있고, 섬세한 Control을 할 수 없습니다.</li>
+</ul>
+<p><br></p>
+<h2 id="1-3-New-approach-for-continuous-control"><a href="#1-3-New-approach-for-continuous-control" class="headerlink" title="1.3 New approach for continuous control"></a>1.3 New approach for continuous control</h2><ul>
+<li>Model-free, Off-policy, Actor-critic algorithm을 제안합니다.</li>
+<li>Deep Deterministic Policy(이하 DPG)를 기반으로 합니다.</li>
+<li>Actor-Critic approach와 DQN의 성공적이었던 부분을 합칩니다.<ul>
+<li>Replay buffer : 샘플들 사이의 상관관계를 줄여줍니다.</li>
+<li>target Q Network : Update 동안 target을 안정적으로 만듭니다.</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h1 id="2-Background"><a href="#2-Background" class="headerlink" title="2.Background"></a>2.Background</h1><p><br></p>
+<h2 id="2-1-Notation"><a href="#2-1-Notation" class="headerlink" title="2.1 Notation"></a>2.1 Notation</h2><ul>
+<li>Observation : $x_{t}$</li>
+<li>Action : $a_t \in {\rm IR}^N $</li>
+<li>Reward : $r_t$</li>
+<li>Discount factor : $\gamma$</li>
+<li>Environment : $E$</li>
+<li>Policy : $\pi : S \rightarrow P(A)  $</li>
+<li>Transition dynamics : $p(s_{t+1} \vert s_t, a_t) $</li>
+<li>Reward function : $r(s_t, a_t)$</li>
+<li>Return : $ \sum_{ i=t }^{ T } \gamma^{(i-t)}r(s_i, a_i) $</li>
+<li>Discounted state visitation distribution for a policy : $\rho^\pi $</li>
+</ul>
+<p><br></p>
+<h2 id="2-2-Bellman-Equation"><a href="#2-2-Bellman-Equation" class="headerlink" title="2.2 Bellman Equation"></a>2.2 Bellman Equation</h2><ul>
+<li>상태 $s_t$에서 행동 $a_t$를 취했을 때 Expected return은 다음과 같습니다.</li>
+</ul>
+<p>$$Q^{\pi}(s_t, a_t)={\rm E}_{r_{i \geqq t},s_{i \geqq t} \backsim E, a_{i \geqq t} \backsim \pi } [R_{t} \vert s_t, a_t  ]$$</p>
+<ul>
+<li>벨만 방정식을 사용하여 위의 식을 변형합니다.</li>
+</ul>
+<p>$$ Q^{\pi}(s_t, a_t)={\rm E}_{r_{t},s_{t} \backsim E } [r(s_t,a_t)+\gamma {\rm E}_{a_{t+1} \backsim \pi } [ Q^{\pi}(s_{t+1}, a_{t+1}) ] ]$$</p>
+<ul>
+<li>Determinsitc policy를 가정합니다.</li>
+</ul>
+<p>$$Q^{\mu}(s_t, a_t)={\rm E}_{r_{t},s_{t} \backsim E } [r(s_t,a_t)+\gamma Q^{\mu}(s_{t+1}, \mu (s_{t+1})) ]$$</p>
+<ul>
+<li><p>위의 수식에 대한 추가설명</p>
+<ul>
+<li>두 번째 수식에서 위의 수식으로 내려오면서 policy가 determinstic하기 때문에 policy에 dependent한 Expectation이 빠진 것을 알 수 있습니다.</li>
+<li>Deterministic policy를 가정하기 전의 수식에서는 $a_{t+1}$을 골랐던 순간의 policy로 Q에 대한 Expection을 원래 구해야하기 때문에 off-policy가 아니지만, Determinsitic policy를 가정한다면 update 할 당시의 policy로 $a_{t+1}$를 구할 수 있기 때문에 off-policy가 됩니다.</li>
+</ul>
+</li>
+<li><p>Q learning<br>$$L(\theta^{Q}) = {\rm E}_{s_t \backsim \rho^\beta , a_t \backsim \beta , r_t \backsim E} [(Q(s_t, a_t \vert \theta^Q)-y_t)^2]$$ </p>
+</li>
+<li><p>위의 수식에 대한 추가설명</p>
+<ul>
+<li>$\beta$는 behavior policy를 의미합니다.</li>
+<li>$ y_t = r(s_t, a_t) + \gamma Q^{\mu}(s_{t+1},\mu(s_{t+1}))$  </li>
+<li>$\mu(s) = argmax_{a}Q(s,a)$<ul>
+<li>Q learning은 위와 같이 $argmax$라는 deterministic policy를 사용하기 때문에 off policy로 사용할 수 있습니다. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h2 id="2-3-DPG"><a href="#2-3-DPG" class="headerlink" title="2.3 DPG"></a>2.3 DPG</h2><p>$$\nabla_{\theta^\mu} J \approx  {\rm E}_{s_t \backsim \rho^\beta} [ \nabla_{\theta^\mu} Q(s, a \vert \theta ^ Q) \vert_{s=s_t, a=\mu(s_t)}] = {\rm E}_{s_t \backsim \rho^\beta} [ \nabla_{a} Q(s, a \vert \theta ^ Q) \vert_{s=s_t, a=\mu(s_t)} \nabla_{\theta^\mu} \mu(s \vert Q^{\mu})\vert_{s=s_t}]$$</p>
+<ul>
+<li>위의 수식은 피지여행 DPG 글 4-2.Q-learning을 이용한 off-policy actor-critic에서 이미 정리 한 바 있습니다. <a href="http://localhost:4000/2018/06/27/2_dpg/" target="_blank" rel="noopener">DPG</a>를 참고해주세요.</li>
+</ul>
+<p><br><br></p>
+<h1 id="3-Algorithm"><a href="#3-Algorithm" class="headerlink" title="3.Algorithm"></a>3.Algorithm</h1><p>Continous control을 위한 새로운 알고리즘을 제안합니다. 제안하는 알고리즘의 특징은 다음과 같습니다.</p>
+<ul>
+<li>Replay buffer를 사용합니다.</li>
+<li>“soft” target update를 사용합니다.</li>
+<li>각 차원의 scale이 다른 low dimension vector로 부터 학습할 때 Batch Normalization을 사용합니다. </li>
+<li>탐험을 위해 action에 Noise를 추가합니다.</li>
+</ul>
+<p><br></p>
+<h2 id="3-1-Replay-buffer"><a href="#3-1-Replay-buffer" class="headerlink" title="3.1 Replay buffer"></a>3.1 Replay buffer</h2><center> <img src="https://www.dropbox.com/s/lc61b8nas1clqme/Screenshot%202018-06-23%2016.32.53.png?dl=1" width="700px"> </center>
+
+<ul>
+<li>큰 State space를 학습하고 일반화 하기위해서는 Neural Network와 같은 non-linear approximator가 필수적이지만 수렴한다는 보장이 없습니다.</li>
+<li>NFQCA에서는 수렴의 안정성을 위해서 batch learning을 도입합니다. 하지만 NFQCA에서는 업데이트시에 policy를 reset하지 않습니다.</li>
+<li>DDPG는 DQN에서 사용된 Replay buffer를 사용하여 online batch update를 가능하게 합니다.</li>
+</ul>
+<p><br></p>
+<h2 id="3-2-Soft-target-update"><a href="#3-2-Soft-target-update" class="headerlink" title="3.2 Soft target update"></a>3.2 Soft target update</h2><p>$$ \theta^{Q^{‘}} \leftarrow \tau \theta^{Q} + (1-\tau) \theta^{Q^{‘}}$$</p>
+<p>$$ \theta^{\mu^{‘}} \leftarrow \tau \theta^{\mu} + (1-\tau) \theta^{\mu^{‘}}$$</p>
+<ul>
+<li>DQN에서는 일정 주기마다 origin network의 weight를 target network로 직접 복사해서 사용합니다.</li>
+<li>DDPG에서는 exponential moving average(지수이동평균) 식으로 대체합니다.</li>
+<li>soft update가 DQN에서 사용했던 방식에 비해 어떤 장점이 있는지는 명확하게 설명되어있지 않지만 stochatic gradient descent와 같이 급격하게 학습이 진행되는 것을 막기 위해 사용하는 것 같습니다.</li>
+</ul>
+<p><br></p>
+<h2 id="3-3-Batch-Normalization"><a href="#3-3-Batch-Normalization" class="headerlink" title="3.3 Batch Normalization"></a>3.3 Batch Normalization</h2><center> <img src="https://www.dropbox.com/s/1erxzrgk69x04j8/Screenshot%202018-06-23%2016.51.56.png?dl=1" width="500px"> </center>
+
+<ul>
+<li><p>서로 scale이 다른 feature를 state로 사용할 때에 Neural Net이 일반화에서 어려움을 겪습니다.</p>
+<ul>
+<li>이걸 해결하기 위해서는 원래 직접 스케일을 조정해주었습니다.</li>
+</ul>
+</li>
+<li><p>하지만 각 layer의 Input을 Unit Gaussian이 되도록 강제하는 BatchNormalization을 사용하여 이 문제를 해결합니다.</p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="3-4-Noise-Process"><a href="#3-4-Noise-Process" class="headerlink" title="3.4 Noise Process"></a>3.4 Noise Process</h2><p>DDPG 에서는 Exploration을 위해서 output으로 나온 행동에 노이즈를 추가해줍니다.</p>
+<p>ORNSTEIN UHLENBECK PROCESS(OU)</p>
+<p>$$dx_t = \theta (\mu - x_t) dt + \sigma dW_t$$</p>
+<ul>
+<li>OU Process는 평균으로 회귀하는 random process입니다.</li>
+<li>$\theta$는 얼마나 빨리 평균으로 회귀할 지를 나타내는 파라미터이며 $\mu$는 평균을 의미합니다.</li>
+<li>$\sigma$는 process의 변동성을 의미하며 $W_t$는 Wiener process를 의미합니다.</li>
+<li>따라서 이전의 noise들과 temporally correlated입니다.</li>
+<li>위와 같은 temporally correlated noise process를 사용하는 이유는 physical control과 같은 관성이 있는 환경에서 학습 시킬 때 보다 효과적이기 때문입니다.</li>
+</ul>
+<p><br></p>
+<h2 id="3-5-Diagram-amp-Pseudocode"><a href="#3-5-Diagram-amp-Pseudocode" class="headerlink" title="3.5 Diagram &amp; Pseudocode"></a>3.5 Diagram &amp; Pseudocode</h2><ul>
+<li>DDPG의 학습 과정을 간단히 도식화 해본 다이어그램입니다.</li>
+</ul>
+<p><img src="https://www.dropbox.com/s/0ffb2c9irctjx2n/Screenshot%202018-06-23%2017.58.57.png?dl=1"> </p>
+<ul>
+<li>DDPG의 알고리즘 수도코드입니다. 모든 항목을 위에서 설명했으니 순서대로 보시면 이해에 도움이 될것입니다.</li>
+</ul>
+<center> <img src="https://www.dropbox.com/s/fd0nj7goixfnd6z/Screenshot%202018-06-23%2018.02.13.png?dl=1" width="700px"> </center>
+
+<p><br><br></p>
+<h1 id="4-Results"><a href="#4-Results" class="headerlink" title="4. Results"></a>4. Results</h1><p><br></p>
+<h2 id="4-1-Variants-of-DPG"><a href="#4-1-Variants-of-DPG" class="headerlink" title="4.1 Variants of DPG"></a>4.1 Variants of DPG</h2><center> <img src="https://www.dropbox.com/s/k8q6tih85lgow5l/Screenshot%202018-06-23%2018.08.05.png?dl=1" width="800px"> </center>
+
+<ul>
+<li>original DPG에 batchnorm만 추가(연한 회색), target network만 추가(진한 회색), 둘 다 추가(초록), pixel로만 학습(파랑). Target network가 성능을 가장 좌지우지합니다.</li>
+</ul>
+<p><br></p>
+<h2 id="4-2-Q-estimation-of-DDPG"><a href="#4-2-Q-estimation-of-DDPG" class="headerlink" title="4.2 Q estimation of DDPG"></a>4.2 Q estimation of DDPG</h2><center> <img src="https://www.dropbox.com/s/vvcfoni0lqrisst/Screenshot%202018-06-23%2018.10.23.png?dl=1" width="650px"> </center>
+
+<ul>
+<li>DQN은 Q value를 Over-estimate하는 경향이 있었지만, DDPG는 simple task에 대해서는 잘한다. 복잡한 문제에 대해서는 estimation을 잘 못했지만, 여전히 좋은 Policy를 찾았습니다.</li>
+</ul>
+<p><br></p>
+<h2 id="4-3-Performance-Comparison"><a href="#4-3-Performance-Comparison" class="headerlink" title="4.3 Performance Comparison"></a>4.3 Performance Comparison</h2><center> <img src="https://www.dropbox.com/s/u8ibmz9q4kfxh6l/Screenshot%202018-06-23%2018.11.40.png?dl=1" width="800px"> </center>
+
+<ul>
+<li>Score는 naive policy를 0, ILQG (planning algorithm)의 mean score를 1점으로 놓았을 때의 점수 Torcs 환경에 대해서만 raw reward를 score로 사용합니다.</li>
+</ul>
+<p><br><br></p>
+<h1 id="5-Implementation-Details"><a href="#5-Implementation-Details" class="headerlink" title="5. Implementation Details"></a>5. Implementation Details</h1><p><br></p>
+<h2 id="5-1-Hyper-parameters"><a href="#5-1-Hyper-parameters" class="headerlink" title="5.1 Hyper parameters"></a>5.1 Hyper parameters</h2><ul>
+<li>Optimizer : Adam<ul>
+<li>actor lr : 0.0001, critic lr : 0.001</li>
+</ul>
+</li>
+<li>Weight decay(L2) for critic(Q) : 0.001</li>
+<li>Discount factor : $\gamma = 0.99 $</li>
+<li>Soft target updates : $\tau = 0.001 $</li>
+<li>Size of replay buffer : 1,000,000</li>
+<li>Orstein Uhlenbeck Process : $\theta = 0.15$, $\sigma = 0.2$</li>
+</ul>
+<p><br></p>
+<h2 id="5-2-Etc"><a href="#5-2-Etc" class="headerlink" title="5.2 Etc."></a>5.2 Etc.</h2><ul>
+<li>Final output layer of actor : tanh (행동의 최소 최대를 맞춰주기 위해서)</li>
+<li>low-dimentional 문제에서 네트워크는 2개의 hidden layer (1st layer 400 units, 2nd layer 300 units)를 가집니다.</li>
+<li>이미지를 통해서 학습시킬 때 : 3 convolutional layers (no pooling) with 32 filters at each layer.</li>
+<li>actor와 critic 각각의 final layer(weight, bias 모두)는 다음 범위의 uniform distribution에서 샘플링합니다. [ - 0.003, 0.003], [ - 0.0003 , 0.0003]. 이렇게 하는 이유는 가장 처음의 policy와 value의 output이 0에 가깝게 나오도록 하기 위합니다.</li>
+</ul>
+<p><br><br></p>
+<h1 id="6-Conclusion"><a href="#6-Conclusion" class="headerlink" title="6.Conclusion"></a>6.Conclusion</h1><ul>
+<li>이 연구는 최근 딥러닝의 발전과 강화학습을 엮은 것으로 Continuous action space를 가지는 문제를 robust하게 풀어냅니다.</li>
+<li>non-linear function approximators을 쓰는 것은 수렴을 보장하지 않지만, 여러 환경에 대해서 특별한 조작 없이 안정적으로 수렴하는 것을 실험으로 보여냅니다.</li>
+<li>Atari 도메인에서 DQN보다 상당히 적은 step만에 수렴하는 것을 실험을 통해서 알아냅니다.</li>
+<li>model-free 알고리즘은 좋은 solution을 찾기 위해서는 많은 sample을 필요로 한다는 한계가 있지만 더 큰 시스템에서는 이러한 한계를 물리칠 정도로 중요한 역할을 하게 될 것이라고 합니다.</li>
+</ul>
+<p><br><br></p>
+<h1 id="처음으로"><a href="#처음으로" class="headerlink" title="처음으로"></a>처음으로</h1><h2 id="PG-Travel-Guide"><a href="#PG-Travel-Guide" class="headerlink" title="PG Travel Guide"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/">PG Travel Guide</a></h2><p><br></p>
+<h1 id="이전으로"><a href="#이전으로" class="headerlink" title="이전으로"></a>이전으로</h1><h2 id="DPG-여행하기"><a href="#DPG-여행하기" class="headerlink" title="DPG 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/27/2_dpg/">DPG 여행하기</a></h2><p><br></p>
+<h1 id="다음으로"><a href="#다음으로" class="headerlink" title="다음으로"></a>다음으로</h1><h2 id="NPG-여행하기"><a href="#NPG-여행하기" class="headerlink" title="NPG 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/25/4_npg/">NPG 여행하기</a></h2>
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>

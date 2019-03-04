@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="A Distributional Perspective on Reinforcement Learning"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>A Distributional Perspective on Reinforcement Learning - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>A Distributional Perspective on Reinforcement Learning</h1>
+					
+					<h2 class="post-subheading">
+						Distributional RL 1번째 논문
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 민규식 on
+						
+						
+							2018-10-02
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/논문/">#논문</a> <a href="/tags/Distributional-RL/">#Distributional RL</a> <a href="/tags/C51/">#C51</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/논문-정리/">논문 정리</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<center> <img src="/img/paper_c51.png" width="800"> </center>
+
+<p>논문 저자 : <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Bellemare%2C+M+G" target="_blank" rel="noopener">Marc G. Bellemare</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Dabney%2C+W" target="_blank" rel="noopener">Will Dabney</a>, <a href="https://arxiv.org/search/cs?searchtype=author&amp;query=Munos%2C+R" target="_blank" rel="noopener">Rémi Munos</a><br>논문 링크 : <a href="https://arxiv.org/abs/1707.06887" target="_blank" rel="noopener">ArXiv</a><br>Proceeding : International Conference on Machine Learning (ICML) 2017<br>정리 : 민규식</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>본 게시물은 2017년에 발표된 논문 <a href="https://arxiv.org/abs/1707.06887" target="_blank" rel="noopener">A Distributional Perspective on Reinforcement Learning</a> 의 내용에 대해 설명합니다.</p>
+<p>Distributional RL에 대해 설명한 게시물에서도 언급했듯이 distributional RL 알고리즘은 value를 하나의 scalar 값이 아닌 distribution으로 예측합니다.</p>
+<p align="center"><br><br><img src="/img/distributionalRL.png" alt="distributional RL" width="600"><br><br></p>
+
+<p> 이에 따라 일반적인 강화학습에서 이용하는 <code>bellman equation</code>의 value Q 대신 distribution Z를 사용합니다. 이 bellman equation을 <code>distributional bellman equation</code> 이라고 합니다. 해당 식들은 다음과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/bellman_equation.png" alt="distributional RL" width="600"><br><br></p>
+
+<p><br></p>
+<p>이에 따라 network의 output도 각 알고리즘에 따라 차이가 있습니다. </p>
+<p><a href="https://deepmind.com/research/publications/human-level-control-through-deep-reinforcement-learning/" target="_blank" rel="noopener">DQN</a>에서 network의 output이 각 action에 대한 Q-value였다면 distributional RL에서 network의 output은 아래 그림과 같이 각 action에 대한 value distribution 입니다. </p>
+<p align="center"><br><br> <img src="/img/network_output.png" alt="Network" width="800"><br><br></p>
+
+<p><br></p>
+<h2 id="Value-Distribution"><a href="#Value-Distribution" class="headerlink" title="Value Distribution"></a>Value Distribution</h2><p>Action에 대한 Distribution에 대해서 살펴보도록 하겠습니다. </p>
+<p align="center"><br><br> <img src="/img/support_and_prob.png" alt="Distribution" width="800"><br><br></p>
+
+<p>Network의 output은 위와 같은 이산 확률분포(Discrete Probability Distribution) 입니다. 여기서 가로축은 <strong>Support</strong> 혹은 <strong>atom</strong>이라고 부르며 value값을 나타냅니다. 세로축은 확률을 나타냅니다. 즉, 이 분포는 각각의 value와 그 value를 받을 확률을 나타내는 분포입니다.</p>
+<p>C51의 경우 분포를 결정해주기 위해서 몇가지 파라미터들이 필요합니다. 해당 파라미터들은 다음과 같습니다.</p>
+<ul>
+<li>Support의 수</li>
+<li>Support의 최대값</li>
+<li>Support의 최소값</li>
+</ul>
+<p>위 그림에서도 볼 수 있듯이 support값은 최소값부터 최대값까지 support의 수에 맞게 일정한 간격으로 나누게 됩니다. 즉, supports는 이렇게 미리 결정된 파라미터들에 의해 그 값이 정해지게 됩니다. 네트워크는 바로 이 support들에 대한 확률을 구해주게 됩니다. 각 action에 대해서 하나의 distribution이 필요하기 때문에 <strong>network output의 크기는 [support의 수 * action의 수]</strong> 가 됩니다.  </p>
+<p><br></p>
+<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>알고리즘의 진행은 DQN과 거의 동일합니다. <code>Experience Replay</code> 나 <code>Target Network</code>  같은 기법도 그대로 이용합니다. 차이점은 아래 3가지 정도입니다. </p>
+<ol>
+<li>Q-value 계산</li>
+<li>Loss</li>
+<li>Target distribution 구하기</li>
+</ol>
+<p>각각 어떻게 차이가 있는지 한번 살펴보도록 하겠습니다. </p>
+<p><br></p>
+<h3 id="1-Q-value-계산"><a href="#1-Q-value-계산" class="headerlink" title="1. Q-value 계산"></a>1. Q-value 계산</h3><p>C51 알고리즘에서 Q-value를 계산하는 방법은 이산확률분포의 기대값을 구하는 것입니다. 이에 따라 각 action에 대한 Q-value를 계산하는 식은 다음과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/Equation_Q_c51.png" alt="Equation of Q-value" width="400"><br><br></p>
+
+<p> 수식에서 사용된 각 기호는 위에 있는 Value distribution 그림을 참고해주세요! 각 action의 distribution마다 위의 식에 따라 연산을 수행하고 최대의 Q-value를 가지는 action을 선택하면 됩니다. </p>
+<p> 위 수식처럼 분포의 기대값을 구하는 연산을 하면 결과적으로 Q-value는 하나의 scalar값을 가지게 됩니다. 이 경우 “뭐지… 결국 scalar값으로 action 선택하자나…” 라고 생각하실수도 있지만!! 단순히 하나의 기대값을 추정하는 것보다 정확하게 분포를 추정하고 그 기대값을 구하는 것이 더 정확한 예측이 될 것이라 생각할 수 있습니다. </p>
+<p><br></p>
+<h3 id="2-Loss-구하기"><a href="#2-Loss-구하기" class="headerlink" title="2. Loss 구하기"></a>2. Loss 구하기</h3><p> Distributional RL의 경우 정확한 분포를 예측하는 것이 목적입니다. 이에 따라 target value가 아닌 target distribution을 통해 학습을 수행합니다. Target distribution과 추정된 distribution간의 차이를 줄이는 방향으로 학습을 수행해야 할텐데! 그럼 distribution간의 차이는 어떻게 구할까요? 본 논문에서는 <a href="https://en.wikipedia.org/wiki/Cross_entropy" target="_blank" rel="noopener">Cross Entropy</a> 를 이용합니다. 그 식은 다음과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/Equation_loss_c51.png" alt="Equation of Loss" width="400"><br><br></p>
+
+<p>마지막으로 위의 식에 필요한 target distribution을 구하는 과정에 대해 살펴보도록 하겠습니다. </p>
+<p><br></p>
+<h3 id="3-Target-Distribution"><a href="#3-Target-Distribution" class="headerlink" title="3. Target Distribution"></a>3. Target Distribution</h3><p>Target distribution을 만드는 이 과정이 C51 알고리즘의 구현에 있어 가장 귀찮고 까다로운 부분입니다. 우선 target distribution을 만들기 위해서 우선 value값과 직접적으로 연관이 있는 support에 대한 연산을 수행합니다. 해당 연산은 DQN에서 target value를 구하는 식과 같습니다. </p>
+<center> <img src="/img/Equation_target1_c51.png" width="400"> </center>
+
+<p>Target distribution의 경우 supports에 대해 위와 같은 연산을 해줍니다. 각 support에 discount factor를 곱하고 reward를 더해줍니다. (단, terminal이 false일 때, 즉 게임이 끝나지 않은 경우에만 이렇게 연산을 하고 게임이 끝난 경우에는 모든 support 값들을 reward 값으로 사용합니다 -&gt; supports = [r_t]) 이 값은 support의 최대값보다 큰 경우 최대값과 같도록, 최소값보다 작은 경우 최소값과 같도록 설정해줍니다. </p>
+<p>그런데 이 경우에 문제가 생길 수 있습니다! 예를 들어 supports가 [1, 2, 3, 4, 5] 인 경우 reward = 0.1, discount factor = 0.9라고 해보겠습니다. 이 경우 위의 식에 따라 연산을 해주면 supports가 [1, 1.9, 2.8, 3.7, 4.6]이 됩니다. Loss인 cross entropy 연산을 하기 위해서는 두 distribution의 supports가 일치해야되는데 support가 달라져 버렸습니다! 이 경우 때문에 target distribution의 support를 원래의 support와 같이 분배해주는 <strong>Projection</strong> 이라는 과정이 추가적으로 필요합니다! </p>
+<p>위의 과정을 그림으로 표현한 것이 다음과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/bellman_operation.png" alt="Bellman Operation" class="center" width="800"><br><br></p>
+
+<p> Projection의 경우 다음의 예시를 통해 설명을 하도록 하겠습니다. </p>
+<p>아래와 같은 상황이 있다고 해보겠습니다. </p>
+<p align="center"><br><br> <img src="/img/projection1.png" alt="Projection1" class="center" width="700"><br><br></p>
+
+<p>변경된  support가 3.7인 경우를 예시로 하여 Projection을 해보도록 하겠습니다. 이 경우 3.7에 해당하는 확률값인 0.25를 support 3과 4로부터의 거리에 비례하여 분배합니다. 그 과정이 아래 그림과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/projection2.png" alt="Projection2" class="center" width="500"><br><br></p>
+
+<p>위와 같이 3.7은 기존의 support 3과 4 사이에 존재하는 값입니다. 3.7이 가진 확률값 0.25를 3과 4에 분배해야합니다. 이때 거리를 기반으로 값을 분배합니다. 3.7은 3보다는 4에 더 가깝죠. 그렇기 때문에 4에 더 많은 비율을 분배해줘야 합니다. 3과 4에서부터 3.7까지 거리의 비율은 각각 7:3 입니다. 이 3:7의 비율 중 3을 support값 3에, 7을 support값 4에 분배해줍니다. 그렇기 때문에 support 3의 확률값은 0.25 <em> 0.3 = 0.075을, support 4의 확률값은 0.25 </em> 0.7 = 0.175를 각각 할당받게 됩니다. 이 과정을 위의 예시에서 모든 supports에 적용한 결과가 다음과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/projection3.png" alt="Projection2" class="center" width="800"><br><br></p>
+
+<p>위와 같이 supports [1, 1.9, 2.8, 3.7, 4.6] 일때 확률값이 [0.1, 0.15, 0.2, 0.25, 0.3] 였던 것이 <strong>Projection</strong> 과정 이후에는 supports [1, 2, 3, 4, 5] 이고 각각에 대한 확률값이 [0.115, 0.175, 0.235, 0.295, 0.18]이 되었습니다. 이것이 최종적으로 구한 target distribution이며 이제 Projection을 통해 supports가 기존의 supports와 같아졌기 때문에 <strong>Cross entropy</strong> 연산이 가능하게 되었습니다!! </p>
+<p>여기까지가 Projection을 수행하는 과정입니다. </p>
+<p><br></p>
+<p>지금까지의 과정을 잘 이해하셨다면 논문에 나온 아래의 알고리즘을 더 수월하게 이해할 수 있을 것입니다. </p>
+<p align="center"><br><br> <img src="/img/algorithm_c51.png" alt="algorithm" class="center" width="800"><br><br></p>
+
+<p><br></p>
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p>본 알고리즘의 성능은 Atari 환경에서 검증되었으며 이때 사용한 parameters는 다음과 같습니다. </p>
+<ul>
+<li>V(max) = 10 -&gt; support의 최대값</li>
+<li>V(min) = -10 -&gt; support의 최소값</li>
+<li>Epsilon (Adam) = 0.01 / (batch size) -&gt; Adam optimizer의 epsilon 값</li>
+<li>Learning rate = 0.00025</li>
+<li>Batch size = 32</li>
+</ul>
+<p>Atari 환경에서 테스트한 결과는 다음과 같습니다. </p>
+<p align="center"><br><br> <img src="/img/result_c51.png" alt="algorithm" class="center" width="800"><br><br></p>
+
+<p>위의 결과에서 볼 수 있듯이 support의 수가 많아질수록 성능은 좋아지는 편입니다. 특히 51개의 support를 이용했을 때 <code>SeaQuest</code> 게임에서 아주 좋은 성능을 보입니다. 그래서 일반적으로 이 알고리즘에서는 51개의 support를 이용하며 이에 따라 <strong>C51</strong>이라고 알고리즘을 부르게 되었습니다. </p>
+<p align="center"><br><br> <img src="/img/sparse_good_result_c51.png" alt="algorithm" class="center" width="800"><br><br></p>
+
+<p>위에서 볼 수 있듯이 sparse한 reward 환경인 Private Eye나 Venture 같은 게임에서도 다른 알고리즘들에 비해 좋은 결과를 보였다고 합니다. </p>
+<p align="center"><br><br> <img src="/img/result_c51_2.png" alt="algorithm" class="center" width="400"><br><br></p>
+
+<p>또한 위에서 볼 수 있듯이 DQN, DDQN, Dueling, PER, PER + Dueling 과 비교했을 때에도 매우 좋은 성능을 보입니다. </p>
+<p align="center"><br><br> <img src="/img/result_c51_3.png" alt="algorithm" class="center" width="400"><br><br></p>
+
+<p>마지막으로 위의 결과는 C51 vs DQN, C51 vs Human, DQN vs Human 을 했을 때 더 좋은 성능을 보인 게임의 수 입니다. 총 57개의 게임이 있으니 C51의 경우 약 절반 이상의 게임에서 사람보다 우수한 성능을 보인 알고리즘이라 할 수 있습니다. </p>
+<p><br></p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>C51의 경우 distributional RL 3형제 중 첫번째 알고리즘으로 distribution을 통해 value를 예측하는 알고리즘입니다. Distribution을 이용하여 value를 잘 예측하며 좋은 성능을 보이지만 이 알고리즘에서는 몇가지 아쉬운 점이 있습니다. </p>
+<ol>
+<li>support에 관련된 파라미터들을 결정해줘야하며 게임의 reward 범위에 따라 이 값들을 따로 설정해야 할 수 있습니다. 이런 점에 조금 귀찮은 점이 있습니다. </li>
+<li>알고리즘에 굉장히 번거로운 projection 과정이 포함되어 있습니다. </li>
+<li>마지막으로 해당 알고리즘의 경우 수학적으로 수렴성을 보장하지 못하는 알고리즘입니다. </li>
+</ol>
+<p align="center"><br><br> <img src="/img/gamma_contraction.png" alt="gamma contraction" class="center" width="400"><br><br></p>
+
+<p>Distributional RL이 수렴하기 위해서는 위와 같은 gamma-contraction 조건을 만족해야합니다. value distribution간 거리를 측정하는 distance metric (d_p)가 <strong>Wasserstein distance</strong>인 경우 위 조건을 <strong>만족</strong>하지만 <strong>Cross entropy</strong> 의 경우 수학적으로 위의 조건을 만족한다는 보장이 없다고 합니다. 하지만 C51 논문은 wasserstein distance를 감소시킬 방법을 찾지 못한 관계로 Cross entropy를 loss로 설정하고 이를 줄이는 방향으로 학습을 수행하는 알고리즘이기 때문에 수학적으로 distributional RL의 수렴성을 증명하지는 못하는 논문입니다. </p>
+<p><br></p>
+<p>이 위의 3가지 문제점들을 해결한 논문이 C51의 후속으로 발표된 <a href="https://arxiv.org/abs/1710.10044" target="_blank" rel="noopener">Distributional Reinforcement Learning with Quantile Regression (QR-DQN)</a> 논문입니다. 다음 게시물에서는 이 QR-DQN 논문의 내용에 대해 살펴보도록 하겠습니다!! :smile:</p>
+<p><br></p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>본 논문의 코드는 다음의 Github를 참고해주세요. </p>
+<p><a href="https://github.com/reinforcement-learning-kr/distributional_rl" target="_blank" rel="noopener">Github</a></p>
+<p><br></p>
+<h2 id="Other-Posts"><a href="#Other-Posts" class="headerlink" title="Other Posts"></a>Other Posts</h2><p><a href="https://reinforcement-learning-kr.github.io/2018/09/27/Distributional_intro/">Distributional RL 개요</a></p>
+<p><a href="https://reinforcement-learning-kr.github.io/2018/10/22/QR-DQN/">QR-DQN</a></p>
+<p><a href="https://reinforcement-learning-kr.github.io/2018/10/30/IQN/">IQN</a></p>
+<p><br></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a href="https://arxiv.org/abs/1707.06887" target="_blank" rel="noopener">A Distributional Perspective on Reinforcement Learning</a></li>
+<li><a href="https://flyyufelix.github.io/2017/10/24/distributional-bellman.html" target="_blank" rel="noopener">Blog: Distributional Bellman and the C51 Algorithm</a></li>
+<li><a href="https://mtomassoli.github.io/2017/12/08/distributional_rl/" target="_blank" rel="noopener">Blog: Distributional RL</a> </li>
+<li><a href="https://deepmind.com/blog/going-beyond-average-reinforcement-learning/" target="_blank" rel="noopener">Deepmind Blog: Going beyond average for reinforcement learning</a></li>
+</ul>
+<p><br></p>
+<h2 id="Team"><a href="#Team" class="headerlink" title="Team"></a>Team</h2><p>민규식: <a href="https://github.com/Kyushik" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/kyushik.min" target="_blank" rel="noopener">Facebook</a></p>
+<p>차금강: <a href="https://github.com/chagmgang" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/profile.php?id=100002147815509" target="_blank" rel="noopener">Facebook</a></p>
+<p>윤승제: <a href="https://github.com/sjYoondeltar" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/seungje.yoon" target="_blank" rel="noopener">Facebook</a></p>
+<p>김하영: <a href="https://github.com/hayoung-kim" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/altairyoung" target="_blank" rel="noopener">Facebook</a></p>
+<p>김정대: <a href="https://github.com/kekmodel" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/kekmodel" target="_blank" rel="noopener">Facebook</a></p>
+
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>

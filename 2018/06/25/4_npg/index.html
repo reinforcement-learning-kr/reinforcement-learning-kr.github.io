@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Natural Policy Gradient"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Natural Policy Gradient - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>Natural Policy Gradient</h1>
+					
+					<h2 class="post-subheading">
+						피지여행 4번째 논문
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 김동민, 이동민, 이웅원, 차금강 on
+						
+						
+							2018-06-25
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/프로젝트/">#프로젝트</a> <a href="/tags/피지여행/">#피지여행</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/프로젝트/">프로젝트</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<center> <img src="https://www.dropbox.com/s/yd0x14ljrhpnj1b/Screen%20Shot%202018-07-18%20at%201.08.05%20AM.png?dl=1" width="600"> </center>
+
+<p>논문 저자 : Sham Kakade<br>논문 링크 : <a href="https://papers.nips.cc/paper/2073-a-natural-policy-gradient.pdf" target="_blank" rel="noopener">https://papers.nips.cc/paper/2073-a-natural-policy-gradient.pdf</a><br>Proceeding : Advances in Neural Information Processing Systems (NIPS) 2002<br>정리 : 김동민, 이동민, 이웅원, 차금강</p>
+<hr>
+<h1 id="1-들어가며…"><a href="#1-들어가며…" class="headerlink" title="1. 들어가며…"></a>1. 들어가며…</h1><p>이 논문이 발표된 2002년 당시에도 많은 연구자들이 objective function의 gradient 값을 따라서 좋은 policy $\pi$를 찾고자 하였습니다. 하지만 기존의 우리가 알던 gradient descent method는 steepest descent direction이 아닐 수 있기 때문에(쉽게 말해 가장 가파른 방향을 따라서 내려가야 하는데 그러지 못할 수도 있다는 것입니다.) 이 논문에서 steepest descent direction를 나타내는 natural gradient method를 policy gradient에 적용하여 좋은 policy $\pi$를 찾습니다. </p>
+<p><br></p>
+<h2 id="1-1-NPG-흐름-잡기"><a href="#1-1-NPG-흐름-잡기" class="headerlink" title="1.1 NPG 흐름 잡기"></a>1.1 NPG 흐름 잡기</h2><h3 id="1-1-1-매니폴드-manifold"><a href="#1-1-1-매니폴드-manifold" class="headerlink" title="1.1.1 매니폴드(manifold)"></a>1.1.1 매니폴드(manifold)</h3><center> <img src="https://www.dropbox.com/s/cstjgemqpby4ysr/Screen%20Shot%202018-08-12%20at%208.28.29%20PM.png?dl=1" width="300"> </center>
+
+<p>매니폴드는 간단하게 말해 위의 그림에서의 점들을 아우르는 subspace입니다. 그래서 NPG 공부하기 전에 매니폴드를 왜 배울까라는 의문이 들으실텐데 그 이유는 위에서도 언급했듯이 natural gradient method는 어떠한 파라미터 공간에서의 steepest descent direction을 강조하기 때문입니다. 여기서 파라미터 공간이 바로 리만 매니폴드입니다. 리만 매니폴드는 매니폴드가 각지지 않고 미분가능하게 부드럽게 곡률을 가진 면이라고 생각하면 편합니다.</p>
+<p>Neural Network(NN)을 사용할 경우 NN의 parameter space가 우리가 보통 생각하는 직선으로 쭉쭉 뻗어있는 유클리디안 공간(Euclidean space)가 아닙니다. 좀 더 일반적으로는 구의 표면과 같이 휘어져있는 공간 즉, 리만 공간(Riemannian space)로 표현할 수 있습니다. 다음 그림들을 보겠습니다.</p>
+<center> <img src="https://www.dropbox.com/s/jnlm6he18ar64yc/Screen%20Shot%202018-08-12%20at%208.14.13%20PM.png?dl=1" width="400"> </center>
+
+<center> <img src="https://www.dropbox.com/s/tufjqmaeaz29kaz/Screen%20Shot%202018-08-12%20at%208.15.53%20PM.png?dl=1" width="400"> </center>
+
+<p>아래의 그림처럼 어떠한 확률 분포가 있다고 해봅시다.</p>
+<center> <img src="https://www.dropbox.com/s/mpoop19eyu1vp0a/Screen%20Shot%202018-08-13%20at%2012.52.09%20PM.png?dl=1" width="600"> </center>
+
+<p>어떠한 공간의 확률 분포에 있는 한 점은 다른 공간의 확률 분포에서의 한 점이 될 것입니다. 이렇게 위의 그림들과 같이 유클리디안 공간의 확률 분포에서의 한 점이 리만 공간의 확률 분포의 한 점이 되는 것이고, 곡률의 일차 근사가 유클리디안 공간에서는 일차 근사가 아닌 이차 근사이고, 리만 공간에서는 휘어진 공간이기 때문에 곡률을 일차 근사라고 보는 것입니다. 추가적으로 일차 근사와 이차 근사의 차이는 <a href="http://darkpgmr.tistory.com/149" target="_blank" rel="noopener">다크 프로그래머님의 블로그</a>를 참고해주시기 바랍니다. (꼭 보세요!) </p>
+<p>일차 근사와 이차 근사의 차이점과 각각의 장단점, 그리고 추가적으로 Line Search까지 알고 난 후에 이 논문을 보시는 것을 권장해드립니다.</p>
+<h3 id="1-1-2-Natural-Gradient-Policy-Gradient"><a href="#1-1-2-Natural-Gradient-Policy-Gradient" class="headerlink" title="1.1.2 Natural Gradient + Policy Gradient"></a>1.1.2 Natural Gradient + Policy Gradient</h3><p>먼저 아래의 그림들을 보여드리겠습니다.</p>
+<center> <img src="https://www.dropbox.com/s/65hra43zadsubff/Screen%20Shot%202018-08-13%20at%2012.51.45%20PM.png?dl=1" width="500"> <img src="https://www.dropbox.com/s/8g332zceeordqwv/Screen%20Shot%202018-08-13%20at%2012.51.51%20PM.png?dl=1" width="400"> </center>
+
+<p>위에서도 언급했듯이 natural gradient가 steepest direction이 된다는 연구가 이뤄지고 있었습니다. 강화학습의 policy gradient은 objective function의 gradient를 따라 policy를 업데이트를 합니다. 이 때 policy는 parameterization되는데 이 경우에도 gradient 대신에 natural gradient가 좋다는 것을 실험해보는 논문이 지금 다루고 있는 논문입니다.</p>
+<p>gradient가 non-covariant(1차 근사)해서 생기는 문제는 간단히 말하자면 다음과 같습니다. policy가 parameterized된 상황에서는 같은 policy라도 다른 parameter를 가질 수 있습니다. 이 때, steepest direction은 두 경우에 같은 방향을 가리켜야 하는데 non-covariant한 경우 그렇지 못합니다. 이러한 부분이 바로 결국 느린 학습으로 연결이 되는 것입니다.</p>
+<p>논문에서 2차미분 방법론들과 짧게 비교합니다. 하지만 개인적인 의견으로 2차미분을 이용한 다른 방법들과의 비교가 생각보다 없는 점이 부족해 보였습니다.(Hessian을 이용한다거나 conjugate gradient method를 이용한다거나). 실험을 통해 Fisher Information Matrix(FIM)가 hessian에 수렴안하는 거라던지 Hessian 방법론이 local maxima 부근에서 상당히 느리다던지의 결과를 보여줬었으면 좋았을 것 같습니다.</p>
+<p>또한 natural gradient의 단점으로 natural gradient 만으로 업데이트하면 policy의 improvement 보장이 안될 수 있습니다. policy의 improvement를 보장하기 위해 line search도 써야하는데 line search를 어떻게 쓰는지에 대한 자세한 언급이 없습니다. 다시 말해 자세한 algorithm 설명이 없다는 것입니다.</p>
+<p>natural policy gradient 논문은 natural gradient + policy gradient를 처음 적용했다는데 의의가 있습니다. 하지만 이 논문이 문제 삼은 gradient는 non-covariant하다라는 문제를 natural gradient를 통해 해결하지는 못했습니다(Experiment를 통해 covariant gradient가 되지 못했다는 것이 보입니다). NPG의 뒤를 잇는 논문이 “covariant policy search”와 “natural actor-critic”에서 covariant(2차 근사)하지 못하다는 것을 해결하기 위해 Fisher Information Matrix를 sample 하나 하나에 대해서 구하는 것이 아니라 trajectory 전체에 대해서 구합니다.</p>
+<p>또한 논문은 pg의 두 가지 세팅 중에 average-reward setting(infinite horizon)에서만 NPG를 다룹니다. “covariant policy search” 논문에서는 average-reward setting과 start-state setting 모두에 대해서 npg를 적용합니다.</p>
+<p>natural gradient + policy gradient를 처음 제시했다는 것은 좋지만 npg 학습의 과정을 자세하게 설명하지 않았고 다른 2차 미분 방법들과 비교를 많이 하지 않은 점이 아쉬운 논문이었습니다.</p>
+<p><br><br></p>
+<h1 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h1><p>소개는 앞에서 다 했기 때문에 간략하게 다시 한 번 정리하겠습니다. direct policy gradient method는 future reward의 gradient를 따라 policy를 update합니다. 하지만 gradient descent는 non-covariant입니다. 따라서 이 논문에서는 covarient gradient를 제시합니다. 바로 “Natural Gradient” 입니다. </p>
+<p>또한 natural gradient와 policy iteration의 연관성을 설명합니다. natural policy gradient is moving toward choosing a greedy optimal action (이런 연결점은 아마도 step-size를 덜 신경쓰고 싶어서 그런게 아닌가 싶습니다)</p>
+<p>논문의 Introduction 부분에 다음 멘트가 있습니다. 이 글만 봐서는 이해가 안갔는데 Mackay 논문에 좀 더 자세히 나와있었습니다.</p>
+<center> <img src="https://www.dropbox.com/s/41xhhr7lgfk24a1/Screenshot%202018-06-10%2011.45.18.png?dl=1"> </center>
+
+<p><a href="http://www.inference.org.uk/mackay/ica.pdf" target="_blank" rel="noopener">Mackay</a>논문에서는 다음과 같이 언급하고 있습니다. Back-propagation을 사용할 경우에 learning rate를 dimension에 1/n로 사용하면 수렴한다는 것이 증명됐습니다. 하지만 너무 느리다고 합니다.</p>
+<center> <img src="https://www.dropbox.com/s/us9ezc7vxgrkez6/Screenshot%202018-06-10%2011.47.21.png?dl=1"> </center>
+
+<p><br><br></p>
+<h1 id="3-A-Natural-Gradient"><a href="#3-A-Natural-Gradient" class="headerlink" title="3. A Natural Gradient"></a>3. A Natural Gradient</h1><p><br></p>
+<h2 id="3-1-Notation"><a href="#3-1-Notation" class="headerlink" title="3.1 Notation"></a>3.1 Notation</h2><p>이 논문에서 제시하는 Notation은 다음과 같습니다.</p>
+<ul>
+<li>MDP : tuple $(S, s_0, A, R, P)$</li>
+<li>$S$ : a finite set of states</li>
+<li>$s_0$ : a start state</li>
+<li>$A$ : a finite set of actions</li>
+<li>$R$ : reward function $R: S \times A -&gt; [0, R_{max}]$</li>
+<li>$\pi(a;s, \theta)$ : stochastic policy parameterized by $\theta$</li>
+<li>모든 정책 $\pi$는 ergodic : stationary distribution $\rho^{\pi}$이 잘 정의되어 있다고 봅니다.</li>
+<li>이 논문에서는 sutton의 pg 논문의 두 세팅(start-state formulation, average-reward formulation) 중에 두 번째인 average-reward formulation을 가정합니다.</li>
+<li>performance or average reward : $\eta(\pi)=\sum_{s,a}\rho^{\pi}(s)\pi(a;s)R(s,a)$</li>
+<li>state-action value : $Q^{\pi}(s,a)=E_{\pi}[\sum_{t=0}^{\infty}R(s_t, a_t)-\eta(\pi)\vert s_0=s, a_0=a]$ (<a href="https://reinforcement-learning-kr.github.io/2018/06/28/sutton-pg/">Sutton PG</a> 를 참고해주시기 바랍니다.)</li>
+<li>정책이 $\theta$로 parameterize되어있으므로 performance는 $\eta(\pi_{\theta})$인데 $\eta(\theta)$로 씁니다.</li>
+</ul>
+<p><br></p>
+<h2 id="3-2-Natural-Gradient"><a href="#3-2-Natural-Gradient" class="headerlink" title="3.2 Natural Gradient"></a>3.2 Natural Gradient</h2><p>Sutton PG 논문의 policy gradient theorem에 따라 exact gradient of the average reward는 다음과 같습니다. 다음 수식이 어떻게 유도되었는지, 어떤 의미인지 모른다면 <a href="https://reinforcement-learning-kr.github.io/2018/06/28/sutton-pg/">Sutton PG</a>을 통해 제대로 이해하는 것이 좋습니다. Euclidean space에서는 objective function의 일반적인 policy gradient는 Sutton PG에서 논의한 바와 같이 다음과 같이 구할 수 있습니다.</p>
+<p>$$\nabla\eta(\pi_\theta) = \Sigma_{s,a}\rho^\pi(s)\nabla\pi(a;s,\theta)Q^\pi(s,a)$$</p>
+<p>여기서 steepest descent direction of $\eta(\theta)$는 $\eta(\theta + d\theta)$를 최소화하는 $d\theta$로 정의됩니다. 이 때, $\vert d\theta \vert^2$가 일정 크기 이하인 것으로 제약조건을 주는데(held to small constant) Euclidian space에서는 $\eta(\theta)$가 steepest direction이지만 Riemannian space에서는 natural gradient가 steepest direction입니다.</p>
+<p>추가적으로 결국 우리가 원하는 건 ‘policy 최적화를 좀 더 스마트하게 해 보자!’입니다. Policy 최적화를 잘한다는 것은 Policy를 어느 방향으로 얼만큼 업데이트 하느냐에 따라 달라집니다.</p>
+<h3 id="3-2-1-Natural-gradient-증명"><a href="#3-2-1-Natural-gradient-증명" class="headerlink" title="3.2.1 Natural gradient 증명"></a>3.2.1 Natural gradient 증명</h3><p>Riemannian space에서 거리는 다음과 같이 정의됩니다. 여기서 $G(\theta)$는 특정한 양수로 이루어진 matrix입니다. 자세한 내용은 <a href="http://bskyvision.com/205" target="_blank" rel="noopener">양의 정부호 행렬(positive definite matrix)이란?</a>을 참고해주시기 바랍니다.</p>
+<p>$$\vert d\theta \vert^2=\sum_{ij}(\theta)d\theta_id\theta_i=d\theta^TG(\theta)d\theta$$</p>
+<p>이 수식은 <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.452.7280&amp;rep=rep1&amp;type=pdf" target="_blank" rel="noopener">Natural gradient works in efficiently in learning</a> 논문에서 증명되어 있습니다. 다음은 natural gradient 증명입니다.</p>
+<p>steepest direction을 구할 때 $\theta$의 크기를 제약조건으로 줍니다. 제약조건은 다음과 같습니다.</p>
+<p>$$\vert d\theta \vert^2 = \epsilon^2$$</p>
+<p>그리고 steepest vector인 $d\theta$는 다음과 같이 정의할 수 있습니다.</p>
+<p>$$d\theta = \epsilon a$$</p>
+<p>$$\vert a \vert^2=a^TG(\theta)a = 1$$</p>
+<p>이 때, $a$가 steepest direction unit vector이 되려면 다음 수식을 최소로 만들어야 합니다.</p>
+<p>$$\eta(\theta + d\theta) = \eta(\theta) + \epsilon\nabla\eta(\theta)^Ta$$</p>
+<p>위 수식이 제약조건 아래 최소가 되는 $a$를 구하기 위해 Lagrangian method를 사용합니다. Lagrangian method를 모른다면 <a href="https://en.wikipedia.org/wiki/Lagrange_multiplier" target="_blank" rel="noopener">위키피디아</a>를 참고하는 것을 추천합니다. 위 수식이 최소라는 것은 $\nabla\eta(\theta)^Ta$가 최소라는 것입니다.</p>
+<p>$$\frac{\partial}{\partial a_i}(\nabla\eta(\theta)^Ta - \lambda a^TG(\theta)a)=0$$</p>
+<p>따라서 $(\nabla\eta(\theta)^Ta - \lambda a^TG(\theta)a)=0$는 상수입니다. 상수를 미분하면 0이므로 이 식을 $a$로 미분합니다. 그러면 다음과 같이 steepest direction을 구한 것입니다.</p>
+<p>$$\nabla\eta(\theta) = 2 \lambda G(\theta)a$$</p>
+<p>$$a=\frac{1}{2\lambda}G^{-1}\nabla\eta(\theta)$$</p>
+<p>이 때, 다음 식을 natural gradient라고 정의합니다.</p>
+<p>$$\bar{\nabla}\eta(\theta) = G^{-1}\nabla\eta(\theta)$$</p>
+<p>natural gradient를 이용한 업데이트는 다음과 같습니다.</p>
+<p>$$\theta_{t+1}=\theta_t - \alpha_tG^{-1}\nabla\eta(\theta)$$</p>
+<p>여기까지는 natural gradient의 증명이었습니다. 이 natural gradient를 policy gradient에 적용한 것이 natural policy gradient입니다. natural policy gradient는 다음과 같이 정의됩니다.</p>
+<p>$$\bar{\nabla}\eta(\theta) = F^{-1}\nabla\eta(\theta)$$</p>
+<p>여기서 $G$대신 $F$를 사용했는데 $F$는 Fisher information matix입니다. 수식은 다음과 같습니다.</p>
+<p>$$F(\theta) = E_{\rho^\pi(s)}[F_s(\theta)]$$</p>
+<p>$$F_s(\theta)=E_{\pi(a;s,\theta)}[\frac{\partial log \pi(a;s, \theta)}{\partial \theta_i}\frac{\partial log \pi(a;s, \theta)}{\partial\theta_j}]$$</p>
+<h3 id="3-2-2-Fisher-Information-Matrix에-정의된-Metric"><a href="#3-2-2-Fisher-Information-Matrix에-정의된-Metric" class="headerlink" title="3.2.2 Fisher Information Matrix에 정의된 Metric"></a>3.2.2 Fisher Information Matrix에 정의된 Metric</h3><p>추가적으로 Fisher Information Matrix(FIM)에 대해서 설명하겠습니다. 위의 문제를 우리가 생각하기 쉬운 Neural Network(NN)으로 구성하고 해결할 수 있다고 해봅시다. NN은 여러가지 parameter set들로 구성될 수 있습니다. 게다가 다른 parameter set을 가지지만 같은 policy를 가질 수도 있습니다. 이 경우 steepest direction은 같은 policy이기 때문에 같은 방향을 가리키고 있어야 하는데 non-covariant한 경우 그렇지 못합니다. 떄문에 학습이 느려지고, 이러한 문제를 해결하기 위해 단순히 Positive-Definite Matrix $G(\theta)$를 사용하지 않고 FIM $F_s(\theta)$를 사용합니다. 어떠한 확률 변수 $X$가 임의의 매개변수 $\theta$에 의해 정의되는 분포를 따른다고 하면 $X=x$일때 FIM은 다음과 같이 정의됩니다.</p>
+<p>$$F_x(\theta)=E\left[\left(\dfrac{\partial}{\partial\theta}\log\Pr(x|\theta)\right)^2\right]$$</p>
+<p>강화학습 관점에서 생각해보면 정보 $x$는 에피소드에 의해 관측된 상태값 $s$이며 매개변수 $\theta$에 의해 선택될 수 있는 행동에 대한 분포가 나오게 됩니다. 이에 의해 위의 FIM는 다음과 같이 표현할 수 있습니다.</p>
+<p>$$F_s(\theta) \equiv E_{\pi(a;s,\theta)}\left[\left(\dfrac{\partial}{\partial\theta}\log\pi(a;s,\theta)\right)^2\right] =E_{\pi(a;s,\theta)}\left[\dfrac{\partial \log\pi(a;s,\theta)}{\partial \theta_i}\dfrac{\partial \log\pi(a;s,\theta)}{\partial\theta_j}\right]$$</p>
+<p>그리고 위의 식들을 이용하여 objective function을 정리하면 아래의 식과 같이 표현됩니다.</p>
+<p>$$F(\theta) = E_{\rho^{\pi}(s)}[F_s(\theta)]$$</p>
+<p>또한 이 Fisher Information Matrix에 정의된 이 metric은 다음과 같은 성질을 가지고 있습니다.</p>
+<ol>
+<li>업데이트되는 파라미터에 의해 구성되는 매니폴드에 기반한 metric입니다.</li>
+<li>확률분포($\pi(a;s,\theta)$)를 구성하는 파라미터($\theta$)의 변화에 독립적입니다.</li>
+<li>마지막으로 positive-definite한 값을 가집니다. 이렇기 때문에 steepest gradient에서 objective function의 방향을 알기 위해 사용한 방법과 같은 방법으로 natural gradient direction을 다음과 같이 구할 수 있는 것입니다.</li>
+</ol>
+<p>$$\bar{\nabla}\eta(\theta) \equiv F(\theta)^{-1}\nabla\eta(\theta)$$</p>
+<p><br><br></p>
+<h1 id="4-The-Natural-Gradient-and-Policy-Iteration"><a href="#4-The-Natural-Gradient-and-Policy-Iteration" class="headerlink" title="4. The Natural Gradient and Policy Iteration"></a>4. The Natural Gradient and Policy Iteration</h1><p>4장에서는 Natural gradient를 통한 policy iteration을 수행하여 실제로 정책의 향상이 있는지를 증명합니다. 여기서 $Q^\pi(s,a)$는 compatible function approximator $f^\pi(s,a;w)$로 근사됩니다. (<a href="https://reinforcement-learning-kr.github.io/2018/06/28/sutton-pg/">Sutton PG</a>를 참고해주시기 바랍니다.)</p>
+<p><br></p>
+<h2 id="4-1-Theorem-1-Compatible-Function-Approximation"><a href="#4-1-Theorem-1-Compatible-Function-Approximation" class="headerlink" title="4.1 Theorem 1: Compatible Function Approximation"></a>4.1 Theorem 1: Compatible Function Approximation</h2><p>approximate하는 함수 $f^{\pi}(s,a;w)$는 다음과 같습니다.(compatible value function)</p>
+<p>$$f^{\pi}(s,a;w)=w^T\psi^{\pi}(s,a)$$</p>
+<p>$$\psi^{\pi}(s,a) = \nabla log\pi(a;s,\theta)$$</p>
+<p>여기서 $[\nabla \log\pi(a;s,\theta)]_i=\partial \log\pi(a;s,\theta)/\partial\theta_i$입니다. $w$는 원래 approximate하는 함수 $Q$와 $f$의 차이를 줄이도록 학습합니다(mean square error). 수렴한 local minima의 $w$를 $\bar{w}$라고 가정 하겠습니다. 에러는 다음과 같은 수식으로 나타낼 수 있습니다.</p>
+<p>$$\epsilon(w,\pi)\equiv\sum_{s, a}\rho^{\pi}(s)\pi(a;s,\theta)(f^{\pi}(s,a;w)-Q^{\pi}(s,a))^2$$</p>
+<p>그 때, $\bar{\omega} = \bar{\nabla}\eta(\theta)$이면 function approximator의 gradient 방향과 정책의 gradient 방향이 같다는 것을 의미합니다.</p>
+<p>아래의 내용은 위의 Theorem에 대한 증명입니다.</p>
+<p>위의 수식이 local minima이면 미분값이 0이 됩니다. $w$에 대해서 미분하면 다음과 같습니다.</p>
+<p>$$\sum_{s, a}\rho^{\pi}(s)\pi(a;s,\theta)\psi^{\pi}(s,a)(\psi^{\pi}(s,a)^T\bar{w}-Q^{\pi}(s,a))=0$$</p>
+<p>$$\sum_{s, a}\rho^{\pi}(s)\pi(a;s,\theta)\psi^{\pi}(s,a)\psi^{\pi}(s,a)^T\bar{w}=\sum_{s, a}\rho^{\pi}(s)\pi(a;s,\theta)\psi^{\pi}(s,a)Q^{\pi}(s,a)$$</p>
+<p>이 때, 위 식의 우변은 $\psi$의 정의에 의해 policy gradient가 됩니다. 또한 왼쪽 항에서는 Fisher information matrix가 나옵니다.</p>
+<p>$$F(\theta)=\sum_{s,a}\pi(a;s,\theta)\psi^{\pi}(s,a)\psi^{\pi}(s,a)=E_{\rho^\pi(s)}[F_s(\theta)]$$</p>
+<p>따라서 다음과 같이 쓸 수 있습니다.</p>
+<p>$$F(\theta)\bar{w}=\nabla\eta(\theta)$$</p>
+<p>$$\bar{w}=F(\theta)^{-1}\nabla\eta(\theta)$$</p>
+<p>위의 수식은 natural gradient식과 동일합니다. 위의 수식은 policy가 update 될 때, value function approximator의 parameter 방향으로 이동한다는 것을 의미합니다. function approximation이 정확하다면 그 parameter의 natural policy gradient와 inner product가 커야합니다.</p>
+<p><br></p>
+<h2 id="4-2-Theorem-2-Greedy-Policy-Improvement"><a href="#4-2-Theorem-2-Greedy-Policy-Improvement" class="headerlink" title="4.2 Theorem 2: Greedy Policy Improvement"></a>4.2 Theorem 2: Greedy Policy Improvement</h2><p>이번 장에서는 natrual gradient는 다른 policy iteration 방법처럼 단순히 더 좋은 행동을 고르도록 학습하는 것이 아니라 가장 좋은(greedy) 행동을 고르도록 학습한다는 것을 증명하는 부분입니다. 이것을 일반적인 형태의 policy에 대해서 증명하기 전에 exponential 형태의 policy에 대해서 증명하는 것이 Theorem 2입니다. 특수한 정책을 가지는 상황안에서 학습속도($\alpha$)를 무한대로 가져감으로서 어떤 action을 선택하는지를 알아봅니다.</p>
+<p>policy를 다음과 같이 정의합니다.</p>
+<p>$$\pi(a;s,\theta) \propto \exp(\theta^T\phi_{sa})$$</p>
+<p>여기서 $\bar{\nabla}\eta(\theta)$가 0이 아니고 $\bar{w}$는 approximation error를 최소화된 $w$라고 가정합니다. 이 상태에서 natural gradient update를 생각해봅시다. 그리고 policy gradient는 gradient ascent임을 기억합시다.</p>
+<p>$$\theta_{t+1}=\theta_t + \alpha_t\bar{\nabla}\eta(\theta)$$</p>
+<p>이 때 $\alpha$가 learning rate로 parameter를 얼마나 업데이트하는지를 결정합니다. 이 값을 무한대로 늘렸을 때 policy가 어떻게 업데이트되는지 생각해봅시다.</p>
+<p>$$\pi_{\infty}(a;s)=lim_{\alpha\rightarrow\infty}\pi(a;s,\theta+\alpha\bar{\nabla}\eta(\theta))-(1)$$</p>
+<p>이 때,</p>
+<p>$$\pi_{\infty}=0 \, \, \, if \, and \, only \, if(필요충분조건) \, \, \, a \notin argmax_{a’}\bar{\nabla}\eta(\theta)^T\phi_{sa’}$$</p>
+<p>이라고 말할 수 있습니다.</p>
+<p>아래의 내용은 위의 Theorem에 대한 증명입니다.</p>
+<p>먼저 function approximator는 앞서 다뤘듯이 아래와 같습니다.</p>
+<p>$$f^{\pi}(s,a;w)=w^T\psi^{\pi}(s,a)$$</p>
+<p>여기서 function approximator는 Theorem 1에 의해 아래와 같이 쓸 수 있습니다.</p>
+<p>$$f^{\pi}(s,a;w)=\bar{\nabla}\eta(\theta)^T\psi^{\pi}(s,a)$$</p>
+<p>$\theta$의 정의에 의해 $\psi$는 다음과 같습니다.</p>
+<p>$$\psi^{\pi}(s,a)=\phi_{sa}-E_{\pi(a’;s,\theta)}[\phi_{sa’}]$$</p>
+<p>따라서 function approximator는 다음과 같이 다시 쓸 수 있습니다.</p>
+<p>$$f^{\pi}(s,a;w)=\bar{\nabla}\eta(\theta)^T(\phi_{sa}-E_{\pi(a’;s,\theta)}[\phi_{sa’}])$$</p>
+<p>greedy policy improvement가 Q function 값 중 가장 큰 값을 가지는 action을 선택하듯이 여기서도 function approximator의 값이 가장 큰 action을 선택하는 상황을 가정해봅시다. 이 때 function approximator의 argmax는 다음과 같이 쓸 수 있습니다.</p>
+<p>$$argmax_{a’}f^{\pi}(s,a)=argmax_{a’}\bar{\nabla}\eta(\theta)^T\phi_{sa’}$$</p>
+<p>(1) 식을 다시 살펴봅시다. 그러면 policy의 정의에 따라 다음과 같이 쓸 수 있습니다.</p>
+<p>$$\pi(a;s,\theta + \alpha\bar{\nabla}\eta(\theta)) \propto exp(\theta^T\phi_{sa} + \alpha\bar{\nabla}\eta(\theta)^T\phi_{sa})$$</p>
+<p>$\bar{\nabla}\eta(\theta) \neq 0$이고 $\alpha\rightarrow\infty$이면 exp안의 항 중에서 뒤의 항이 dominate하게 됩니다. 여러 행동 중에 $\bar{\nabla}\eta(\theta)^T\phi_{sa}$가 가장 큰 행동이 있다면 이 행동의 policy probability가 1이 되고 나머지는 0이 됩니다. 따라서 다음이 성립합니다.</p>
+<p>$$\pi_{\infty}=0 \, \, \, if \, and \, only \, if \, \, \, a \notin argmax_{a’}\bar{\nabla}\eta(\theta)^T\phi_{sa’}$$</p>
+<p>이 결과로부터 natural policy gradient는 단지 더 좋은 action이 아니라 best action을 고르도록 학습이 됩니다. 반면에 non-covariant gradient(1차미분)에서는 그저 더 좋은 action을 고르도록 학습이 됩니다. 이 natural policy gradient에 대한 결과는 infinite learning rate 세팅에서만 성립합니다. 좀 더 일반적인 경우에 대해서 살펴봅시다.</p>
+<p><br></p>
+<h2 id="4-3-Theorem-3-General-Parameterized-Policy"><a href="#4-3-Theorem-3-General-Parameterized-Policy" class="headerlink" title="4.3 Theorem 3: General Parameterized Policy"></a>4.3 Theorem 3: General Parameterized Policy</h2><p>Theorem 2에서와는 달리 일반적인 policy를 가정해봅시다(general parameterized policy). Theorem 3는 이 상황에서 natural gradient를 통한 업데이트가 best action를 고르는 방향으로 학습이 된다는 것을 보여줍니다.</p>
+<p>natural gradien에 따른 policy parameter의 업데이트는 다음과 같습니다. $\bar{w}$는 approximation error를 minimize하는 $w$입니다.</p>
+<p>$$\delta\theta = \theta’ - \theta = \alpha\bar{\nabla}\eta(\theta)=\alpha\bar{w}$$</p>
+<p>policy에 대해서 1차근사를 하면 다음과 같습니다.</p>
+<p>$$\pi(a;s,\theta’)=\pi(a;s,\theta)+\frac{\partial\pi(a;s,\theta)^T}{\partial\theta}\delta\theta + O(\delta\theta^2)$$</p>
+<p>$$=\pi(a;s,\theta)(1+\psi(s,a)^T\delta\theta) + O(\delta\theta^2)$$</p>
+<p>$$=\pi(a;s,\theta)(1+\alpha\psi(s,a)^T\bar{w}) + O(\delta\theta^2)$$</p>
+<p>$$=\pi(a;s,\theta)(1+\alpha f^{\pi}(s,a;\bar{w})) + O(\delta\theta^2)$$</p>
+<p>policy 자체가 function approximator의 크기대로 업데이트가 되므로 local하게 best action의 probability는 커지고 다른 probability의 크기는 작아질 것입니다. 하지만 만약 greedy improvement가 된다하더라도 그게 performance의 improvement를 보장하는 것은 아닙니다. 하지만 line search와 함께 사용할 경우 improvement를 보장할 수 있습니다. 왜 그런지는 처음에 말씀드린 블로그 <a href="http://darkpgmr.tistory.com/149" target="_blank" rel="noopener">다크 프로그래머님의 블로그</a>를 참고해주시기 바랍니다.</p>
+<p><br><br></p>
+<h1 id="5-Metrics-and-Curvatures"><a href="#5-Metrics-and-Curvatures" class="headerlink" title="5. Metrics and Curvatures"></a>5. Metrics and Curvatures</h1><p>$$\vert d\theta \vert^2=\sum_{ij}(\theta)d\theta_id\theta_i=d\theta^TG(\theta)d\theta$$</p>
+<p>이 파트에서는 FIM과 다른 metric 사이의 관계를 다룹니다.</p>
+<p>위의 식에 해당하는 G는 Fisher Information Matrix만 사용할 수 있는 것이 아닙니다. Positive-Definite Matrix인 FIM이외의 다른 Matrix도 사용할 수 있습니다. 또한 다양한 파라미터 추정에서 FIM은 Hessian Matrix에 수렴하지 않을 수 있다고 합니다. 이 말은 2nd order(2차 근사) 수렴이 보장되지 않는다는 말입니다.</p>
+<p>논문에 있는 내용들을 조금 더 추가적으로 보면 아래와 같이 나옵니다.</p>
+<p>In the different setting of parameter estimation, the Fisher information converges to the <code>Hessian</code>, so it is <a href="https://en.wikipedia.org/wiki/Efficiency_(statistics" target="_blank" rel="noopener">asymptotically efficient</a>) 이지만,</p>
+<p>이 논문의 경우, 아마리 논문의 ‘blind separation case’와 유사한데 이 때는 꼭 asymtotically efficient하지 않다고 말합니다. 이 말은 즉 2nd order 수렴이 보장되지 않는다는 것이다.</p>
+<p><a href="http://www.inference.org.uk/mackay/ica.pdf" target="_blank" rel="noopener">Mackay</a> 논문에서는 Hessian에서 data independant한 term을 metric으로 가져오는 방법을 제안했습니다. 그래서 performance를 2번 미분해보면 아래의 수식과 같습니다. 하지만 다음 식에서는 모든 항이 data dependent합니다(Q가 있으니까). 첫 번째 항이 그나마 FIM과의 관련성이 있을 수 있지만 Q 값이 curvature에 weight를 주는 방식 때문에 다르다고 할 수 있습니다.</p>
+<p>$$\nabla^2\eta(\theta)=\sum_{sa}\rho^{\pi}(s)(\nabla^2\pi(a;s)Q^{\pi}(s,a)+\nabla\pi(a;s)\nabla Q^{\pi}(s,a)^T+\nabla Q^{\pi}(s,a)\nabla\pi(a;s)^T)$$</p>
+<p>hessian은 보통 positive definite가 아닐수도 있습니다. 따라서 local maxima가 될 때까지 Hessian이 사용하기 별로 안좋습니다. 그리고 local maxima에서는 Hessian보다는 Conjugate methods가 더 효율적이라고 합니다.</p>
+<p>사실 이 파트에서는 무엇을 말하고 있는지 알기가 어렵습니다. FIM과 Hessian이 관련이 있다는 것을 알겠는데 asymtotically efficient와 같은 내용을 모르므로 내용의 이해가 어려웠습니다.</p>
+<p>Mackay 논문에서 해당 부분은 다음과 같습니다.</p>
+<center> <img src="https://www.dropbox.com/s/x4n6z6pdyi7xtb9/Screenshot%202018-06-10%2012.04.13.png?dl=1"> </center>
+
+<p><br></p>
+<h2 id="5-1-Fisher-Information-Matrix-FIM-vs-Hessian"><a href="#5-1-Fisher-Information-Matrix-FIM-vs-Hessian" class="headerlink" title="5.1 Fisher Information Matrix(FIM) vs. Hessian"></a>5.1 Fisher Information Matrix(FIM) vs. Hessian</h2><p>FIM과 Hessian에 대해서 추가적인 설명을 하고자 합니다.</p>
+<ul>
+<li>FIM</li>
+</ul>
+<p>일단 정의되려면 space 자체가 stochastic한 성질을 가지고 있어야 합니다. 모든 parameter를 표현하는 함수가 deterministic한 함수가 아니라 확률로 나타낸 분포입니다. (probability distribution)</p>
+<p>결국은 FIM에서도 hessian처럼 비슷한 과정을 취하고 싶은 것입니다. 따라서 확률 변수이기 때문에 어떠한 특정 sample을 취하면 그게 항상 다른값이 됩니다. 그래서 FIM에다가 expectation을 취한 것입니다. expectation을 취함으로써 hessian같은 성질을 가집니다. 왜냐하면 expectation을 취함으로써 constant한 값이 되기 때문입니다.</p>
+<ul>
+<li>Hessian</li>
+</ul>
+<p>그냥 deterministic한 함수에서 정의됩니다. 그냥 함수를 두 번 미분 한 것이라고 보면 됩니다.</p>
+<p><br></p>
+<h2 id="5-2-Conjugate-Gradient-Method"><a href="#5-2-Conjugate-Gradient-Method" class="headerlink" title="5.2 Conjugate Gradient Method"></a>5.2 Conjugate Gradient Method</h2><p>추가적으로 Conjugate Gradient Method(CGM)에 대해서 다루고자 합니다.</p>
+<ul>
+<li>참고자료<ul>
+<li><a href="https://www.quora.com/What-is-an-intuitive-explanation-of-what-the-conjugate-gradient-method-is" target="_blank" rel="noopener">https://www.quora.com/What-is-an-intuitive-explanation-of-what-the-conjugate-gradient-method-is</a></li>
+<li><a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf" target="_blank" rel="noopener">https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Conjugate_gradient_method" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Conjugate_gradient_method</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="mathbf-A-mathbf-x-mathbf-b-의-해-구하기"><a href="#mathbf-A-mathbf-x-mathbf-b-의-해-구하기" class="headerlink" title="$\mathbf{A}\mathbf{x} = \mathbf{b}$의 해 구하기"></a>$\mathbf{A}\mathbf{x} = \mathbf{b}$의 해 구하기</h3><p>$\mathbf{A}\mathbf{x} = \mathbf{b}$의 해를 구하는 문제를 생각해봅시다. $\mathbf{A}$의 역행렬을 구해서 양변에 곱해주면 $\mathbf{x} = \mathbf{A}^{-1}\mathbf{b}$가 되어 쉽게 해를 구할 수 있습니다. 하지만 $\mathbf{A}^{-1}$은 계산이 많이 필요 자원소모가 큰 연산입니다. 역행렬을 취하지 않고 해를 구할 수 있는 방법이 있을까요?</p>
+<p>위의 방정식에서 $\mathbf{b}$를 이항시키면 $\mathbf{A}\mathbf{x} - \mathbf{b} = 0$이 됩니다. 최적화문제는 많은 경우 1차 미분이 0이 되는 지점이 해일 확률이 높습니다. $\mathbf{A}\mathbf{x} - \mathbf{b} = 0$을 1차 미분으로 가지는 함수는 무엇일까요?</p>
+<p>$$f( \mathbf{x} ) = \frac{1}{2}\mathbf{x}^\mathrm{T}\mathbf{A}\mathbf{x} - \mathbf{x}^\mathrm{T}\mathbf{b}$$</p>
+<p>위의 함수는 $\mathbf{A}\mathbf{x} - \mathbf{b}$를 1차 미분값으로 가집니다. 이 때 $\mathbf{A}$는 symmetric positive definite해야 합니다.</p>
+<ul>
+<li>symmetric: $\mathbf{A}=\mathbf{A}^\mathrm{T}$</li>
+<li>positive definite: $\mathbf{x}^\mathrm{T}\mathbf{A}\mathbf{x}&gt;0,\quad\forall\mathbf{x}$ or all eigenvalues of $\mathbf{A}$ are positive</li>
+</ul>
+<p>symmetric positive definite한 성질은 $\mathbf{x}$를 strict convex function이 되게 만들어서 unique solution이 존재하게 합니다. $\mathbf{A}$는 $\mathbf{x}$의 Hessian이기도 합니다.</p>
+<p>자, 우리는 위의 방정식의 해 $\mathbf{x}^*$를 iterative한 방식으로 찾고자 합니다. $\mathbf{x}_0$을 초기값이라고 합시다.</p>
+<p>우리는 <img src="https://www.dropbox.com/s/g91yqajf72jzjoc/Screen%20Shot%202018-08-14%20at%208.43.28%20AM.png?dl=1" width="80">가 되는 <img src="https://www.dropbox.com/s/aj3j5fjtiyewlo1/Screen%20Shot%202018-08-14%20at%208.43.37%20AM.png?dl=1" width="30">를 찾고 싶은데 이를 위한 현재의 추정값은 $\mathbf{A} \mathbf{x}_0$입니다. 최적의 값을 찾았을 때와 비교하면 현재의 오차는 $\mathbf{b} - \mathbf{A}\mathbf{x}_0 = \mathbf{r}_0$입니다. 이것을 residual이라고 합니다. 어떻게 효율적으로 값을 변화시켜서 오차를 0으로 만들 수 있을까요? 일단 매 iteration마다 residual이 작아지는 방향으로 나아가야겠죠?</p>
+<p>가장 널리 알려진 방법은 gradient descent 방향입니다. gradient가 증가하면 반대로 가고 gradient가 감소하면 그 방향으로 가는 것입니다. 그리고 어떤 방향으로든 gradient가 0이면 그 지점에 멈추는 것이죠. 이 방법은 수렴은 하지만 zigzag하게 움직여서 느립니다. 이것보다 더 좋은 방법이 없을까요?</p>
+<h3 id="Conjugate-Gradient-Method"><a href="#Conjugate-Gradient-Method" class="headerlink" title="Conjugate Gradient Method"></a>Conjugate Gradient Method</h3><h4 id="Gram-Schmidt-orthgonalization"><a href="#Gram-Schmidt-orthgonalization" class="headerlink" title="Gram-Schmidt orthgonalization"></a>Gram-Schmidt orthgonalization</h4><p>다음과 같은 vector들의 집합 <img src="https://www.dropbox.com/s/csgdsfofe19q5r6/Screen%20Shot%202018-08-14%20at%208.56.04%20AM.png?dl=1" width="135">이 있다고 해봅시다. 이 vector들이 서로 linearly independent하다면 이 vector들은 $\mathbb{R}^n$ 공간 상의 basis입니다. 이 vector들을 이용해서 orthogonal한 vector들을 만들어보겠습니다. 새로운 vector들을 <img src="https://www.dropbox.com/s/7xg7pciar1ndu44/Screen%20Shot%202018-08-14%20at%208.58.25%20AM.png?dl=1" width="130">라고 한다면 아래와 같은 과정을 통해 만들 수 있습니다. 이 방법을 Gram-Schmidt orthogonalization이라고 합니다.</p>
+<ul>
+<li>$\mathbf{d}_1=\mathbf{v}_1$</li>
+<li>$\mathbf{d}_2=\mathbf{v}_2 - \left\langle\mathbf{v}_2,\frac{\mathbf{d}_1}{\parallel\mathbf{d}_1\parallel}\right\rangle\frac{\mathbf{d}_1}{\parallel\mathbf{d}_1\parallel}$<br>…</li>
+<li><img src="https://www.dropbox.com/s/arzc5cez8az0j7h/Screen%20Shot%202018-08-14%20at%209.00.04%20AM.png?dl=1" width="290"></li>
+</ul>
+<p>간단히 설명을 하면, 첫 vector는 basis와 같은 방향으로 출발합니다. 그 다음 vector는 그 다음 basis를 이전 vector로 projection한 다음 해당 basis로부터 빼줍니다. 그 다음 vector를 만들 때는 이전에 만든 모든 vector들에 대해서 projection을 취한 다음 모두 더한 것을 해당 basis에서 빼줍니다. </p>
+<h4 id="A-conjugate"><a href="#A-conjugate" class="headerlink" title="$A$-conjugate"></a>$A$-conjugate</h4><p>이 방법을 이용하여 matrix $A$에 관하여 orthogonal한 새로운 vector들의 집합을 만들어보겠습니다. 일반적인 inner product와 약간 다른 다음과 같은 inner product를 정의할 수 있습니다.</p>
+<p>$$&lt;\mathbf{x},\mathbf{y}&gt;_\mathbf{A} = \mathbf{x}^\mathrm{T}\mathbf{A}\mathbf{y}$$</p>
+<p>이 때 $&lt;\mathbf{x},\mathbf{y}&gt;_\mathbf{A} = 0$이면 $\mathbf{x}와 \mathbf{y}$는 $\mathbf{A}$-orthogonal 또는 $\mathbf{A}$-conjugate하다라고 합니다. vector norm $\parallel\cdot\parallel$도 일반적인 vector norm이 아닌 A-norm을 다음과 같이 정의합니다.</p>
+<p>$$\parallel\mathbf{x}\parallel_\mathbf{A}^2=\mathbf{x}^\mathrm{T}\mathbf{A}\mathbf{x}$$</p>
+<p>Gram-Schmidt orthogonalization을 또 이용해볼까요? 아래와 같습니다.</p>
+<ul>
+<li>$\mathbf{d}_1=\mathbf{v}_1$</li>
+<li><img src="https://www.dropbox.com/s/i8wnvoccefgg7t8/Screen%20Shot%202018-08-14%20at%209.08.42%20AM.png?dl=1" width="400"><br>…</li>
+<li><img src="https://www.dropbox.com/s/045x2v5sx7s0wot/Screen%20Shot%202018-08-14%20at%209.09.03%20AM.png?dl=1" width="500"></li>
+</ul>
+<p>그런데 이 Gram-Schmidt 방법은 단점이 하나 있습니다. 새로운 vector를 만들어내기 위해서 이전에 만든 vector들을 모두 가지고 있어야 하고 projection도 다시 계산해야 한다는 점입니다. 그런데 마법같은 이유($\approx$ 여기서 설명하지 않는 이유)로 인해서 오직 마지막으로 만들어낸 vector만 가지고 있어도 기존의 모든 vector들이 성질을 표현해낼 수 있습니다. 그러면 우리가 만들어낸 vector는 다음과 같이 간단해집니다.</p>
+<center> <img src="https://www.dropbox.com/s/wlyu7ax6qt0aw9w/Screen%20Shot%202018-08-14%20at%209.09.43%20AM.png?dl=1" width="550"> </center>
+
+<p>이 방향이 우리가 업데이트시키고 싶은 방향입니다. 즉 우리는 다음 수식처럼 움직이고자 합니다.</p>
+<center> <img src="https://www.dropbox.com/s/053o4ocvxsgxfl9/Screen%20Shot%202018-08-14%20at%209.09.56%20AM.png?dl=1" width="180"> </center>
+
+<p>$d_k$는 방향이고 $\alpha_{k}$는 step size입니다. 이러한 방법을 일반적으로 line search method라고 부릅니다. 방향은 위에서 구한 conjugate 방향을 이용합니다. 그래서 이 line search를 conjugate gradient method라고 부릅니다. 이 방법의 한가지 중요한 장점은 업데이트가 무조건 n번만 일어난다는 것입니다! n-dimensional space에서는 basis가 n개 밖에 없거든요. 그렇다면 얼마만큼 많이 이 방향으로 움직여야 할까요? 더 이상 $f(\mathbf{x})$가 감소하지 않을 때까지 움직이는게 좋지 않을까요? 이것은 다시 말하면 gradient가 0이 될 때까지 움직인다는 뜻입니다. 위에서 설명한 residual과도 관계있을 것 같지 않나요?</p>
+<p>$\nabla f(\mathbf{x})=\mathbf{A}\mathbf{x} - \mathbf{b}$에 $x_k + \alpha_{k} d_k$를 대입해 봅시다. 아래와 같이 step size를 구할 수 있습니다.</p>
+<center> <img src="https://www.dropbox.com/s/xikpfgcix64ngmp/Screen%20Shot%202018-08-14%20at%209.13.20%20AM.png?dl=1" width="300"> </center>
+
+<p>네, 이제 우리는 방향과 step size를 모두 알았습니다. 이제 update만 하면 해를 찾을 수 있겠군요!</p>
+<center> <img src="https://www.dropbox.com/s/avjw4kbzd4ormv5/conjugate_gradient_wikipedia.png?dl=1" width="200"> </center>
+
+<p>위키피디아에서 가져온 위의 그림을 봅시다. 그림의 녹색선이 gradient descent이고 빨간선이 conjugate gradient입니다. conjugate gradient는 gradient descent보다 빨리 수렴합니다. 녹색선은 항상 이전 이동 방향과 직각으로 이동합니다. 빨간선은 보다 빠르게 더 낮은 값이 있는 곳으로 이동합니다.</p>
+<p>위에서 설명을 생략했지만 왜 conjugate gradient는 빠르게 수렴(n-step)하며 Gram-Schmidt orthogonalization을 할 때도 메모리가 적게 필요할까요? 수학적으로 엄밀하게 설명하기 보다는 개념적으로 설명을 하겠습니다. 그 비밀은 바로 $\mathbf{A}$-orthogonal 또는 $\mathbf{A}$-conjugate vector들을 이용한데 있습니다. 이 vector들은 basis라고 했습니다. 즉, 처음에 우리가 구하고자 했던 해 $\mathbf{x}^*$를 이 vector들을 이용해서 표현할 수 있습니다. 또한 iterative하게 찾아가기 위한 초기 vector $\mathbf{x}_0$도 이 vector들로 표현할 수 있습니다. 그렇다면 이 둘 간의 오차도 이 vector들도 표현할 수 있게 됩니다. 다음 수식처럼 말입니다.</p>
+<p>$$\mathbf{x}^* - \mathbf{x}_0 = \epsilon_1\mathbf{d}_1 + \epsilon_2\mathbf{d}_2 + \cdots + \epsilon_n\mathbf{d}_n$$</p>
+<p>우리의 목표는 이 오차를 줄이는 것입니다. 각각의 basis마다 오차가 있으며 이들은 서로 independent합니다. 즉, 특정 iteration에서 특정 basis에 대한 오차를 0으로 만들면 다음 번 iteration에서는 이 오차는 영향을 받지 않습니다! 이러한 이유로 n번의 iteration만으로 해를 찾을 수 있고 다른 vector들을 저장할 필요도 없는 것입니다. 선형대수의 아름다움이 느껴지지 않으시나요? 오래되었지만 참 잘 디자인된 기법이라는 생각이 듭니다.</p>
+<p><br><br></p>
+<h1 id="6-Experiment"><a href="#6-Experiment" class="headerlink" title="6. Experiment"></a>6. Experiment</h1><p>이 논문에서는 natural gradient를 simple MDP와 tetris MDP에 대해서 실험을 진행했습니다. FIM은 다음과 같은 식으로 업데이트합니다.</p>
+<p>$$f\leftarrow f+\nabla \log \pi(a_t; s_t, \theta)\nabla \log \pi(a_t; s_t, \theta)^T$$</p>
+<p>$T$ length trajectory에 대해서 $f/T$를 이용해 $F$의 기대값($E$)를 구합니다.</p>
+<p><br></p>
+<h2 id="6-1-LQR-Linear-Quadratic-Regulator"><a href="#6-1-LQR-Linear-Quadratic-Regulator" class="headerlink" title="6.1 LQR(Linear Quadratic Regulator)"></a>6.1 LQR(Linear Quadratic Regulator)</h2><p>Agent를 실험할 환경은 다음과 같은 dynamics를 가지고 있습니다.</p>
+<p>$x(t+1) = 0.7x(t)+u(t)+\epsilon(t)$</p>
+<p>$u(t)$는 control 신호로서 에이전트의 행동입니다. $\epsilon$은 noise distribution으로 환경에 가해지는 노이즈입니다. 에이전트의 목표는 적절한 $u(t)$를 통해 $x(t)$를 0으로 유지하는 것입니다. $x(t)$를 0으로 유지하기 위해서 필요한 소모값(cost)는 $x(t)^2$로 정의하며 cost를 최소화하도록 학습합니다. 이 논문에서는 실험할 때 복잡성을 더 해주기 위해 noise distribution인 $\epsilon$을 dynamics에 추가하였습니다.</p>
+<p>이 실험에서 policy는 다음과 같이 설정하였습니다. 파라미터가 2개 밖에 없는 간단한 policy입니다.</p>
+<p>$\pi(u;x,\theta)\propto \exp(\theta_1s_1x^2+\theta_2s_2x)$</p>
+<p>이 policy를 간단히 그래프로 그려보면 다음과 같습니다. 가로축은 $x$, 세로축은 cost입니다. $\theta_1$과 $\theta_2$를 (0.5, 0.5), (1, 0), (0, 1)로 설정하고 $s_1$, $s_2$는, 1로 두었습니다. $x$는 -1~1사이의 범위로 그렸습니다. </p>
+<center> <img src="https://www.dropbox.com/s/v69qyrwn7zurk8c/Screenshot%202018-06-08%2014.57.07.png?dl=1" width="500px"> </center>
+
+<p>아래의 그림은 LQR을 학습한 그래프입니다. cost가 $x^2$이기 때문에 cost가 0으로 갈수록 agent는 0에서 안정적으로 머무른다고 볼 수 있습니다. 6개의 선 중에서 오른쪽 세 개가 일반적인 gradient 방법을 사용해서 학습한 결과입니다. 그리고 왼쪽의 세 개의 선이 natural policy gradient를 통해 학습한 곡선입니다. 일반 gradient 방법보다 natural gradient가 훨씬 빠르게 학습합니다(time 축이 log scale인 것을 감안하면 차이가 많이 납니다.). </p>
+<p>하지만 문제가 있습니다. NPG를 학습한 세 개의 곡선은 $\theta$를 rescale 한 것입니다. $\theta$앞에 곱해지는 숫자에 따라 학습의 과정이 다릅니다. 이 것은 coordinate에 따라 steepest gradient가 다르게 측정된다는 것입니다. 즉, covariant gradient가 아니라는 뜻입니다. 이 논문에서는 natural gradient를 통해 gradient가 covariant하도록 만들고 싶었는데 실패한 것입니다.</p>
+<center> <img src="https://www.dropbox.com/s/fhn8cgje0rdws0i/Screenshot%202018-06-08%2023.13.37.png?dl=1" width="300px"> </center>
+
+<p>natural gradient가 covariant하지 않은 이유는 Fisher Information Matrix가 예상했던 바와는 달리 invariant metric이 아니기 때문입니다. 또한 FIM이 invariant metric이 아닌 이유는 FIM을 계산할 때 $\rho_s$가 곱해지기 때문입니다. 하지만 여전히 의의가 있는 것은 기존 gradient 방법들보다 훨씬 빠르게 학습한다는 것입니다!</p>
+<p><br></p>
+<h2 id="6-2-Simple-2-state-MDP"><a href="#6-2-Simple-2-state-MDP" class="headerlink" title="6.2 Simple 2-state MDP"></a>6.2 Simple 2-state MDP</h2><p>이제 다른 예제에서 NPG를 테스트합니다. 2개의 state만 가지는 MDP를 고려해봅시다. <a href="http://repository.cmu.edu/cgi/viewcontent.cgi?article=1080&amp;context=robotics" target="_blank" rel="noopener">그림출처</a>. 그림으로보면 다음과 같습니다. $x=0$ 상태와 $x=1$ 상태 두 개가 존재합니다. 에이전트는 각 상태에서 다시 자신의 상태로 되돌아오는 행동을 하거나 다른 상태로 가는 행동을 할 수 있습니다. 상태 $x=0$에서 다시 자기 자신으로 돌아오면 1의 보상을 받고 상태 $x=1$에서 자기 자신으로 돌아오면 2의 보상을 받습니다. 결국 optimal policy는 상태 $x=1$에서 계속 자기 자신으로 돌아오는 행동을 취하는 것입니다. </p>
+<p><img src="https://www.dropbox.com/s/g1x9yknzsrip59i/Screenshot%202018-06-08%2023.06.50.png?dl=1"></p>
+<p>문제를 좀 어렵게 만들기 위해 state distribution을 다음과 같이 설정합니다. 즉, 대부분의 경우에 상태 x=0에서 에이전트가 시작하는 것입니다.</p>
+<p>$$\rho(x=0)=0.8,  \rho(x=1)=0.2$$</p>
+<p>일반적인 gradient 방법을 사용하면 다음과 같은 policy gradient 식에 따라서 업데이트를 하게 됩니다. 이 때, $\rho(s)$가 gradient에 곱해지므로 상대적으로 상태 0에서의 gradient 값이 커지게 됩니다. 따라서 에이전트는 상태 0에서의 gradient(상태 0에서 스스로에게 돌아오는 행동을 취하도록 정책을 업데이트하는 gradient)를 따라 parameterized policy를 update합니다. 따라서 아래 그림의 첫번째 그림에서처럼 reward가 1에서 오랜 시간동안 머무릅니다. 즉, 에이전트가 상태 0에서 self-loop를 계속 돌고 있다는 것입니다.</p>
+<p>$$\nabla\eta(\theta)=\sum_{s,a}\rho^{\pi}(s)\nabla\pi(a;s,\theta)Q^{\pi}(s,a)$$</p>
+<center><img src="https://www.dropbox.com/s/xtb77mfazbppnss/Screenshot%202018-06-08%2023.14.24.png?dl=1" width="300px"></center>
+
+<p>하지만 NPG를 사용할 경우에는 훨씬 빠르게 average reward가 2에 도달합니다. gradient 방법이 $1.7\times 10^7$정도의 시간만에 2에 도달한 반면 NPG는 2의 시간만에 도달합니다. 또한 $\rho(x=0)$가 $10^{-5}$이하로 떨어지지 않습니다.</p>
+<p>한 가지 그래프를 더 살펴봅시다. 다음 그래프는 parameter $\theta$가 업데이트 되는 과정을 보여줍니다. 이 그래프에서는 parameter가 2개 있습니다. 일반적인 gradient가 아래 그래프에서 실선에 해당합니다. 이 실선의 그래프는 보면 처음부터 중반까지 $\theta_i$만 거의 업데이트하는 것을 볼 수 있습니다. 그에 비해 NPG는 두 개의 parameter를 균등하게 업데이트하는 것을 볼 수 있습니다. </p>
+<center><img src="https://www.dropbox.com/s/g7pazozw2k6rd7x/Screenshot%202018-06-08%2023.23.25.png?dl=1" width="300px"></center>
+
+<p>policy가 $\pi(a;s,\theta)\propto \exp(\theta_{sa})$일 때, 다음과 같이 $F_{-1}$이 gradient 앞에 weight로 곱해지는데 이게 $\rho$와는 달리 각 parameter에 대해 균등합니다. 따라서 위 그래프에서와 같이 각 parameter는 비슷한 비율로 업데이트가 되는 것입니다.</p>
+<p>$$\bar{\nabla}\eta(\theta) = F^{-1}\nabla\eta(\theta)$$</p>
+<p><br></p>
+<h2 id="6-3-Tetris"><a href="#6-3-Tetris" class="headerlink" title="6.3 Tetris"></a>6.3 Tetris</h2><p>NPG를 테스트할 tetris 예제는 Neuro Dynamic Programming 책에 소개되어 있습니다. 다음 그림은 tetris 예제를 보여줍니다. 보통 그림에서와 같이 state의 feature를 정해줍니다. <a href="http://slideplayer.com/slide/5215520/" target="_blank" rel="noopener">그림 출처</a></p>
+<p><img src="https://www.dropbox.com/s/y1halso9yermy8s/Screenshot%202018-06-08%2023.44.34.png?dl=1"></p>
+<p>이 예제에서도 exponential family로 policy를 표현합니다. $\pi(a;s,\theta) \propto \exp(\theta^T\phi_{sa})$ 로 표현합니다.</p>
+<p>tetris는 linear function approximator와 greedy policy iteration을 사용할 경우 performance가 갑자기 떨어지는 현상이 있습니다. 밑의 그림에서 A의 spike가 있는 그래프가 이 경우입니다. 그 밑에 낮게 누워있는 그래프는 일반적인 policy gradient 방법입니다. 하지만 Natural policy gradient를 사용할 경우 B 그림에서 오른쪽 그래프와 같이 성능개선이 뚜렷합니다. Policy Iteration 처럼 성능이 뚝 떨어지지 않고 안정적으로 유지합니다. 또한 그림 C에서 보는 것처럼 오른쪽 그래프인 일반적인 gradient 방법보다 훨씬 빠르게 학습하는 것을 볼 수 있습니다.</p>
+<p><img src="https://www.dropbox.com/s/pr6s2qrqaic0wyj/Screenshot%202018-06-08%2023.40.16.png?dl=1"></p>
+<p><br><br></p>
+<h1 id="7-Discussion"><a href="#7-Discussion" class="headerlink" title="7. Discussion"></a>7. Discussion</h1><p>Natural Gradient Method는  Policy Iteration에서와 같이 Greedy Action을 선택하도록 학습합니다. Line search 기법과 함께 사용하면 더 Policy Iteration과 비슷해집니다. Greedy Policy Iteration에서와 비교하면 Performance Improvement가 보장됩니다. 하지만 FIM이 asymtotically Hessian으로 수렴하지 않습니다. 그렇기 때문에 Conjugate Gradient Method로 구하는 방법이 더 좋을수 있습니다.</p>
+<p>살펴봤듯이 본 논문의 NPG는 완벽하지 않습니다. 위의 몇가지 문제점을 극복하기 위한 추가적인 연구가 필요하다고 할 수 있습니다.</p>
+<p><br><br></p>
+<h1 id="처음으로"><a href="#처음으로" class="headerlink" title="처음으로"></a>처음으로</h1><h2 id="PG-Travel-Guide"><a href="#PG-Travel-Guide" class="headerlink" title="PG Travel Guide"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/">PG Travel Guide</a></h2><p><br></p>
+<h1 id="이전으로"><a href="#이전으로" class="headerlink" title="이전으로"></a>이전으로</h1><h2 id="DDPG-여행하기"><a href="#DDPG-여행하기" class="headerlink" title="DDPG 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/26/3_ddpg/">DDPG 여행하기</a></h2><p><br></p>
+<h1 id="다음으로"><a href="#다음으로" class="headerlink" title="다음으로"></a>다음으로</h1><h2 id="NPG-Code"><a href="#NPG-Code" class="headerlink" title="NPG Code"></a><a href="https://github.com/reinforcement-learning-kr/pg_travel/blob/master/mujoco/agent/tnpg.py" target="_blank" rel="noopener">NPG Code</a></h2><h2 id="TRPO-여행하기"><a href="#TRPO-여행하기" class="headerlink" title="TRPO 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/24/5_trpo/">TRPO 여행하기</a></h2>
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>

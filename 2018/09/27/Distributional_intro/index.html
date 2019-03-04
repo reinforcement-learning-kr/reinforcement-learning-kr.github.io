@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Introduction to Distributional RL"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Introduction to Distributional RL - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>Introduction to Distributional RL</h1>
+					
+					<h2 class="post-subheading">
+						Introduction to Distributional RL
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 민규식 on
+						
+						
+							2018-09-27
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/프로젝트/">#프로젝트</a> <a href="/tags/DistRL/">#DistRL</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/프로젝트/">프로젝트</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<h1 id="Distributional-RL"><a href="#Distributional-RL" class="headerlink" title="Distributional RL"></a>Distributional RL</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>본 게시글은 강화학습의 한 종류 중 하나인 <strong>Distributional Reinforcement Learning</strong>에 대해서 설명하고 <a href="https://deepmind.com/" target="_blank" rel="noopener">Deepmind</a>에서 발표한 몇가지 알고리즘을 설명할 예정입니다.   </p>
+<p>우선 일반적인 강화학습 알고리즘과 distributional RL 알고리즘을 간단하게 그림으로 비교한 것이 다음과 같습니다. </p>
+<p align="center"><br>  <img src="/img/Fig0.png" width="600" alt="Comparison"><br></p>
+
+
+<p>일반적인 강화학습은 다양하게 task를 시도해보고 그 경험을 바탕으로 미래에 받을 평균 reward를 하나의 숫자(scalar)로 예측하도록 학습합니다. 그리고 이 예측을 통해 미래에 많은 reward를 받을 것이라 예측되는 action을 선택하게 됩니다. </p>
+<p>하지만!!! 환경이 <strong>랜덤성</strong>을 포함하고 있는 경우 상황에 따라 동일한 state에서 동일한 action을 취하더라도 다음 state에서 받는 reward가 변할 수 있습니다. 이런 상황에 대한 예시를 한번 들어보겠습니다! 아래의 경우처럼 자동차가 운전을 하고 있다고 해보겠습니다.</p>
+<p align="center"><br>  <img src="/img/Fig1.png" width="600" alt="Driving example"><br></p>
+
+
+<p><strong>빨간색 자동차</strong>가 <strong>agent</strong> 이며 하얀색 자동차는 랜덤하게 가속, 감속, 차선변경을 하는 차량이라고 가정해보겠습니다. 이에 따라 해당 환경은 랜덤성을 포함한 환경이라 할 수 있습니다. 가장 위쪽 그림들을 보면 두 상황은 동일한 상황이고 빨간 차량은 모두 빠른 속도로 직진하는 action을 선택했습니다. 하지만 다음 state에서는 서로 다른 결과가 발생하였습니다. 왼쪽의 경우 하얀 차량이 갑자기 차선 변경을 하여 충돌이 발생하였고, 오른쪽의 경우 하얀차량이 agent보다 느린 속도로 직진하였으므로 agent가 하얀 차량을 추월하여 주행하였습니다. </p>
+<p>이렇게 확률적인 상황에서는 예측되는 reward를 분포로 나타내면 아래와 같이 나타낼 수 있습니다. </p>
+<p align="center"><br>  <img src="/img/Fig2.png" width="500" alt="Distribution"><br></p>
+
+
+<p>위의 분포를 보면 확률적으로 약 1점의 reward를 받을수도, 약 -9점의 reward를 받을 수 있는 상황입니다. 확률적인 환경의 경우 상황에 따라서는 받을 확률이 높은 reward가 더 다양할 수도 있습니다. 이런 분포를 <a href="https://en.wikipedia.org/wiki/Multimodal_distribution" target="_blank" rel="noopener">Multimodal Distribution</a>이라고 합니다. </p>
+<p>이렇게 확률적인 환경에서는 하나의 숫자로 미래의 reward를 예측하는 것보다 위와 같이 분포로 미래의 reward를 예측하는 것이 더 정확한 예측이라고 할 수 있습니다. 이렇게 미래의 보상을 분포를 통해 예측하여 확률적인 환경에서 더 정확한 예측을 수행하는 강화학습 알고리즘이 바로 <strong>Distributional Reinforcement Learning</strong> 알고리즘입니다!! </p>
+<p><br></p>
+<h2 id="Papers"><a href="#Papers" class="headerlink" title="Papers"></a>Papers</h2><p>최고의 AI관련 연구 기관 중 하나인 <a href="https://deepmind.com/" target="_blank" rel="noopener">Deepmind</a>가 최근 distributional RL에 대한 몇 가지 논문들을 발표하였으며 해당 기술들을 계속 발전시켜 다양하게 적용 중에 있습니다. 본 블로그에서 리뷰할 논문들은 다음과 같습니다. </p>
+<ul>
+<li><a href="https://arxiv.org/abs/1707.06887" target="_blank" rel="noopener">A Distributional Perspective on Reinforcement Learning (C51)</a></li>
+<li><a href="https://arxiv.org/abs/1710.10044" target="_blank" rel="noopener">Distributional Reinforcement Learning with Quantile Regression (QR-DQN)</a></li>
+<li><a href="https://arxiv.org/abs/1806.06923" target="_blank" rel="noopener">Implicit Quantile Networks for Distributional Reinforcement Learning (IQN)</a></li>
+</ul>
+<p><br></p>
+<h2 id="Description-of-the-algorithms"><a href="#Description-of-the-algorithms" class="headerlink" title="Description of the algorithms"></a>Description of the algorithms</h2><p>각 알고리즘들에 대한 설명은 다음의 링크들을 따라가시면 됩니다 </p>
+<ul>
+<li><a href="https://reinforcement-learning-kr.github.io/2018/10/02/C51/">C51</a></li>
+<li><a href="https://reinforcement-learning-kr.github.io/2018/10/22/QR-DQN/">QR-DQN</a></li>
+<li><a href="https://reinforcement-learning-kr.github.io/2018/10/30/IQN/">IQN</a></li>
+</ul>
+<p><br></p>
+<h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><p>해당 알고리즘의 코드들은 아래의 Github에 정리되어있습니다. </p>
+<p><a href="https://github.com/reinforcement-learning-kr/distributional_rl" target="_blank" rel="noopener">RL Korea Distibutional RL Github</a></p>
+<h2 id="Team"><a href="#Team" class="headerlink" title="Team"></a>Team</h2><p>민규식: <a href="https://github.com/Kyushik" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/kyushik.min" target="_blank" rel="noopener">Facebook</a></p>
+<p>차금강: <a href="https://github.com/chagmgang" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/profile.php?id=100002147815509" target="_blank" rel="noopener">Facebook</a></p>
+<p>윤승제: <a href="https://github.com/sjYoondeltar" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/seungje.yoon" target="_blank" rel="noopener">Facebook</a></p>
+<p>김하영: <a href="https://github.com/hayoung-kim" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/altairyoung" target="_blank" rel="noopener">Facebook</a></p>
+<p>김정대: <a href="https://github.com/kekmodel" target="_blank" rel="noopener">Github</a>, <a href="https://www.facebook.com/kekmodel" target="_blank" rel="noopener">Facebook</a></p>
+
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Maximum Margin Planning"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Maximum Margin Planning - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>Maximum Margin Planning</h1>
+					
+					<h2 class="post-subheading">
+						Inverse RL 3번째 논문
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 이동민 on
+						
+						
+							2019-02-07
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/프로젝트/">#프로젝트</a> <a href="/tags/GAIL하자/">#GAIL하자!</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/프로젝트/">프로젝트</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<center> <img src="../../../../img/irl/mmp_1.png" width="850"> </center>
+
+<p>Author : Nathan D. Ratliff, J. Andrew Bagnell, Martin A. Zinkevich<br>Paper Link : <a href="https://www.ri.cmu.edu/pub_files/pub4/ratliff_nathan_2006_1/ratliff_nathan_2006_1.pdf" target="_blank" rel="noopener">https://www.ri.cmu.edu/pub_files/pub4/ratliff_nathan_2006_1/ratliff_nathan_2006_1.pdf</a><br>Proceeding : International Conference on Machine Learning (ICML) 2006</p>
+<hr>
+<h1 id="0-Abstract"><a href="#0-Abstract" class="headerlink" title="0. Abstract"></a>0. Abstract</h1><p>일반적으로 Supervised learning techniques를 통해 sequential, goal-directed behavior에 대한 imitation learning은 어렵습니다. 이 논문에서는 maximum margin을 이용한 prediction problem에 대해 sequential, goal-directed behavior을 학습하는 것을 다룹니다. 더 구체적으로 말하자면, <strong>features부터 cost까지 한번에 mapping하는 것을 학습</strong> 해서, 이 cost에 대한 Markov Decision Process(MDP)에서의 optimal policy가 expert’s behavior를 모방하도록 하는 것입니다.</p>
+<p>또한 inference를 위해 fast algorithms을 이용하여 subgradient method의 기반인 structured maximum margin learning으로서 간단하고 효율적인 접근을 보였습니다. 비록 이러한 fast algorithm technique는 일반적으로 사용하지만, QP formulation의 한계를 벗어난 문제에서는 $A^*$나 Dynamic Programming(DP) 접근들이 policy를 learning하는 것을 더 쉽게 다룰 수 있도록 만듭니다.</p>
+<p>실험에서는 outdoor mobile robot들을 이용하여 route planning에 적용합니다.</p>
+<p><br></p>
+<h2 id="0-1-들어가기에-앞서"><a href="#0-1-들어가기에-앞서" class="headerlink" title="0.1 들어가기에 앞서.."></a>0.1 들어가기에 앞서..</h2><p>이 논문은 앞서 다뤘던 APP 논문에 더하여 좀 더 효율적인 알고리즘을 만들고자 하였습니다. 그래서 기존에 APP에서 QP를 이용한 SVM 방법에 더하여 Soft Margin term을 추가하여 슬랙변수를 가지는 SVM을 사용하였고, subgradient method를 이용하여 알고리즘을 좀 더 쉽고 빠르게 구할 수 있도록 만들었습니다.</p>
+<p>SVM과 Soft Margin SVM에 대해 모르는 분이 계시다면 아래의 링크를 꼭 보시고 이 논문을 보시는 것을 추천해드립니다!</p>
+<p>1) 영상 (KAIST 문일철 교수님 강의)</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=hK7vNvyCXWc&amp;list=PLbhbGI_ppZISMV4tAWHlytBqNq1-lb8bz&amp;index=23" target="_blank" rel="noopener">Lecture 1 Decision boundary with Margin</a></li>
+<li><a href="https://www.youtube.com/watch?v=tZy3uRv-9mY&amp;list=PLbhbGI_ppZISMV4tAWHlytBqNq1-lb8bz&amp;index=24" target="_blank" rel="noopener">Lecture 2 Maximizing the Margin</a></li>
+<li><a href="https://www.youtube.com/watch?v=sYLuJ_8Qw3s&amp;list=PLbhbGI_ppZISMV4tAWHlytBqNq1-lb8bz&amp;index=25" target="_blank" rel="noopener">Lecture 3 SVM with Matlab</a></li>
+<li><a href="https://www.youtube.com/watch?v=vEivqCo-LiU&amp;list=PLbhbGI_ppZISMV4tAWHlytBqNq1-lb8bz&amp;index=26" target="_blank" rel="noopener">Lecture 4 Error Handling in SVM</a></li>
+<li><a href="https://www.youtube.com/watch?v=5jOqc7ByMm4" target="_blank" rel="noopener">Lecture 5 Soft Margin with SVM</a></li>
+</ul>
+<p>2) 블로그 글</p>
+<ul>
+<li><a href="https://gentlej90.tistory.com/43" target="_blank" rel="noopener">SVM (Support Vector Machine) Part 1</a></li>
+<li><a href="https://gentlej90.tistory.com/44" target="_blank" rel="noopener">SVM (Support Vector Machine) Part 2</a></li>
+</ul>
+<p><br><br></p>
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h1><p>Imitation Learning에서, learner는 expert의 “behavior” or “control strategy”를 모방하려고 시도합니다. 이러한 imitation learning을 이용하여, robotics에서의 supervised learning 접근은 featrues부터 decision까지 mapping하는 것을 학습하는 것에서 엄청난 결과로서 사용되어 왔지만, Long-range나 Goal-directed behavior에서는 이러한 기술들을 사용하기 어렵습니다.</p>
+<p><br></p>
+<h2 id="1-1-Perception-and-Planning"><a href="#1-1-Perception-and-Planning" class="headerlink" title="1.1 Perception and Planning"></a>1.1 Perception and Planning</h2><p>Mobile robotics에서는 일반적으로 <strong>perception</strong> subsystem과 <strong>planning</strong> subsystem으로 autonomy software를 partition함으로써 Long-horizon goal directed behavior를 찾습니다.<br>1) Perception system은 다양한 model과 환경의 features를 계산합니다.<br>2) Planning system은 cost-map을 input으로 두고, 그 input을 통해 minimal risk (cost) path를 계산합니다.</p>
+<p><br></p>
+<h2 id="1-2-In-this-work"><a href="#1-2-In-this-work" class="headerlink" title="1.2 In this work"></a>1.2 In this work</h2><p>하지만 불행하게도, perception의 model부터 planner에 대한 cost까지 하는 것은 종종 어렵습니다.</p>
+<p>따라서 이 논문에서는 새로운 방법을 제시합니다. <strong>perception features부터 planner에 대한 cost까지 (Perception + Planning)</strong> mapping하는 것을 자동화하는 방법입니다. 최종 목표는 features부터 cost function까지 mapping하는 것을 한번에 학습하는 것입니다. 그래서 이러한 cost function에 대한 optimal policy로 expert의 behavior을 한번에 모방하도록 하는 것입니다.</p>
+<p><br></p>
+<h2 id="1-3-Three-fold"><a href="#1-3-Three-fold" class="headerlink" title="1.3 Three fold"></a>1.3 Three fold</h2><p>정리해보면, 이 논문에서는 3가지 중요한 언급이 있습니다.</p>
+<ol>
+<li>planning을 학습하기위한 새로운 방법을 제시합니다.</li>
+<li>sutructured maximum-margin classification으로서 효율적이고 간단한 접근을 제시합니다. 또한 batch setting에서도 linear convergence하다는 것을 보여주며, 다른 QP 기법이 없이도 lerge problems에 적용될 수 있다고 합니다.</li>
+<li>실험적으로 mobile robotics 관련 문제에 적용하였습니다.</li>
+</ol>
+<p><br><br></p>
+<h1 id="2-Preliminaries"><a href="#2-Preliminaries" class="headerlink" title="2. Preliminaries"></a>2. Preliminaries</h1><h2 id="2-1-Notations"><a href="#2-1-Notations" class="headerlink" title="2.1 Notations"></a>2.1 Notations</h2><h3 id="2-1-1-modeling-the-planning-problem-with-discrete-MDPs"><a href="#2-1-1-modeling-the-planning-problem-with-discrete-MDPs" class="headerlink" title="2.1.1 modeling the planning problem with discrete MDPs"></a>2.1.1 modeling the planning problem with discrete MDPs</h3><p>이 논문은 discrete MDPs에서의 planning problem을 modeling합니다.</p>
+<p>$\mathcal{X}$ is state spaces. $x$ index the state spaces.</p>
+<p>$\mathcal{A}$ is action spaces. $a$ index the action spaces.</p>
+<p>$p(y|x,a)$ is transition probablities.</p>
+<p>$s$ is initial state distribution.</p>
+<p>$\gamma$ is a discount factor on rewards. if any, $\gamma$ is aborbed into the transition probabilities.</p>
+<p>Reward $R$은 따로 두지 않고, demonstrated behavior를 모방하는 policies를 만들기 위한 examples(expert’s trajectory or path)로부터 학습됩니다.</p>
+<p>$v \in \mathcal{V}$ is primal variables of value function</p>
+<p>$\mu \in \mathcal{G}$ is <strong>dual state-action frequency counts</strong>. equal to $y$.</p>
+<ul>
+<li>여기서 $\mu$는 어떠한 상태에서 어떠한 행동을 취했는 지를 count의 개념으로 나타낸 것인데 $y$와 혼용되어 쓸 수 있습니다.</li>
+</ul>
+<p>그리고 여기서는 오직 stationary policies만을 고려합니다. The generalization is straightforward.</p>
+<h4 id="state-action-frequency-counts란-중요"><a href="#state-action-frequency-counts란-중요" class="headerlink" title="state-action frequency counts란? (중요)"></a>state-action frequency counts란? (중요)</h4><p>Inverse RL의 궁극적인 목표를 다르게 말해보면 expert가 어떠한 행동을 했을 때, 여기서의 state-action visitation frequency counts(줄여서 visitation frequency)를 구합니다. 그리고 <strong>우리의 목적은 expert의 visitation frequency과 최대한 비슷한 visitation frequency를 만들어내는 어떤 reward를 찾는 것</strong> 입니다.</p>
+<p>일반적으로, RL 문제는 reward가 주어졌을 때, 이 reward의 expected sum을 최대로 하는 policy를 찾는다고 알려져 있습니다. 그런데 <strong>이 문제의 dual problem은 visitation frequency를 찾는 것입니다.</strong></p>
+<p>다시 말해 optimal policy와 optimal visitation frequency counts는 <strong>1:1 관계</strong> 라는 것입니다.</p>
+<h3 id="2-1-2-The-input-to-our-algorithm"><a href="#2-1-2-The-input-to-our-algorithm" class="headerlink" title="2.1.2 The input to our algorithm"></a>2.1.2 The input to our algorithm</h3><p>The input is a set of training instances</p>
+<center> <img src="../../../../img/irl/mmp_2.png" width="300"> </center>
+
+<p>$p_i$ is transition probablities.</p>
+<p>State-action pairs $(x_i, a_i) \in \mathcal{X}_i, \mathcal{A}_i$ is $d \times |\mathcal{X}||\mathcal{A}|$ Feature matrix (or mapping) $F_i \in \mathbb{R}^{d \times |\mathcal{X}||\mathcal{A}|}$.</p>
+<p>$y_i$ is expert’s demonstration (desired trajectory or full policy). equal to <strong>dual state-action frequency counts</strong> $\mu_i$.</p>
+<p>$f_i (y)$ denote vector of expected feature counts $F_i \mu$ of the $i$th example.</p>
+<p>$\mathcal{L}_i$ is some additional loss function (heuristic)</p>
+<h3 id="2-1-3-Detail-description"><a href="#2-1-3-Detail-description" class="headerlink" title="2.1.3 Detail description"></a>2.1.3 Detail description</h3><p>$\mu_i^{x, a}$ is the expected state-action frequency for state $x$ and action $a$ of example $i$.</p>
+<ul>
+<li>$\mu_i$를 자세히보면 $\mu$에 $i$가 붙은 형태로 되어있습니다. 여기서 example $i$라는 것 총 trajectory(or path)의 length 중에서 하나의 index(example)를 말하는 것입니다. expert의 경우, 보통 전체 trajectory를 한꺼번에 취하기 때문에 이 논문에서는 구별하기 위해 $i$라는 notation을 쓴 것입니다.</li>
+</ul>
+<p>$\mathcal{D} = \{(\mathcal{X}_i, \mathcal{A}_i, p_i, f_i, y_i, \mathcal{L}_i)\} \equiv \{(\mathcal{X}_i, \mathcal{A}_i, \mathcal{G}_i, F_i, \mathcal{\mu}_i, \mathcal{l}_i)\}$</p>
+<ul>
+<li>($\mathcal{D}$는 $\mathcal{D}_{i=1}^n$)</li>
+</ul>
+<p>Loss function is $\mathcal{L} : \mathcal{Y} \times \mathcal{Y} \rightarrow \mathbb{R}_+$ between solutions. $\mathcal{L} (y_i, y) = \mathcal{L}_i (y) = l_i^T \mu$. </p>
+<ul>
+<li>$l_i \in \mathbb{R}_+^{|\mathcal{X}||\mathcal{A}|}$</li>
+<li>$l_i = 1 -$ expert’s visitation frequency</li>
+</ul>
+<h3 id="2-1-4-그래서-이-논문에서-하고-싶은-것-중요"><a href="#2-1-4-그래서-이-논문에서-하고-싶은-것-중요" class="headerlink" title="2.1.4 그래서 이 논문에서 하고 싶은 것 (중요)"></a>2.1.4 그래서 이 논문에서 하고 싶은 것 (중요)</h3><p>The best policy over the resulting reward function $\mu^* = arg\max_{\mu \in \mathcal{G}_i} w^T F_i \mu$ is “<strong>close</strong>” to the expert’s demonstrated policy $\mu_i$.</p>
+<p><br></p>
+<h2 id="2-2-Loss-function"><a href="#2-2-Loss-function" class="headerlink" title="2.2 Loss function"></a>2.2 Loss function</h2><p>위에서 말했던 loss function은 teacher가 아닌 learner가 방문한 states의 count입니다.</p>
+<p>또한 이 논문에서는 teacher가 도달한 어떠한 states에서 teacher와 다른 action들을 고르거나 teacher가 선택하지 않은 states를 도달하는 것을 penalizing할 것입니다.</p>
+<p>끝으로, $\mathcal{L}(y_i, y) \geq 0$을 가정합니다.</p>
+<p><br></p>
+<h2 id="2-3-Quadratic-Programming-Formulation"><a href="#2-3-Quadratic-Programming-Formulation" class="headerlink" title="2.3 Quadratic Programming Formulation"></a>2.3 Quadratic Programming Formulation</h2><h3 id="2-3-1-Quadratic-Program"><a href="#2-3-1-Quadratic-Program" class="headerlink" title="2.3.1 Quadratic Program"></a>2.3.1 Quadratic Program</h3><p>Given a training set :</p>
+<center> <img src="../../../../img/irl/mmp_2.png" width="300"> </center>
+
+<p>Quadratic Program is</p>
+<p>$$\min_{w, \zeta_i} \frac{1}{2} \parallel w \parallel^2 + \frac{\gamma}{n} \sum_i \beta_i \zeta_i \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, (1)$$</p>
+<p>$$s.t. \,\, \forall i \,\,\,\, w^T f_i (y_i) \geq \max_{\mu \in \mathcal{G}_i} (w^T f_i (y) + \mathcal{L} (y_i, y)) - \zeta_i \,\,\,\,\,\,\,\,\, (2)$$</p>
+<p>s.t.로 나오는 constraint의 intuition을 보자면, expert’s policies가 margin에 대해 <strong>다른 모든 policies보다 더 높은 experted reward를 가지도록 하는 only weight vectors를 찾자</strong> 는 것입니다.</p>
+<p>다음으로 위의 수식에 나오는 notation에 대해서 자세히 알아보겠습니다.</p>
+<p>$\frac{\gamma}{n}\sum_i \zeta_i$ is <strong>soft margin term</strong> from soft margin SVM. $\zeta$의 값을 되도록 최소화하여 오분류의 허용도를 낮추기 위해 추가되었습니다.</p>
+<p>$\zeta_i$ is <strong>slack variable</strong>. The slack variable permit violations of these constraints for a penalty. 여유 변수라고도 하고, $\zeta_i$만큼의 오류를 인정한다는 의미로 볼 수 있습니다.</p>
+<p>$\gamma \geq 0$ is scaled for a penalty. 보통 $c$ ($c \geq 0$)라고도 하는데, 최소화 조건을 반영하는 정도를 결정하는 값으로 우리가 적절히 정해주어야 합니다. c값이 크면 전체 margin도 커지므로 오분류를 적게 허용(엄격)한다는 뜻이고, 반대로 c값이 작으면 margin이 작아지므로 비교적 높은 오분류를 허용(관대)한다는 뜻입니다.</p>
+<p>$\beta_i \geq 0$는 examples가 다른 length일 때 normalization하기 위해서 사용되는 data dependent scalars입니다.</p>
+<p>$w^T f_i(y_i)$ is expert’s reward.</p>
+<p>$w^T f_i(y)$ is other’s reward.</p>
+<p>$\mathcal{L} (y_i, y)$는 $y_i$와 $y$가 일치하지 않는 상태의 수입니다.</p>
+<h3 id="2-3-2-Maximum-Margin-Problem-MMP"><a href="#2-3-2-Maximum-Margin-Problem-MMP" class="headerlink" title="2.3.2 Maximum Margin Problem(MMP)"></a>2.3.2 Maximum Margin Problem(MMP)</h3><p>만약 $f_i (\cdot)$ and $\mathcal{L}_i (\cdot)$가 state-action frequencies $\mu$에서 linear하다면, MMP는 다음과 같이 정의할 수 있습니다.</p>
+<p>$$\min_{w, \zeta_i} \frac{1}{2} \parallel w \parallel^2 + \frac{\gamma}{n} \sum_i \beta_i \zeta_i \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, (3)$$</p>
+<p>$$s.t. \,\, \forall i \,\,\,\, w^T F_i \mu_i \geq \max_{\mu \in \mathcal{G}_i} (w^T F_i \mu + l_i^T \mu) - \zeta_i \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, (4)$$</p>
+<p>그리고 수식 (4)에서, $\mu \in \mathcal{G}_i$를 Bellman-flow constraints로 표현할 수 있습니다. 다시 말해 $\mu \geq 0$는 다음을 만족합니다.</p>
+<center> <img src="../../../../img/irl/mmp_3.png" width="450"> </center>
+
+<ul>
+<li>나중에 GAIL 논문에서도 나오겠지만, 위의 수식에서 우항은 어떠한 상태에서의 모든 행동에 대한 visitation frequency를 summation한 것입니다. 그리고 좌항을 MDP의 dual form으로 유도해보면 자연스럽게 우항에 있는 수식으로 <strong>정의</strong> 할 수 있습니다. intuition을 생각해보면, 결국 visitation frequency가 적절한 확률 분포가 되어야한다는 것이며, 모든 행동에 대해서 summation을 취했기 때문에 모든 $x’$에 대해 1이 됩니다.</li>
+</ul>
+<h3 id="2-3-3-One-compact-quadratic-program-for-MMP"><a href="#2-3-3-One-compact-quadratic-program-for-MMP" class="headerlink" title="2.3.3 One compact quadratic program for MMP"></a>2.3.3 One compact quadratic program for MMP</h3><p>이어서 수식 (4)인 nonlinear, convex constraints는 우항의 dual을 계산함으로써 linear constraints의 compact set으로 다음과 같이 변형될 수 있습니다.</p>
+<p>$$\forall i \,\,\,\, w^T F_i \mu_i \geq \min_{v \in V_i} \, (s_i^T v) - \zeta_i \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, (5)$$</p>
+<p>그리고 수식 (5)에서, $v \in V_i$는 Bellman primal constraints을 만족하는 value function입니다. Bellman primal constraints는 다음과 같습니다.</p>
+<p>$$\forall i,x,a \,\,\,\, v^x \geq (w^T F_i + l_i)^{x,a} + \sum_{x’} p_i (x’|x,a) v^{x’} \,\,\,\,\,\,\,\,\,\, (6)$$</p>
+<p>위의 constraints (5), (6)을 combining함으로써 최종적으로 다음과 같이 쓸 수 있습니다.</p>
+<p>One compact quadratic program is</p>
+<p>$$\min_{w, \zeta_i} \frac{1}{2} \parallel w \parallel^2 + \frac{\gamma}{n} \sum_i \beta_i \zeta_i \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, (7)$$</p>
+<p>$$\forall i \,\,\,\, w^T F_i \mu_i \geq \min_{v \in V_i} \, (s_i^T v) - \zeta_i \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, (8)$$</p>
+<p>$$\forall i,x,a \,\,\,\, v_i^x \geq (w^T F_i + l_i)^{x,a} + \sum_{x’} p_i (x’|x,a) v_i^{x’} \,\,\,\,\,\,\,\, (9)$$</p>
+<p>위의 수식은 MMP 문제를 One compact quadratic program으로써 풀 수 있도록 만든 것입니다. 하지만 아쉽게도 위의 <strong>constraints의 수는 state-action pairs와 training examples에 대해 linear하게 scaling</strong> 됩니다.</p>
+<p>이러한 program을 직접적으로 optimize할 수 있도록 이미 만들어져 있는 QP software가 있지만, 뒤이어 나오는 <strong>section 3</strong> 에서 <strong>subgradient methods</strong> 의 이용함으로써 One compact quadratic program보다 더 크게 향상시킬 수 있는 다른 alternative formulation을 이용하고자 합니다.</p>
+<p>추가적으로, <strong>Section 4</strong> 에서는 최종 objective function에 유용한 방법들을 생각해 볼 것입니다. 그리고 나서 path planning problems에 대한 적절한 examples를 말할 것입니다.</p>
+<p><br><br></p>
+<h1 id="3-Efficient-Optimization"><a href="#3-Efficient-Optimization" class="headerlink" title="3. Efficient Optimization"></a>3. Efficient Optimization</h1><p>실제로, 수식 (9)에서의 quadratic program을 해결하는 것은 적어도 single MDP의 linear programming을 해결하는 것만큼 어렵습니다. 그래서 수식 (9)를 quadratic program으로 해결하려는 것이 적절한 방법이 될 수 있지만, 다르게 보면 많은 문제들에 대해 policy iteration과 $A^*$ algorithm처럼 이론적으로나 실험적으로나 더 빠르게 해결할 수 있도록 design된 algorithm으로 해결할 수도 있습니다.</p>
+<p>따라서 이 논문에서는 더 나아가 <strong>fast maximization algorithm을 사용하는 iterative method 기반인 subgradient method로 접근합니다.</strong></p>
+<p><br></p>
+<h2 id="3-1-Objective-function"><a href="#3-1-Objective-function" class="headerlink" title="3.1 Objective function"></a>3.1 Objective function</h2><p>첫 번째 step은 optimization program(One compact quadratic program)을 <strong>“hinge-loss”</strong> form으로 변형하는 것입니다.</p>
+<p>변형된 objective function은 다음과 같습니다.</p>
+<p>$$c_q(w) = \frac{1}{n} \sum_{i=1}^n \beta_i \Big( \big\{\max_{\mu \in \mathcal{G}_i} (w^T F_i + l_i^T)\mu \big\} - w^T F_i \mu_i\Big) + \frac{\lambda}{2} \parallel w \parallel^2 \,\,\,\,\,\,\,\,\,\,\,\, (10)$$</p>
+<p>hinge-loss 관점에서 보면, 위의 수식에서 $\big\{\max_{\mu \in \mathcal{G}_i} (w^T F_i + l_i^T)\mu\big\} - w^T F_i \mu_i$은 slack variable인 $\zeta_i$과 동일합니다.</p>
+<p>또한 기존에 있던 $\gamma$는 slack variable $\zeta_i$가 없어졌기 때문에 사라집니다.</p>
+<p>여기서 $\lambda$는 regularization parameter로 사용합니다.</p>
+<p>위의 objective function은 convex하지만, <strong>max term</strong>이 있기 때문에 미분이 불가능합니다. 따라서 이 논문에서는 subgradient method라 불리는 gradient descent의 generalization을 이용함으로써 optimization을 합니다.</p>
+<p>convex function $c : \mathcal{W} \rightarrow \mathbb{R}$의 subgradient는 vector $g$로 정의합니다.</p>
+<center> <img src="../../../../img/irl/mmp_4.png" width="400"> </center>
+
+<p>위의 수식에서 subgradient는 비록 미분 가능한 점에서 필연적으로 gradient와는 같지만, unique할 필요는 없습니다.</p>
+<h3 id="3-1-1-Subgradient-Method란"><a href="#3-1-1-Subgradient-Method란" class="headerlink" title="3.1.1 Subgradient Method란?"></a>3.1.1 Subgradient Method란?</h3><p>아래의 링크를 참고해주시면 감사하겠습니다.</p>
+<p>1) <a href="https://en.wikipedia.org/wiki/Subgradient_method" target="_blank" rel="noopener">Wikipedia - Subgradient method</a><br>2) <a href="https://wikidocs.net/18963" target="_blank" rel="noopener">모두를 위한 컨벡스 최적화 - Subgradient</a><br>3) <a href="https://wikidocs.net/18953" target="_blank" rel="noopener">모두를 위한 컨벡스 최적화 - Subgradient Method</a></p>
+<p><br></p>
+<h2 id="3-2-Four-well-known-properties-for-subgradient-method"><a href="#3-2-Four-well-known-properties-for-subgradient-method" class="headerlink" title="3.2 Four well known properties for subgradient method"></a>3.2 Four well known properties for subgradient method</h2><p>최종 objective function을 보기전에, 먼저 $c(w)$의 subgradient를 계산하기 위해, subgradient에 대해 잘 알려진 4가지 속성들에 대해서 알아봅시다. (<strong>3번 중요</strong>)<br>1) Subgradient operators are linear.<br>2) The gradient is the unique subgradient of a differentiable function.<br><strong>3)</strong> Denoting $y^∗ = arg\max_y [f (x, y)]$ for differentiable $f (., y)$, $\nabla_x f(x,y∗)$ is a subgradient of the piecewise(구분적으로, 구간적으로) differentiable convex function $\max_y [f (x, y)]$.<br>4) An analogous chain rule holds as expected.</p>
+<p>3번을 보면, 결국 subgradient method를 통해 하고 싶은 것은 piecewise differentiable convex function인 $f(x,y)$ 중에서 제일 큰 $\max_y [f (x, y)]$를 subgradient로 구해서, 그 중 가장 큰 값인 $y^∗ = arg\max_y [f (x, y)]$를 통해 $\nabla_x f(x,y∗)$를 하겠다는 것입니다.</p>
+<p><br></p>
+<h2 id="3-3-A-subgradient-method-for-objective-function"><a href="#3-3-A-subgradient-method-for-objective-function" class="headerlink" title="3.3 A subgradient method for objective function"></a>3.3 A subgradient method for objective function</h2><p>We are now equipped to compute a subgradient $g_w \in \partial c(w)$ of our objective function (10):</p>
+<p>$$g_w = \frac{1}{n} \sum_{i=1}^n \beta_i \big( (w^T F_i + l_i^T)\mu^* - w^T F_i \mu_i \big) \cdot F_i \Delta^w \mu_i + \lambda w \,\,\,\,\,\,\,\,\,\,\,\, (12)$$</p>
+<p>위의 수식에서 detail한 notation은 다음과 같습니다.</p>
+<p>$$\mu^* = arg \max_{\mu \in \mathcal{G}} (w^T F_i + l_i^T)\mu \,\,\,\,\,\,\,\,\,\,\,\, (12-1)$$</p>
+<p>$$\Delta^w \mu_i = \mu^∗ − \mu_i \,\,\,\,\,\,\,\,\,\,\,\, (12-2)$$</p>
+<p>수식 (12-2)를 직관적으로 보면, subgradient가 현재의 reward function $w^T F_i$에 관하여 <strong>optimal policy와 example policy 사이의 state-action visitation frequency count를 비교한다는 점</strong>을 발견할 수 있습니다.</p>
+<p>또한 <strong>subgradient를 계산하는 것은 $\mu^* = arg \max_{\mu \in \mathcal{G}} (w^T F_i + l_i^T)\mu$을 해결하는 것과 같습니다.</strong> 다시 말해 reward function $w^T F_i + l_i^T$를 해결한다는 것입니다.</p>
+<p><br></p>
+<h2 id="3-4-Algorithm-1-Max-Margin-Planning"><a href="#3-4-Algorithm-1-Max-Margin-Planning" class="headerlink" title="3.4 Algorithm 1. Max Margin Planning"></a>3.4 Algorithm 1. Max Margin Planning</h2><center> <img src="../../../../img/irl/mmp_5.png" width="500"> </center>
+
+<ul>
+<li>5: loss augmented cost map $(w^T F_i + l_i^T)$에 대해서 각각의 input map에 대한 optimal policy $\mu^*$와 state-action visitation frequencies $\mu^i$를 계산합니다. 처음에는 w가 0에서 시작하므로 loss augmented cost map $w^T F_i + l_i^T$은 $l_i^T$로 시작하게 됩니다.</li>
+<li>6: 수식 (12)에 있는 objective function $g$를 계산합니다.</li>
+<li>7: w를 $\alpha_t g$에 따라 minimize합니다.</li>
+<li>8: Option으로 추가적인 constraints를 둘 수도 있습니다. 자세한 내용은 section 4.4인 Incorporating Prior Knowledge를 참고하시기 바랍니다.</li>
+<li>No RL step!</li>
+</ul>
+<p><br><br></p>
+<h1 id="4-Additional-section"><a href="#4-Additional-section" class="headerlink" title="4. Additional section"></a>4. Additional section</h1><p>이전까지는 최종 objective function과 algorithm을 살펴봤습니다. 여기서 더 나아가 유용한 방법들을 통해 우리의 objective function과 algorithm이 더 robust하도록 만들어봅시다.</p>
+<p><br></p>
+<h2 id="4-1-Guarantees-in-the-Batch-Setting"><a href="#4-1-Guarantees-in-the-Batch-Setting" class="headerlink" title="4.1 Guarantees in the Batch Setting"></a>4.1 Guarantees in the Batch Setting</h2><p>subgradient method로 구성된 algorithm들의 잘 연구된 class 중 하나는 <strong>batch setting</strong> 으로 둘 수 있다는 것입니다.</p>
+<p>batch setting에는 두 가지 key point가 존재합니다.<br>1) 이 method에서 <strong>step-size sequence</strong> $\{ \alpha_t \}$의 선택은 상당히 중요합니다. $\{ \alpha_t \}$에 따라서 convergence guarantee가 달라집니다.<br>2) 우리의 결과는 objective function을 유지하기 위해 <strong>strong convexity assumption</strong> 이 필요합니다.</p>
+<p>따라서 Given $\mathcal{W} \subseteq \mathbb{R}^d$, a function $f: \mathcal{W} \rightarrow \mathbb{R}$ is $\eta$-strongly convex if there exists $g: \mathcal{W} \rightarrow \mathbb{R}$ such that for all $w$, $w’ \in \mathcal{W}$:</p>
+<center> <img src="../../../../img/irl/mmp_6.png" width="500"> </center>
+
+<p><strong>Theorem 1. Linear convergence of constant stepsize sequence.</strong> Let the stepsize sequence $\{ \alpha_t \}$ of Algorithm (1) be chosen as $\alpha_t = \alpha \leq \frac{1}{\lambda}$. Furthermore, assume for a particular region of radius $R$ around the minimum, $\forall w,g \in \partial c(w), ||g|| \leq C$. Then the algorithm converges at a linear rate to a region of some minimum point $x^*$ of $c$ bounded by</p>
+<p>$$||x_{min} - x^*|| \leq \sqrt{\frac{a C^2}{\lambda}} \leq \frac{C}{\lambda}$$</p>
+<center> <img src="../../../../img/irl/mmp_7.png" width="450"> </center>
+
+<p>Theorem 1은 우리가 충분히 작고 일정한 stepsize를 통해 linear convergence rate를 얻을 수 있다는 것을 보여줍니다. 그러나 이 convergence는 오직 minimum 주변 지역에서만 가능합니다.</p>
+<p>대안적으로, 우리는 $t \geq 1$에 대해 $\alpha_t = \frac{r}{t}$ 형태의 감소하는 step size rule을 고를 수 있습니다. 여기서 $r$은 learning rate로 생각할 수 있는 some positive constant입니다.</p>
+<p>이러한 rule을 통해, <strong>Algorithm 1은 minimum에서 convergence가 보장되지만, 위에서 말했던 strong convexity assumption에서만 오직 sublinear rate로 수렴</strong> 될 수 있습니다.</p>
+<p><br></p>
+<h2 id="4-2-Optimization-in-an-Online-Setting"><a href="#4-2-Optimization-in-an-Online-Setting" class="headerlink" title="4.2 Optimization in an Online Setting"></a>4.2 Optimization in an Online Setting</h2><p>다양한 optimization techniques와 다르게, subgradient method는 batch setting에서 더 확장됩니다.</p>
+<p><strong>online setting</strong> 에서는 적절하게 관련된 domain에 대한 다양한 planning problem들을 생각해볼 수 있습니다. 특히, 그 중 하나는 path를 plan하기 위해 필요로 하는 domain을 제공하는 것입니다. 더 정확하게는 <strong>“correct” path</strong> 를 제공하는 것입니다.</p>
+<p>At each time step $i$:<br>1) We observe $\mathcal{G}_i$ and $F_i$.<br>2) Select a weight vector $w_i$ and using this compute a resulting path.<br>3) Finally we observe the true policy $y_i$.</p>
+<p>즉, strongly convex cost function(앞서 다뤘던 수식 (10))이 되기 위해 $c_i(w) = \frac{1}{2} \parallel w \parallel^2 + \{ \max_{\mu \in \mathcal{G}_i} (w^T F_i + l_i)\mu\} − w^T F_i \mu_i$를 정의할 수 있다는 것입니다. 그리고 우리는 $y_i$, $\mathcal{G}_i$, $F_i$가 주어진다면 계산할 수 있습니다.</p>
+<p>정리하자면, 앞서 본 cost function(Equation 10)에서 $\frac{1}{n}\sum_{i=1}^n \beta_i$가 없어진 것과 같이 <strong>online setting이 가능하다는 것</strong> 을 보여줍니다.</p>
+<p>This is now an <strong>online convex programming problem</strong>.</p>
+<p><br></p>
+<h2 id="4-3-Modifications-for-Acyclic-Positive-Costs-Think-of-Worst-Case"><a href="#4-3-Modifications-for-Acyclic-Positive-Costs-Think-of-Worst-Case" class="headerlink" title="4.3 Modifications for Acyclic Positive Costs (Think of Worst Case)"></a>4.3 Modifications for Acyclic Positive Costs (Think of Worst Case)</h2><p>acyclic(특정 방향이 없는, 사이클이 없는, 비순환적인) domain의 infinite horizon problems에서, $A^*$와 이것의 변종들은 일반적으로 좋은 paln을 찾기위한 가장 효율적인 방법입니다. 이러한 domain에서는 <strong>strictly negative한 reward</strong> 를 생각해볼 필요가 있습니다(동일하게, cost는 strictly positive). 다시 말해 best case에 대해서만 생각해볼 것이 아니라 <strong>worst case</strong> 에 대해서도 생각해볼 필요가 있다는 것입니다. 이렇게 하지 않으면 infinite reward path가 발생할지도 모르기 때문입니다. 이러한 <strong>negativity의 strictness는 heuristic의 존재를 더 확실히게 보장</strong> 하는 것이라고 볼 수 있습니다.</p>
+<p>$F_i \geq 0$이라고 가정하면, 이러한 negativity의 strictness는 두 가지 방법을 통해 쉽게 구현할 수 있습니다.<br>1) w에 component-wise negativity constraints를 추가<br>2) 각각의 state-action pair에 대한 보상에 negativity를 부여하는 constraints를 추가</p>
+<p>이렇게 negativity를 추가할 수 있는 이유는 reward $w^T F_i \mu$(or $(w^T F_i + l_i^T) \mu$)에서 $F_i$이 0보다 크기 때문에, 우리는 $w, \mu$에 negativity를 추가할 수 있습니다. 1의 경우 단순히 w의 violated component를 0으로 설정하여 구현할 수 있고, 2의 경우 가장 violated constraint를 반복적으로 추정함으로써 효율적으로 구현할 수 있습니다.</p>
+<p><br></p>
+<h2 id="4-4-Incorporating-Prior-Knowledge"><a href="#4-4-Incorporating-Prior-Knowledge" class="headerlink" title="4.4 Incorporating Prior Knowledge"></a>4.4 Incorporating Prior Knowledge</h2><p>이 section은 앞서 Algorithm 1의 Line 8에서와 말한 것과 같이 option으로 <strong>prior knowledge</strong> 을 통해 추가적인 constraints를 둘 수 있다는 것을 보여줍니다.<br>1) 0 vector 대신에 $w$에 prior belief에 대한 solution을 regularizing하는 것<br>2) loss function을 통해 특정한 state-action pairs를 poor choices으로 표시하는 것. algorithm이 이러한 요소로 인하여 large magin을 가지도록 강제합니다.<br>3) $w$에 constraint 형태로 domain knowledge를 포함시키는 것 (e.g 특정한 영역의 state를 다른 state보다 cost가 적어도 두 배가 되도록 요구.)</p>
+<p>이러한 방법들은 training examples의 사용 외에도 learner에게 expert의 knowledge를 전달하는 강력한 방법입니다.</p>
+<p><br><br></p>
+<h1 id="5-Experimental-Results"><a href="#5-Experimental-Results" class="headerlink" title="5. Experimental Results"></a>5. Experimental Results</h1><p><br></p>
+<h2 id="5-1-Demonstration-of-learning-to-plan-based-on-satellite-color-imagery"><a href="#5-1-Demonstration-of-learning-to-plan-based-on-satellite-color-imagery" class="headerlink" title="5.1 Demonstration of learning to plan based on satellite color imagery"></a>5.1 Demonstration of learning to plan based on satellite color imagery</h2><p>실험에서는 실제 문제(Path planning)에서 논문 개념을 이용하여 유효성 검증할 것입니다.<br>1) Section 4에서 보여주었던 batch learning algorithm을 사용<br>2) Regularization을 위한 적당한 값을 사용하고, 위에서 다뤘던 우리의 algorithm을 사용</p>
+<p>추가적으로 prior knowledge에서의 첫 번째 방법을 적용한 것으로 보입니다.</p>
+<p>같은 맵의 영역에서 시연되는 다른 예제 경로는 학습 후에 hold out 영역에서 상당히 다른 결과를 이끌었습니다.</p>
+<center> <img src="../../../../img/irl/mmp_8.png" width="1200"> </center>
+
+<center> <img src="../../../../img/irl/mmp_9.png" width="600"> </center>
+
+<ul>
+<li><p>실험 의도</p>
+<ul>
+<li>Top : Road에 유지하도록 제안</li>
+<li>Bottom : 은밀한 의도를 제시(여기서는 숲을 지나는 의도를 의미)</li>
+</ul>
+</li>
+<li><p>실험 결과</p>
+<ul>
+<li>Left : Training 예제</li>
+<li>Middle : Training 이후에 hold out 영역에서 학습된 cost map</li>
+<li>Right : Hold out 영역에서 $A^*$를 이용하여 생성된 행동 결과</li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h2 id="5-2-Data-shown-are-MMP-learned-cost-maps"><a href="#5-2-Data-shown-are-MMP-learned-cost-maps" class="headerlink" title="5.2 Data shown are MMP learned cost maps"></a>5.2 Data shown are MMP learned cost maps</h2><center> <img src="../../../../img/irl/mmp_10.png" width="1100"> </center>
+
+<p>Figure 2은 holdout region으로부터의 결과입니다.</p>
+<p>그림에서 loss-augmented path (blue)은 일반적으로 마지막 학습된 경로보다 일반적으로 좋은 결과를 수행하지 못하는 것을 나타났습니다. 왜냐하면 loss-augmentation은 높은 loss의 영역을 최종 학습 지도보다 더욱 desirable하게 만들기 때문입니다.</p>
+<p><strong>직관적으로, 만약 학습자가 loss-augmented cost map에 대해서 잘 수행할 수 있다면, loss-augmentation없이도 더욱 잘 수행되어야 한다는 것입니다.</strong> 이것은 margin을 가지고 학습된 개념입니다.</p>
+<p><br></p>
+<h2 id="5-3-Results-using-two-alternative-approaches"><a href="#5-3-Results-using-two-alternative-approaches" class="headerlink" title="5.3 Results using two alternative approaches"></a>5.3 Results using two alternative approaches</h2><center> <img src="../../../../img/irl/mmp_11.png" width="700"> </center>
+
+<ul>
+<li>Left : the result of a next-action classifier applied superimposed on a visualization of the second dataset.</li>
+<li>Right : a cost map learned by manual training of a regression.</li>
+</ul>
+<p>두 개의 경우에서 학습된 경로들은 poor approximations. (not shown on left, red on right).</p>
+<p><br></p>
+<h2 id="5-4-Visualization-about-losses"><a href="#5-4-Visualization-about-losses" class="headerlink" title="5.4 Visualization about losses"></a>5.4 Visualization about losses</h2><center> <img src="../../../../img/irl/mmp_12.png" width="850"> </center>
+
+<ul>
+<li>Left : Visualization of inverted Loss function $(1− l(x))$ for a training example path.</li>
+<li>Right : Comparison of holdout loss of MMP (by number of iterations) to a regression method where a teacher hand-labeled costs.</li>
+</ul>
+<p>비교를 위해, 저자는 MMP에 다른 두 개의 접근방법을 사용하여 유사한 학습을 시도하였습니다.</p>
+<ol>
+<li><p>(Lecun et al., 2006)$^5$에서 제안한 방법으로 state 특징들을 다음 action으로 취하는 mapping을 사용한 직접적으로 학습하는 알고리즘입니다. 이 경우, traing data에 대해 좋은 결과를 얻지 못했습니다.</p>
+</li>
+<li><p>다소 더 성공적은 시도는 직접 label을 통해 cost를 학습시킨 알고리즘입니다. 이 알고리즘은 MMP보다 학습자에게 더 많은 명시적 정보를 제공합니다.</p>
+<ul>
+<li>다음을 기반하여 low, medium, high cost로 제공<ol>
+<li>Expert knowledge of the planner</li>
+<li>Iterated training and observation</li>
+<li>The trainer had prior knowledge of the cost maps found under MMP batch learning on this dataset.</li>
+</ol>
+</li>
+<li>추가 정보가 주어진 cost map은 정성적으로 올바른 것처럼 보이지만, 그림 3과 그림 4는 상당히 좋지 않은 성능을 보여줍니다.</li>
+</ul>
+</li>
+</ol>
+<p><br><br></p>
+<h1 id="6-Related-and-Future-Work"><a href="#6-Related-and-Future-Work" class="headerlink" title="6. Related and Future Work"></a>6. Related and Future Work</h1><p>Maximum Margin Planning과 직접적으로 연관된 두 가지 work가 있습니다.</p>
+<p>그 중 하나가 바로 <strong>Inverse RL</strong> 입니다.</p>
+<p>IRL의 목표는 MDP에서 agent의 행동을 관찰하는 하여 agent의 행동으로 부터 reward function를 추출하는 것입니다. 그러나 이것은 기본적으로 ill-posed problem으로 알고 있습니다. 그럼에도 불구하고, MMP와 같이 유사한 효과를 가진 IRL 아이디어들을 시도한 몇 가지 heuristic 시도가 있었습니다.</p>
+<p>유용한 heuristic 방법은 바로 이전 논문인 <strong>APP</strong> 논문입니다. 학습자의 정책과 시연되는 예제간의 expected feature counts을 통해 매칭을 시도하는 학습 방법입니다.</p>
+<p>MMP의 경우 IRL algorithm의 variant과는 다른 스타일의 algorithm입니다. MMP는 하나의 MDP 보다 많은 정책 시연들을 허용하도록 설계되어 있습니다. 여러 특징 맵, 다른 시작 지점과 목표 지점, 완전히 새로운 맵과 목표 지점을 가지는 학습자의 목표를 이용하여 예제들을 시연했습니다.</p>
+<p>IRL과 MMP간의 관계는 <strong>generative and discriminative learning</strong> 간의 구별을 연상시킵니다.</p>
+<p><strong>일반적인 IRL의 경우, feature matching을 시도합니다.</strong> agent가 MDP에서 (거의 최적같이) 행동하고 (거의) feature expectation에 매칭 가능할 때 학습하도록 설계되었습니다(Generative models과 같은 strong 가정). 예를 들어 feature expecatation을 매칭하는 능력은 algorithm의 행동이 feature가 선형인 모든 cost function에 대해서 near-optimal일 것이라는 것을 의미합니다.</p>
+<p><strong>반대로 MMP의 경우, 우리의 목표가 직접적으로 output behavior을 모방하는 것이라는 weaker 가정을 하고 실제 MDP나 reward function에 대해 agnostic합니다.</strong> 여기서 MDP는 output decision들을 구조화하고 경쟁하려고 하는 expert의 잠재적인 natural class을 제공합니다.</p>
+<p>정리하자면,<br><strong>Generative Model</strong> : 개별 클래스의 분포를 모델링합니다.<br><strong>Discriminative Model</strong> : Discriminative 모델은 기본 확률 분포 또는 데이터 구조를 모델링하지 않고 기본 데이터를 해당 클래스에 직접 mapping(class 경계를 통해 학습). SVM은 이러한 기준을 만족시키므로 decision tree와 마찬가지로 discriminative model이라고 할 수 있습니다.</p>
+<p><br><br></p>
+<h1 id="처음으로"><a href="#처음으로" class="headerlink" title="처음으로"></a>처음으로</h1><h2 id="Let’s-do-Inverse-RL-Guide"><a href="#Let’s-do-Inverse-RL-Guide" class="headerlink" title="Let’s do Inverse RL Guide"></a><a href="https://reinforcement-learning-kr.github.io/2019/01/22/0_lets-do-irl-guide/">Let’s do Inverse RL Guide</a></h2><p><br></p>
+<h1 id="이전으로"><a href="#이전으로" class="headerlink" title="이전으로"></a>이전으로</h1><h2 id="APP-여행하기"><a href="#APP-여행하기" class="headerlink" title="APP 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2019/02/01/2_app/">APP 여행하기</a></h2><h2 id="APP-Code"><a href="#APP-Code" class="headerlink" title="APP Code"></a><a href="">APP Code</a></h2><p><br></p>
+<h1 id="다음으로"><a href="#다음으로" class="headerlink" title="다음으로"></a>다음으로</h1><h2 id="MaxEnt-여행하기"><a href="#MaxEnt-여행하기" class="headerlink" title="MaxEnt 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2019/02/10/4_maxent/">MaxEnt 여행하기</a></h2>
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>

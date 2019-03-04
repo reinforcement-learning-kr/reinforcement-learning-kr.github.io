@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<!-- Head tag -->
+<head>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="RLKorea 블로그">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Bomi Yu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Trust Region Policy Optimization"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="RLKorea 블로그" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="RLKorea"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Trust Region Policy Optimization - RLKorea</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="/css/customizing.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125432253-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+
+
+    <!-- favicon -->
+    
+    <link rel="icon" href="/img/favicon.ico"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Menu -->
+    <!-- Navigation -->
+<div class="custom-nav">
+	<div class="menu-icon">
+		<button>
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>			
+		</button>
+	</div>
+	<a class="logo" href="/">RLKorea</a>
+
+</div>	
+
+<div class="left-side on" id="bs-example-navbar-collapse-1">
+	<button class="close">
+		<span class="bar"></span>
+		<span class="bar"></span>
+	</button>
+	<div class="intro">
+		<a href="/"><img src="/img/logo.png" alt="내사진"></a>
+		<p><i class="fa fa-facebook"></i><a href="https://www.facebook.com/groups/ReinforcementLearningKR/"><strong> RLKorea</strong></a><br>
+			RLKorea 블로그</p>
+	</div>
+	<ul>
+		<!--<li><a href="/2018/05/16/RLKorea_intro/">RLKorea소개</a></li> -->
+		<li class="more_btn">
+			<p class="clearfix">
+			    <span class="left">
+			        프로젝트
+			    </span>
+			    <i class="fa fa-sort-down right"></i>
+			</p>
+			<ul>
+				<li><a href="/2018/06/29/0_pg-travel-guide/">피지여행</a></li>
+				<li><a href="/tags/알파오목/">알파오목</a></li>
+				<li><a href="/2018/09/27/Distributional_intro/">Dist_RL</a></li>
+				<li><a href="/2018/11/20/robot_arm_intro/">각잡고로봇팔</a></li>
+				<li><a href="/2019/01/22/0_lets-do-irl-guide/">GAIL하자!</a></li>
+				<!--<li><a href="/tags/홈네비/">홈네비</a></li>
+				<li><a href="/tags/DQN 뽀개기/">DQN 뽀개기</a></li>
+				<li><a href="/tags/광산깨기/">광산깨기</a></li>-->
+			</ul>
+		</li>
+		<li class="more_btn"><a href="#">논문리뷰</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 컨텐츠</a></li>
+		<li class="more_btn"><a href="#">강화학습 관련 Q&A</a></li>
+		<!-- 
+			<li>
+				<a href="/">
+					
+						Home
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/archives">
+					
+						Archives
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/tags">
+					
+						Tags
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="/categories">
+					
+						Categories
+					
+				</a>
+			</li>
+		
+			<li>
+				<a href="https://github.com/reinforcement-learning-kr">
+					
+						<i class="fa fa-github fa-stack-2x"></i>
+					
+				</a>
+			</li>
+		 -->
+	</ul>
+</div>
+
+
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header post">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="post-heading">
+					<h1>Trust Region Policy Optimization</h1>
+					
+					<h2 class="post-subheading">
+						피지여행 5번째 논문
+					</h2>
+					
+					<span class="meta">
+						<!-- Date and Author -->
+						
+							Posted by 공민서, 김동민 on
+						
+						
+							2018-06-24
+						
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Post Content -->
+<article>
+	<div class="container">
+		<div class="row">
+
+			<!-- Tags and categories -->
+		   
+				<div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 post-tags">
+					
+						
+
+
+<a href="/tags/프로젝트/">#프로젝트</a> <a href="/tags/피지여행/">#피지여행</a>
+
+
+					
+				</div>
+				<div class="col-lg-3 col-md-4 post-categories">
+					
+						
+
+<a href="/categories/프로젝트/">프로젝트</a>
+
+					
+				</div>
+			
+
+			<!-- Gallery -->
+			
+
+			<!-- Post Main Content -->
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<center> <img src="https://www.dropbox.com/s/o7cjcn0e17mpizr/Screen%20Shot%202018-07-18%20at%201.14.22%20AM.png?dl=1" width="700"> </center>
+
+<p>논문 저자 : John Schulman, Sergey Levine, Philipp Moritz, Michael Jordan, Pieter Abbeel<br>논문 링크 : <a href="https://arxiv.org/pdf/1502.05477.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1502.05477.pdf</a><br>Proceeding : International Conference on Machine Learning (ICML) 2015<br>정리 : 공민서, 김동민</p>
+<hr>
+<h1 id="1-들어가며…"><a href="#1-들어가며…" class="headerlink" title="1. 들어가며…"></a>1. 들어가며…</h1><p>Trust region policy optimization (TRPO)는 상당히 우수한 성능을 보여주는 policy gradient 기법으로 알려져 있습니다. 높은 차원의 action space를 가진 robot locomotion부터 action은 적지만 화면을 그대로 처리하여 플레이하기 때문에 control parameter가 매우 많은 Atari game까지 각 application에 세부적으로 hyperparameter들을 특화시키지 않아도 두루두루 좋은 성능을 나타내기 때문에 일반화성능이 매우 좋은 기법입니다. 이 TRPO에 대해서 알아보겠습니다.</p>
+<p>※TRPO를 매우 재밌게 설명한 Crazymuse AI의 <a href="https://www.youtube.com/watch?v=CKaN5PgkSBc&amp;t=90s" target="_blank" rel="noopener">Youtube video</a>에서 일부 그림을 차용했습니다. 이 비디오를 시청하시는 것을 강력하게 추천합니다!</p>
+<p><br></p>
+<h2 id="1-1-TRPO-흐름-잡기"><a href="#1-1-TRPO-흐름-잡기" class="headerlink" title="1.1 TRPO 흐름 잡기"></a>1.1 TRPO 흐름 잡기</h2><p>TRPO 논문은 많은 수식이 등장하여 이 수식들을 따라가다보면 큰 그림을 놓칠 수도 있습니다. 세부적인 내용을 살펴보기 전에 기존 연구에서 출발해서 TRPO로 어떻게 발전해나가는지 간략하게 살펴보겠습니다.</p>
+<h3 id="1-1-1-Original-Problem"><a href="#1-1-1-Original-Problem" class="headerlink" title="1.1.1 Original Problem"></a>1.1.1 Original Problem</h3><p>$$\max_\pi \eta(\pi)$$</p>
+<p>모든 강화학습이 그렇듯이 expected discounted reward를 최대화하는 policy를 찾는 문제로부터 출발합니다.</p>
+<h3 id="1-1-2-Conservative-policy-iteration"><a href="#1-1-2-Conservative-policy-iteration" class="headerlink" title="1.1.2 Conservative policy iteration"></a>1.1.2 Conservative policy iteration</h3><p>$$\max L_\pi(\tilde\pi) = \eta(\pi) + \sum_s \rho_\pi(s)\sum_a\tilde\pi(a\vert s)A_\pi(s,a)$$</p>
+<p>$\eta(\pi)$를 바로 최대화하는 것은 많은 경우 어렵습니다. $\eta(\pi)$의 성능향상을 보장하면서 policy를 update하는 conservative policy iteration 기법이 <a href="http://www.cs.cmu.edu/~./jcl/papers/aoarl/Final.pdf" target="_blank" rel="noopener">Kakade와 Langford</a>에 의하여 제안되었습니다. 이 기법을 이용하면 policy update가 성능을 향상시키는지는 못하더라도 최소한 성능을 악화시키지는 않는다는 것이 이론적으로 보장됩니다.</p>
+<h3 id="1-1-3-Theorem-1-of-TRPO"><a href="#1-1-3-Theorem-1-of-TRPO" class="headerlink" title="1.1.3 Theorem 1 of TRPO"></a>1.1.3 Theorem 1 of TRPO</h3><p>$$\max L_{\pi_\mathrm{old} }\left(\pi_\mathrm{new}\right) - \frac{4\epsilon\gamma}{(1-\gamma)^2}\alpha^2,\quad\left(\alpha=D_\mathrm{TV}^\max\left(\pi_\mathrm{old},\pi_\mathrm{new}\right)\right)$$</p>
+<p>기존의 conservative policy iteration은 과거 policy와 새로운 policy를 섞어서 사용해서 실용적이지 않다는 단점이 있었는데 이것을 보완하여 온전히 새로운 policy만으로 update할 수 있는 기법을 제안합니다. </p>
+<h3 id="1-1-4-KL-divergence-version-of-Theorem-1"><a href="#1-1-4-KL-divergence-version-of-Theorem-1" class="headerlink" title="1.1.4 KL divergence version of Theorem 1"></a>1.1.4 KL divergence version of Theorem 1</h3><p>$$\max L_{\pi}\left(\tilde\pi\right) - C\cdot D_\mathrm{KL}^\max\left(\pi,\tilde\pi\right),\quad\left(C = \frac{4\epsilon\gamma}{(1-\gamma)^2}\right)$$</p>
+<p>distance metric을 KL divergence로 바꿀 수 있습니다.</p>
+<h3 id="1-1-5-Using-parameterized-policy"><a href="#1-1-5-Using-parameterized-policy" class="headerlink" title="1.1.5 Using parameterized policy"></a>1.1.5 Using parameterized policy</h3><p>$$\max_\theta L_{\theta_\mathrm{old} }(\theta) - C\cdot D_\mathrm{KL}^\max\left(\theta_\mathrm{old}, \theta\right)$$</p>
+<p>최적화문제를 더욱 편리하게 풀 수 있도록 낮은 dimension을 가지는 parameter들로 parameterized된 policy를 사용할 수 있습니다.</p>
+<h3 id="1-1-6-Trust-region-constraint"><a href="#1-1-6-Trust-region-constraint" class="headerlink" title="1.1.6 Trust region constraint"></a>1.1.6 Trust region constraint</h3><p>$$<br>\begin{align}<br>\max_\theta\quad &amp;L_{\theta_\mathrm{old} }(\theta) \\<br>\mathrm{s.t.\ }&amp;D_\mathrm{KL}^\max\left(\theta_\mathrm{old}, \theta\right) \leq \delta<br>\end{align}$$</p>
+<p>1.1.5까지는 아직 conservative policy iteration을 약간 변형시킨 것입니다. policy를 update할 때 지나치게 많이 변하는 것을 방지하기 위하여 <a href="https://en.wikipedia.org/wiki/Trust_region" target="_blank" rel="noopener">trust region</a>을 constraint로 설정할 수 있습니다. 이 아이디어로 인해서 TRPO라는 명칭을 가지게 됩니다.</p>
+<h3 id="1-1-7-Heuristic-approximation"><a href="#1-1-7-Heuristic-approximation" class="headerlink" title="1.1.7 Heuristic approximation"></a>1.1.7 Heuristic approximation</h3><p>$$<br>\begin{align}<br>\max_\theta\quad &amp;L_{\theta_\mathrm{old} }(\theta) \\<br>\mathrm{s.t.\ }&amp;\overline{D}_\mathrm{KL}^{\rho_\mathrm{old} }\left(\theta_\mathrm{old}, \theta\right) \leq \delta<br>\end{align}$$</p>
+<p>사실 1.1.6의 constraint는 모든 state에 대해서 성립해야 하기 때문에 문제를 매우 어렵게 만듭니다. 이것을 좀 더 다루기 쉽게 state distribution에 대한 평균을 취한 것으로 변형합니다.</p>
+<h3 id="1-1-8-Monte-Carlo-simulation"><a href="#1-1-8-Monte-Carlo-simulation" class="headerlink" title="1.1.8 Monte Carlo simulation"></a>1.1.8 Monte Carlo simulation</h3><p>$$<br>\begin{align}<br>\max_\theta\quad &amp;E_{s\sim\rho_{\theta_\mathrm{old} },a\sim q}\left[\frac{\pi_\theta(a\vert s)}{q(a\vert s)}Q_{\theta_\mathrm{old} }(s,a)\right] \\<br>\mathrm{s.t.\ }&amp;E_{s\sim\rho_{\theta_\mathrm{old} }}\left[D_\mathrm{KL}\left(\pi_{\theta_\mathrm{old} }(\cdot\vert s) \parallel \pi_\theta(\cdot\vert s)\right)\right] \leq \delta<br>\end{align}$$</p>
+<p>Sampling을 통한 계산이 가능하도록 식을 다시 표현할 수 있습니다. </p>
+<h3 id="1-1-9-Efficiently-solving-TRPO"><a href="#1-1-9-Efficiently-solving-TRPO" class="headerlink" title="1.1.9 Efficiently solving TRPO"></a>1.1.9 Efficiently solving TRPO</h3><p>$$<br>\begin{align}<br>\max_\theta\quad &amp;\nabla_\theta \left. L_{\theta_\mathrm{old} }(\theta)\right\vert _{\theta=\theta_\mathrm{old} } \left(\theta - \theta_\mathrm{old}\right) \\<br>\mathrm{s.t.\ }&amp;\frac{1}{2}\left(\theta_\mathrm{old} - \theta \right)^T A\left(\theta_\mathrm{old}\right)\left(\theta_\mathrm{old} - \theta \right) \leq \delta \\<br>&amp;A_{ij} = \frac{\partial}{\partial \theta_i}\frac{\partial}{\partial \theta_j}\overline{D}_\mathrm{KL}^{\rho_\mathrm{old} }\left(\theta_\mathrm{old}, \theta\right)<br>\end{align}$$</p>
+<p>문제를 효율적으로 풀기 위하여 approximation을 적용할 수 있습니다. objective function은 first order approximation, constraint는 quadratic approximation을 취하면 효율적으로 문제를 풀 수 있는 형태로 바뀌는데 이것을 natural gradient로 풀 수도 있고 conjugate gradient로 풀 수도 있습니다.</p>
+<p>TRPO는 이렇게 다양한 방법으로 문제를 변형한 것입니다! 이제 좀 더 자세히 살펴보겠습니다.</p>
+<p><br><br></p>
+<h1 id="2-Preliminaries"><a href="#2-Preliminaries" class="headerlink" title="2. Preliminaries"></a>2. Preliminaries</h1><p>다음과 같은 파라미터를 가지는 infinite-horizon discounted Markov decision process (MDP)를 고려합니다. </p>
+<ul>
+<li>$\mathcal{S}$: finite set of states</li>
+<li>$\mathcal{A}$: finite set of actions</li>
+<li>$P: \mathcal{S}\times\mathcal{A}\rightarrow\mathbb{R}$: transition probability distribution</li>
+<li>$r: \mathcal{S}\rightarrow\mathbb{R}$: reward function</li>
+<li>$\rho_0:\mathcal{S}\rightarrow\mathbb{R}$: distribution of the initial state $s_0$</li>
+<li>$\gamma\in(0,1)$: discount factor</li>
+<li>$\eta(\pi)=E_{s_0,a_0,\ldots}\left[\sum_{t=0}^\infty\gamma^t r\left(s_t\right)\right]$, where $s_0\sim\rho_0\left(s_0\right), a_t\sim\pi\left(\left.a_t \right\vert s_t\right), s_{t+1}\sim P\left(\left.s_{t+1}\right\vert s_t,a_t\right)$</li>
+<li>$Q_\pi\left(s_t,a_t\right)=E_{ { \color{red}{s_{t+1}} },a_{t+1},\ldots}\left[\sum_{l=0}^\infty \gamma^l r\left(s_{t+l}\right)\right]$: action value function</li>
+<li>$V_\pi\left(s_t\right)=E_{ { \color{red}{a_t} }, s_{t+1},a_{t+1},\ldots}\left[\sum_{l=0}^\infty \gamma^l r\left(s_{t+l}\right)\right]$: value function (action value function과 expectation의 첨자가 다른 부분을 유의하세요.)</li>
+<li>$A_\pi(s,a) = Q_\pi(s,a) - V_\pi(s)$: advantage function</li>
+</ul>
+<p><br></p>
+<h2 id="2-1-Useful-identity-Kakade-amp-Langford-2002"><a href="#2-1-Useful-identity-Kakade-amp-Langford-2002" class="headerlink" title="2.1 Useful identity [Kakade &amp; Langford 2002]"></a>2.1 Useful identity [Kakade &amp; Langford 2002]</h2><p>우리의 목표는 $\eta(\pi)$가 최대화되도록 만드는 것입니다. 하지만 $\pi$의 변화에 따라 $\eta$가 어떻게 변하는지 알아내는 것도 쉽지 않습니다. $\pi$는 기존의 policy이고 $\tilde\pi$는 새로운 policy를 나타낸다고 할 때 $\eta$와 policy update 사이에 다음과 같은 관계가 있다는 것이 밝혀졌습니다.</p>
+<p><strong>Lemma 1.</strong> $\eta\left(\tilde\pi\right) = \eta(\pi) + E_{s_{0},a_{0},\ldots\sim\tilde\pi}\left[\sum_{t=0}^\infty\gamma^t A_\pi\left(s_t,a_t\right)\right]$</p>
+<p><em>Proof.</em> $A_\pi(s,a)=E_{s’\sim P\left(s’\vert s,a\right)}\left[r(s)+\gamma V_\pi\left(s’\right)-V_\pi(s)\right]$로 다시 표현할 수 있습니다. 표기의 편의를 위하여 $\tau:=\left(s_0,a_0,s_1,a_1,\ldots\right)$를 정의하겠습니다. 다음과 같은 수식 전개가 가능합니다.<br>$$<br>\begin{align}<br>&amp;E_{\tau\vert \tilde\pi}\left[\sum_{t=0}^\infty\gamma^t A_\pi\left(s_t,a_t\right)\right] \\<br> &amp;= E_{\tau\vert \tilde\pi}\left[\sum_{t=0}^\infty\gamma^t \left(r(s_t)+\gamma V_\pi\left(s_{t+1}\right)-V_\pi(s_t)\right)\right] \\<br>&amp;= E_{\tau\vert \tilde\pi}\left[\left(\sum_{t=0}^\infty\gamma^t r(s_t)\right)+\gamma V_\pi\left(s_{1}\right)-V_\pi(s_0)+\gamma^2 V_\pi\left(s_{2}\right)-\gamma V_\pi(s_1)+\gamma^3 V_\pi\left(s_{3}\right)-\gamma^2 V_\pi(s_2)+\cdots\right] \\<br>&amp;= E_{\tau\vert \tilde\pi}\left[\sum_{t=0}^\infty\gamma^t r(s_t)+\color{red}{\gamma V_\pi\left(s_{1}\right)}-V_\pi(s_0)+\color{red}{\gamma^2 V_\pi\left(s_{2}\right)}-\color{red}{\gamma V_\pi(s_1)}+\cdots\right] \\<br>&amp;= E_{\tau\vert \tilde\pi}\left[-V_\pi(s_0)+\sum_{t=0}^\infty\gamma^t r(s_t)\right] \\<br>&amp;\overset{\underset{\mathrm{(a)} }{} }{=} -E_{\color{red}{s_0}}\left[V_\pi(s_0)\right]+E_{\tau\vert \tilde\pi}\left[\sum_{t=0}^\infty\gamma^t r(s_t)\right] \\<br>&amp;=-\eta(\pi) + \eta\left(\tilde\pi\right)\\<br>&amp;\quad\therefore \eta\left(\tilde\pi\right) = \eta(\pi) + E_{s_{0},a_{0},\ldots\sim\tilde\pi}\left[\sum_{t=0}^\infty\gamma^t A_\pi\left(s_t,a_t\right)\right]<br>\end{align}<br>$$<br>위의 전개의 (a) 부분은 $V_\pi\left(s_0\right)=E_{a_0,a_1,s_1,\ldots}\left[\sum_{t=0}^\infty\gamma^l r\left(s_l\right)\right]$이므로 $\tau$ 중 많은 부분들이 이미 expectation이 취해진 값이므로 무시됩니다. 오직 $s_0$만 expectation이 취해지지 않았기 때문에 남아있습니다.</p>
+<p><strong>Lemma 1</strong>은 새로운 policy와 기존의 policy 사이의 관계를 규정합니다. 다음과 같은 식을 정의하고 이것을 이용해서 <strong>Lemma 1</strong>을 변형시켜 봅시다.</p>
+<ul>
+<li>$\rho_\pi(s) = P\left(s_0=s\right) + \gamma P\left(s_1=s\right)\ + \gamma^2 P\left(s_2=s\right) + \cdots $: (unnormalized) discounted visitation frequencies</li>
+</ul>
+<p>$$<br>\begin{align}<br>\eta\left(\tilde\pi\right) &amp;= \eta(\pi) + \sum_{t=0}^\infty\sum_{s}P\left(\left.s_t=s\right\vert \tilde\pi\right)\sum_a\tilde\pi(a\vert s)\gamma^t A_\pi(s,a) \\<br>&amp;= \eta(\pi) + \sum_{s}{\color{red}{\sum_{t=0}^\infty \gamma^t P\left(\left.s_t=s\right\vert \tilde\pi\right)} } \sum_a\tilde\pi(a\vert s) A_\pi(s,a) \\<br>&amp;= \eta(\pi) + \sum_{s}{\color{red}{\rho_\tilde\pi(s)} }\sum_a\tilde\pi(a\vert s) A_\pi(s,a) \\<br>\end{align}<br>$$</p>
+<p>이 수식의 의미가 무엇일까요? 만약 $\sum_a\tilde\pi(a\vert s) A_\pi(s,a) \geq 0$이라면 $\eta(\tilde\pi)$는 항상 $\eta(\pi)$보다 큽니다. 즉, policy를 업데이트함으로써 항상 개선됩니다. 즉, 이 수식을 통해서 항상 더 좋은 성능을 내는 policy update가 가져야 할 특징을 알 수 있습니다. 다음과 같은 deterministic policy가 있다고 합시다.</p>
+<p>$$<br>\tilde\pi(s) = \arg\max_a A_\pi(s,a)<br>$$</p>
+<p>이 policy는 적어도 하나의 state-action pair에서 0보다 큰 값을 가지는 advantage가 있고 그 때의 확률이 0이 아니라면 항상 성능을 개선시킵니다. 어려운 점은 policy를 바꾸면 $\rho$도 바뀐다는 점입니다. </p>
+<p>다음 그림을 봅시다. Starting Point에서 여러가지 경로를 거쳐서 Destination으로 갈 수 있습니다. 다른 policy를 이용하는 것은 다른 경로를 이용한 것입니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=16s" target="_blank" rel="noopener"><img src="../../../../img/policy_change.png" alt="policy_change" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>이 때 다른 policy를 이용함에 따라 state visitation frequency도 변하게 됩니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=36s" target="_blank" rel="noopener"><img src="../../../../img/state_visitation_change.png" alt="state_visitation_change" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>이로 인해서 policy를 최적화하는 것은 어려워집니다. 그래서 이러한 변화를 무시하는 다음과 같은 approximation을 취합니다.</p>
+<p>$$<br>\begin{align}<br>L_\pi\left(\tilde\pi\right) &amp;= \eta(\pi) + \sum_{s}{\color{red}{\rho_\pi(s)} } \sum_a\tilde\pi(a\vert s) A_\pi(s,a)<br>\end{align}<br>$$</p>
+<p>policy가 바뀌었음에도 이전의 state distribution을 계속 이용하는 것입니다. 이것은 policy의 변화가 크지 않다면 어느 정도 허용될 수 있을 것입니다. 그렇지만 얼마나 많은 변화가 허용될까요? 이것을 정하기 위해서 이용하는 것이 trust region입니다.</p>
+<p><br></p>
+<h2 id="2-2-Conservative-Policy-Iteration"><a href="#2-2-Conservative-Policy-Iteration" class="headerlink" title="2.2 Conservative Policy Iteration"></a>2.2 Conservative Policy Iteration</h2><p>policy의 변화를 다루기 용이하게 하기 위해서 policy를 다음과 같이 파라미터를 이용해서 표현합시다.</p>
+<ul>
+<li>$\pi_\theta(a\vert s)$: parameterized policy</li>
+</ul>
+<p>$\pi_\theta$는 $\theta$에 대하여 미분가능한 함수입니다. $L_\pi\left(\tilde\pi\right)$을 $\theta_0$에서 $\eta(\pi)$에 대한 first order approximation이라고 하면 다음 식이 성립합니다.</p>
+<p>$$<br>\begin{align}<br>L_{\pi_{\theta_0} }\left(\pi_{\theta_0}\right) &amp;= \eta\left(\pi_{\theta_0}\right) \\<br>\nabla_\theta \left.L_{\pi_{\theta_0} }\left(\pi_{\theta_0}\right)\right\vert _{\theta=\theta_0} &amp;= \nabla_\theta\left.\eta(\pi_{\theta_0})\right\vert _{\theta=\theta_0}<br>\end{align}<br>$$</p>
+<p>이것의 의미는 $\pi_{\theta_0}$가 매우 작게 변한다면 $L_{\pi_{\theta_0} }$를 개선시키는 것이 $\eta$를 개선시키는 것이라는 것입니다. 그러나 지금까지의 설명만으로는 $\pi_{\theta_0}$를 얼마나 작게 변화시켜야 할지에 대해서는 알 수 없습니다.</p>
+<p>Kakade &amp; Langford가 2002년 발표한 논문에서도 이것에 대해서 고민했습니다. 그 논문에서 <em>conservative policy iteration</em>이라는 기법을 제안합니다. 그 논문의 contribution은 다음과 같습니다.</p>
+<ul>
+<li>$\eta$ 개선의 lower bound를 제공</li>
+<li>기존의 policy를 $\pi_\mathrm{old}$라고 하고 $\pi’$를 $\pi’=\arg\max_{\pi’}L_{\pi_\mathrm{old} }\left(\pi’\right)$과 같이 정의할 때, 새로운 mixture policy $\pi_\mathrm{new}$를 다음과 같이 제안<br>$$<br>\pi_\mathrm{new}(a\vert s) = (1-\alpha)\pi_\mathrm{old}(a\vert s) + \alpha \pi’(a\vert s)<br>$$</li>
+</ul>
+<p>그림으로 표현하면 다음과 같습니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=2m46s" target="_blank" rel="noopener"><img src="../../../../img/mixure_policy.png" alt="mixure_policy" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<ul>
+<li>다음과 같은 lower bound를 정의<br>$$<br>\eta\left(\pi_\mathrm{new}\right) \geq L_{\pi_{\theta_\mathrm{old} }}\left(\pi_\mathrm{new}\right) - \frac{2\epsilon\gamma}{(1-\gamma)^2}\alpha^2,\\<br>\mathrm{where\ }\epsilon = \max_s\left\vert E_{a\sim\pi’(a\vert s)}\left[A_\pi(s,a)\right]\right\vert<br>$$</li>
+</ul>
+<p>하지만 mixture된 policy라는 것은 실용적이지 않습니다. </p>
+<p><br><br></p>
+<h1 id="3-Monotonic-Improvement-Guarantee-for-General-Stochastic-Policies"><a href="#3-Monotonic-Improvement-Guarantee-for-General-Stochastic-Policies" class="headerlink" title="3. Monotonic Improvement Guarantee for General Stochastic Policies"></a>3. Monotonic Improvement Guarantee for General Stochastic Policies</h1><p>이전 장에서 설명한 lower bound는 오직 mixture policy에 대해서만 성립하고 더 많이 사용되는 stochastic policy에는 적용되지 않습니다. 따라서 stochastic policy를 이용할 수 있도록 개선할 필요가 있습니다. 아래와 같이 기존 수식에서 두 가지를 바꿈으로써 이것이 가능합니다.</p>
+<ul>
+<li>$\alpha\rightarrow$ distance measure between $\pi$ and $\tilde\pi$</li>
+<li>constant $\epsilon\rightarrow\max_{s,a}\left\vert A_\pi(s,a)\right\vert $</li>
+</ul>
+<p>여기서 distance measure로 total variation divergence를 이용합니다. discrete porbability distribution $p$와 $q$에 대하여 다음과 같이 정의됩니다.<br>$$<br>D_\mathrm{TV}(p\parallel q) = \frac{1}{2}\sum_i\left\vert p_i - q_i\right\vert<br>$$</p>
+<p>이것을 이용하여 $D_\mathrm{TV}^\max$를 다음과 같이 정의합니다.<br>$$<br>D_\mathrm{TV}^\max(\pi\parallel \tilde\pi) = \max_s D_\mathrm{TV}\left(\pi(\cdot\vert s)\parallel\tilde\pi(\cdot\vert s)\right)<br>$$</p>
+<p>그림으로 표현하면 다음과 같습니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=3m15s" target="_blank" rel="noopener"><img src="../../../../img/tvd.png" alt="tvd" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>이것을 이용하여 다음과 같은 관계식을 얻을 수 있습니다.</p>
+<p><strong>Theorem 1.</strong> Let $\alpha=D_\mathrm{TV}^\max(\pi\parallel \tilde\pi)$. Then the following bound holds:<br>$$<br>\begin{align}<br>\eta\left(\pi_\mathrm{new}\right) &amp;\geq L_{\pi_\mathrm{old} }\left(\pi_\mathrm{new}\right) - \frac{4\epsilon\gamma}{(1-\gamma)^2}\alpha^2, \\<br>\mathrm{where\ } \epsilon&amp;= \max_{s,a}\left\vert A_\pi(s,a)\right\vert<br>\end{align}<br>$$<br><!--*Proof.* TBD.--></p>
+<p>또다른 distance metric으로 아래 그림과 같은 KL divergence가 있습니다.<br>(그런데 왜 하필 KL divergence로 바꿀까요? 논문의 뒤쪽에서 계산효율을 위해서 conjugate gradient method를 이용하는데 이를 위해서 바꾼게 아닐까 싶습니다. Wasserstein distance 같은 다른 방향으로 발전시킬 수도 있을 것 같습니다. Schulmann이 아마 해봤겠죠?^^a)</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=3m34s" target="_blank" rel="noopener"><img src="../../../../img/kld.png" alt="kld" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>total variation divergence와 KL divergence 사이에는 다음과 같은 관계가 있습니다.<br>$$<br>D_\mathrm{TV}(p\parallel q)^2 \leq D_\mathrm{KL}(p\parallel q)<br>$$</p>
+<p>다음 수식을 정의합니다.<br>$$<br>D_\mathrm{KL}^\max(\pi\parallel \tilde\pi) = \max_s D_\mathrm{KL}\left(\pi(\cdot\vert s)\parallel\tilde\pi(\cdot\vert s)\right)<br>$$</p>
+<p><strong>Theorem 1</strong>을 이용하여 다음과 같은 수식이 성립함을 알 수 있습니다.<br>$$<br>\begin{align}<br>\eta\left(\tilde\pi\right) &amp;\geq L_{\pi}\left(\tilde\pi\right) - C\cdot D_\mathrm{KL}^\max(\pi, \tilde\pi), \\<br>\mathrm{where\ } C&amp;= \frac{4\epsilon\gamma}{(1-\gamma)^2}<br>\end{align}<br>$$</p>
+<p>이러한 policy imporvement bound를 기반으로 다음과 같은 approximate policy iteration 알고리듬을 고안해낼 수 있습니다.</p>
+<p><strong>Algorithm 1</strong> Policy iteration algorithm guaranteeing non-decreasing expected return $\eta$</p>
+<blockquote>
+<p>Initialize $\pi_0$<br><strong>for</strong> $i=0,1,2,\ldots$ until convergence <strong>do</strong><br>$\quad$Compute all advantage values $A_{\pi_i}(s,a)$<br>$\quad$Solve the contstrained optimization problem<br>$\quad\pi_{i+1}=\arg\max_\pi\left[L_{\pi_i} - CD_\mathrm{KL}^\max\left(\pi_i,\pi\right)\right]$<br>$\quad\quad$where $C = 4\epsilon\gamma / (1-\gamma)^2$<br>$\quad\quad$and $L_{\pi_i}\left(\pi\right) = \eta(\pi_i) + \sum_{s}\rho_{\pi_i}(s)\sum_a\pi(a\vert s) A_{\pi_i}(s,a)$<br><strong>end for</strong></p>
+</blockquote>
+<p><strong>Algorithm 1</strong>은 advantage를 정확하게 계산할 수 있다고 가정하고 있습니다. 이 알고리듬은  monotonical한 성능 증가($\eta(\pi_0)\leq\eta(\pi_1)\leq\cdots$)를 한다는 것을 다음과 같이 보일 수 있습니다. $M_i(\pi)=L_{\pi_i}(\pi) - CD_\mathrm{KL}^\max\left(\pi_i,\pi\right)$라고 합시다.</p>
+<p>$$<br>\begin{align}<br>\eta \left(\pi_{i+1}\right) &amp;\geq M_i\left(\pi_{i+1}\right)\\<br>\eta \left(\pi_{i}\right) &amp;= M_i\left(\pi_{i}\right) \\<br>\eta \left(\pi_{i+1}\right) - \eta \left(\pi_{i}\right) &amp;\geq M_i\left(\pi_{i+1}\right) - M_i\left(\pi_{i}\right)<br>\end{align}<br>$$</p>
+<p>위 수식과 같이 매 iteration 마다 $M_i$를 최대화함으로써, $\eta$가 감소하지 않는다는 것을 보장할 수 있습니다. 이와 같은 타입의 알고리듬을 <a href="https://www.jstor.org/stable/pdf/27643496.pdf?casa_token=0qHamcl60WoAAAAA:-fkZ9JcA_nrY3-zbCUpqvPOgcAMgw7Gr96MajCZg2byHf8m5GU1KTSxyJJcBy1lPZbBTZVCjHHUXilh4k-iuwF91Wka4B5qdltC1IR2qMWk8q1FoV6__" target="_blank" rel="noopener">minorization-maximization (MM) algorithm</a>이라고 합니다. EM 알고리듬도 이 타입의 알고리듬 중 하나입니다.</p>
+<p><strong>Algorithm 1</strong>은 아래 그림과 같이 동작합니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=3m52s" target="_blank" rel="noopener"><img src="../../../../img/surrogate.png" alt="surrogate" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>$M_i$는 $\pi_i$일 때 equality가 되는 $\eta$에 대한  surrogate function입니다. TRPO는 이 surrogate function을 최대화하고 KL divergence를 penalty가 아닌 constraint로 두는 알고리듬입니다.</p>
+<p><br><br></p>
+<h1 id="4-Optimization-of-Parameterized-Policies"><a href="#4-Optimization-of-Parameterized-Policies" class="headerlink" title="4. Optimization of Parameterized Policies"></a>4. Optimization of Parameterized Policies</h1><p>표기의 편의를 위해 다음과 같이 notation들을 더 간략하게 정의합니다.</p>
+<ul>
+<li>$\eta(\theta):=\eta\left(\pi_\theta\right)$</li>
+<li>$L_\theta\left(\tilde\theta\right):=L_{\pi_\theta}\left(\pi_{\tilde\theta}\right)$</li>
+<li>$D_\mathrm{KL}\left(\theta\parallel\tilde\theta\right):=D_\mathrm{KL}\left(\pi_\theta\parallel\pi_{\tilde\theta}\right)$</li>
+<li>$\theta_\mathrm{old}$: previous policy parameter</li>
+</ul>
+<p><br></p>
+<h2 id="4-1-Trust-Region-Policy-Optimization"><a href="#4-1-Trust-Region-Policy-Optimization" class="headerlink" title="4.1 Trust Region Policy Optimization"></a>4.1 Trust Region Policy Optimization</h2><p>이전 장의 중요 결과를 위의 notation으로 다시 표기하면 아래와 같습니다.</p>
+<p>$$<br>\eta\left(\theta\right) \geq L_{\theta_\mathrm{old} }\left(\theta\right) - C\cdot D_\mathrm{KL}^\max\left(\theta_\mathrm{old}, \theta\right)<br>$$</p>
+<p>$\eta$의 성능 향상을 보장하기 위해서 그것의 lower bound를 최대화할 수 있습니다.</p>
+<p>$$<br>\max_\theta \left[L_{\theta_\mathrm{old} }\left(\theta\right) - C D_\mathrm{KL}^\max\left(\theta_\mathrm{old}, \theta\right)\right]<br>$$</p>
+<p>이 최적화 문제는 step size를 매우 작게 해야 올바른 동작을 합니다. 위에서 살펴봤듯이 first order approximation이기 때문입니다. 좀 더 큰 step size를 가질 수 있도록 이 최적화 문제를 trust region constraint를 도입하여 다음과 같이 바꿉니다.</p>
+<p>$$<br>\begin{align}<br>\max_\theta\quad &amp;L_{\theta_\mathrm{old} }(\theta) \\<br>\mathrm{s.t.\ }&amp;D_\mathrm{KL}^\max\left(\theta_\mathrm{old}, \theta\right) \leq \delta<br>\end{align}$$</p>
+<p>이 최적화문제의 constraint는 모든 state space에 대해서 성립해야 합니다. 또한 maximum값을 매번 찾아야 합니다. state가 많은 경우 constraint의 수가 매우 많아져서 문제를 풀기 어렵게 만듭니다. constraint의 수를 줄이기 위하여 다음과 같은 avergae KL divergence를 이용하는 heuristic approximation을 취합니다. 이것이 최선의 방법은 아닐 수 있지만 실용적인 방법입니다.</p>
+<p>$$<br>\overline D_\mathrm{KL}^{\rho}\left(\theta_1, \theta_2\right):=E_{s\sim\rho}\left[D_\mathrm{KL}\left(\pi_{\theta_1}(\cdot\vert s)\parallel\pi_{\theta_2}(\cdot\vert s)\right)\right]<br>$$</p>
+<p>이것을 기반으로 다음과 같은 최적화 문제를 풀 수 있습니다.</p>
+<p>$$<br>\begin{align}<br>\max_\theta\quad &amp;L_{\theta_\mathrm{old} }(\theta) \\<br>\mathrm{s.t.\ }&amp;\overline{D}_\mathrm{KL}^{\rho_\mathrm{old} }\left(\theta_\mathrm{old}, \theta\right) \leq \delta<br>\end{align}$$</p>
+<p>아래 그림처럼 step size에 대해서 고려할 수 있습니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=4m35s" target="_blank" rel="noopener"><img src="../../../../img/heuristic_approx.png" alt="heuristic_approx" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p><br><br></p>
+<h1 id="5-Sample-Based-Estimation-of-the-Objective-and-Constraint"><a href="#5-Sample-Based-Estimation-of-the-Objective-and-Constraint" class="headerlink" title="5. Sample-Based Estimation of the Objective and Constraint"></a>5. Sample-Based Estimation of the Objective and Constraint</h1><p>실용적인 알고리듬을 만들려고 하는 노력은 아직 끝나지 않았습니다. 이제 앞의 알고리듬을 sample-based estimation 즉, Monte Carlo estimation을 할 수 있도록 바꿔보겠습니다. sampling을 편하게 할 수 있도록 아래와 같이 바꿔줍니다.</p>
+<ul>
+<li>$\sum_s \rho_{\theta_\mathrm{old} }(s)[\ldots]\rightarrow\frac{1}{1-\gamma}E_{s\sim\rho_{\theta_\mathrm{old} }}[\ldots]$</li>
+<li>$A_{\theta_\mathrm{old} }\rightarrow Q_{\theta_\mathrm{old} }$</li>
+<li>$\sum_a\pi_{\theta_\mathrm{old} }(a\vert s)A_{\theta_\mathrm{old} } \rightarrow E_{a\sim q}\left[\frac{\pi_\theta(a\vert s)}{q(a\vert s)}A_{\theta_\mathrm{old} }\right]$</li>
+</ul>
+<p>이러한 변화를 그림처럼 도식화할 수 있습니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=5m31s" target="_blank" rel="noopener"><img src="../../../../img/sample-based.png" alt="sample-based" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>한 가지 짚고 넘어가야 할 점은 action sampling을 할 때 importance sampling을 사용한다는 것입니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=5m53s" target="_blank" rel="noopener"><img src="../../../../img/importance_sampling.png" alt="importance_sampling" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>바뀐 최적화문제는 아래와 같습니다.</p>
+<ul>
+<li><strong>Equation (14).</strong></li>
+</ul>
+<p>$$<br>\begin{align}<br>\max_\theta\quad &amp;E_{s\sim\rho_{\theta_\mathrm{old} },a\sim q}\left[\frac{\pi_\theta(a\vert s)}{q(a\vert s)}Q_{\theta_\mathrm{old} }(s,a)\right] \\<br>\mathrm{s.t.\ }&amp;E_{s\sim\rho_{\theta_\mathrm{old} }}\left[D_\mathrm{KL}\left(\pi_{\theta_\mathrm{old} }(\cdot\vert s) \parallel \pi_\theta(\cdot\vert s)\right)\right] \leq \delta<br>\end{align}<br>$$</p>
+<p>이 때 sampling하는 두 가지 방법이 있습니다.</p>
+<p><br></p>
+<h2 id="5-1-Single-Path"><a href="#5-1-Single-Path" class="headerlink" title="5.1 Single Path"></a>5.1 Single Path</h2><p><em>single path</em>는 개별 trajectory들을 이용하는 방법입니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=6m15s" target="_blank" rel="noopener"><img src="../../../../img/single.png" alt="single" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p><br></p>
+<h2 id="5-2-Vine"><a href="#5-2-Vine" class="headerlink" title="5.2 Vine"></a>5.2 Vine</h2><p><em>vine</em>은 한 state에서 rollout을 이용하여 여러 action을 수행하는 방법입니다.</p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=6m32s" target="_blank" rel="noopener"><img src="../../../../img/vine1.png" alt="vine1" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p><a href="https://youtu.be/CKaN5PgkSBc?t=6m49s" target="_blank" rel="noopener"><img src="../../../../img/vine2.png" alt="vine2" title="https://youtu.be/CKaN5PgkSBc"></a></p>
+<p>estimation의 variance를 낮출 수 있지만 계산량이 많고 한 state에서 여러 action을 수행할 수 있어야 하기 때문에 현실적인 문제에 적용하기에는 어려움이 있습니다.</p>
+<p><br><br></p>
+<h1 id="6-Practical-Algorithm"><a href="#6-Practical-Algorithm" class="headerlink" title="6. Practical Algorithm"></a>6. Practical Algorithm</h1><p>앞서 single-path, vine 샘플링을 사용하는 두가지 방식의 policy optimization 알고리즘을 살펴봤습니다. 실용적인 알고리듬은 아래의 과정을 반복해서 수행합니다.</p>
+<p>1) Q-values의 몬테카를로 추정을 통해 state-action 쌍 집합을 single path 또는 vine 과정을 통해 수집함.</p>
+<p>2) 샘플 평균으로, (14)식의 목적함수와 제약식을 추정함</p>
+<ul>
+<li><strong>Equation (14).</strong><br>$$<br>\begin{align}<br>\max_\theta\quad &amp;E_{s\sim\rho_{\theta_\mathrm{old} },a\sim q}\left[\frac{\pi_\theta(a\vert s)}{q(a\vert s)}Q_{\theta_\mathrm{old} }(s,a)\right] \\<br>\mathrm{s.t.\ }&amp;E_{s\sim\rho_{\theta_\mathrm{old} }}\left[D_\mathrm{KL}\left(\pi_{\theta_\mathrm{old} }(\cdot\vert s) \parallel \pi_\theta(\cdot\vert s)\right)\right] \leq \delta<br>\end{align}<br>$$</li>
+</ul>
+<p>3) policy parameter vector인 $\theta$를 업데이트 하면서 제약조건이 있는 최적화 문제를 근사적으로 풂. 본 논문에서는 gradient를 직접 계산하는 것보다는 약간 더 계산량이 있는 line search와 conjugate gradient algorithm을 사용했습니다.</p>
+<p>3)에 대해서,  gradient의 covariance matrix를 사용하지 않고 KL divergence의 Hessian을 해석적으로 계산하여 Fisher Information Matrix를 구성했습니다.</p>
+<p>다시말해서</p>
+<p>$\frac{1}{N} \sum_{n=1}^{N} \frac{\partial}{\partial \theta_i} \log \pi_{\theta}(a_n\vert s_n) \frac{\partial}{\partial \theta_j} \log \pi_{\theta}(a_n\vert s_n)$ 대신 $\frac{1}{N} \sum_{n=1}^{N} \frac{\partial^2}{\partial \theta_i \partial \theta_j} D_{KL}(\pi_{\theta_{old} }(\cdot \vert  s_n) \vert \vert  \pi_{\theta}(\cdot \vert  s_n))$를 계산한 것입니다.</p>
+<p>이 analytic estimator는 Hessian이나 trajectories의 모든 gradient를 저장하지 않아도 되기 때문에 대규모 환경을 고려할 경우 계산 상 이점이 있습니다. 좀 더 자세하게 설명한 Appendix C 부분을 살펴보겠습니다.</p>
+<p><br></p>
+<h2 id="Appendix-C-Efficiently-Solving-the-Trust-Region-Constrained-Optimization-Problem"><a href="#Appendix-C-Efficiently-Solving-the-Trust-Region-Constrained-Optimization-Problem" class="headerlink" title="Appendix C. Efficiently Solving the Trust-Region Constrained Optimization Problem"></a>Appendix C. Efficiently Solving the Trust-Region Constrained Optimization Problem</h2><p>우리가 풀고자 하는 식은 다음과 같습니다.</p>
+<p>$$<br>\begin{align}<br>\max\quad &amp;L(\theta) \\<br>\mathrm{s.t.\ } &amp;\overline{D}_{KL}(\theta_\mathrm{old}, \theta) \leq \delta<br>\end{align}<br>$$</p>
+<p>이 최적화 문제를 풀기 위하여 우리는 gradient 기법을 이용할 것입니다. gradient 기법은 결국 update할 방향과 크기를 결정하는 문제로 생각할 수 있습니다. 이에 따라 아래와 같은 두가지 과정으로 진행합니다.</p>
+<p>1) 탐색 방향을 계산, 목적함수의 first-order approximation(선형근사)와 제약식의 quadratic approximation(2차 근사).</p>
+<p>2) 이동거리 계산을 위해 해당 방향으로 line search 수행.</p>
+<p>탐색 방향은 $Ax = g$ 수식을 근사적으로 풀어서 구합니다. 여기서 $A$ 는 Fisher Information Matrix이고, 이것은 KL divergence 제약식의 2차 근사 $\overline{D}_\mathrm{KL} (\theta_\mathrm{old}, \theta) \approx \frac{1}{2}(\theta - \theta_\mathrm{old})^T A(\theta - \theta_\mathrm{old})$를 푸는 것입니다. 여기서 $A_{ij} = \frac{\partial}{\partial \theta_i} \frac{\partial}{\partial \theta_j} \overline{D}_\mathrm{KL}(\theta_\mathrm{old}, \theta)$입니다.</p>
+<p>논문에서 이 부분에 대한 설명이 약간 부족해서 좀 더 내용을 추가하자면, $\frac{1}{2}x^T A x - x^T g + b = 0$과 같은 quadratic equation의 해는 1차 derivative를 0으로 만드는 $x$를 찾음으로써 알 수 있습니다. 위에서 우리는 목적함수를 1차 근사시키고 제약조건은 2차 근사를 시킴으로써 quadratic equation 형태로 변형했기 때문에 같은 방식으로 풀 수 있습니다. 따라서 $g$는 1차근사시킨 목적함수의 계수가 될 것입니다.</p>
+<p>대규모 문제에서 $A$ 혹은 $A^{-1}$ 을 계산하는 것은 엄청난 계산량이 필요합니다. 하지만 conjugate gradient algorithm을 잘 이용하면 전체 $A$행렬(FIM)을 계산하지 않아도 $Ax=g$ 를 근사적으로 해결할 수 있게 해줍니다.</p>
+<p>탐색 방향 $s \approx A^{-1}g$과 더불어 최대스텝길이(step size) $\beta$도 계산할 필요가 있습니다.</p>
+<p>즉, $\delta = \overline{D}_\mathrm{KL} \approx \frac{1}{2}(\beta s)^T A(\beta s) = \frac{1}{2}\beta^2s^TAs$ 이고, </p>
+<p>$\beta = \sqrt{2\delta / s^T As}$가 됩니다. 이때 $\delta$는 KL divergence의 boundary term 입니다.</p>
+<p>$s^T As$ 항은 Hessian-vector product로 계산할 수 있고, conjugate gradient 과정에서 계산됩니다.</p>
+<p>마지막으로, surrogate objective와 KL divergence 제약식을 위해 다음과 같은 함수를 정의하고 line search를 사용합니다.</p>
+<p>$$<br>L_{\theta_\mathrm{old} }(\theta) - \chi [\overline{D}_{KL}(\theta_\mathrm{old}, \theta) \leq \delta]<br>$$</p>
+<p>$\chi[\cdot]$ 함수는 []안의 조건이 맞으면 0이고 틀리면 무한으로 발산하는 함수입니다.</p>
+<p>위에서 계산한 $\beta$ 의 최대 값부터 시작해서 목적함수가 개선될때까지 exponential하게 줄여 나갑니다. line search가 없었다면 이 알고리즘은 매우 큰 스텝으로 계산될 것이고 심각한 성능 저하가 발생할 것입니다.</p>
+<p>(여기서 살짝 예고를 하자면, 나중에 이 KL 기반 기법을 개선한 더 단순한 방법이 제안됩니다. PPO라고…)</p>
+<p><br><br></p>
+<h1 id="7-Connections-with-Prior-Work"><a href="#7-Connections-with-Prior-Work" class="headerlink" title="7. Connections with Prior Work"></a>7. Connections with Prior Work</h1><p>Natural Policy Gradient는 $L$의 선형 근사와 $\overline D_\mathrm{KL}$ 제약식을 2차근사 하는 아래의 식의 special case입니다.</p>
+<ul>
+<li>Equation (17).</li>
+</ul>
+<p>$L_{\pi}(\tilde\pi) = \eta(\pi) + \underset{s}{\sum}\rho_{\pi}(s) \underset{a}{\sum}\tilde\pi(a\vert s)A_\pi(s,a)$</p>
+<p>$\underset{\theta}{\max}\quad [\nabla_{\theta}L_{\theta_\mathrm{old} }(\theta) \ \rvert_{\theta=\theta_\mathrm{old} } \cdot (\theta - \theta_\mathrm{old})]$</p>
+<p>$\mathrm{s.t.}\quad\frac{1}{2}(\theta_\mathrm{old} - \theta)^{T} A(\theta_\mathrm{old})(\theta_\mathrm{old}-\theta) \leq \delta$</p>
+<p>$\mathrm{where\ }A(\theta_{old})_{ij} = $</p>
+<p>$\Large \frac{\partial}{\partial \theta_{i} } \frac{\partial}{\partial \theta_{j} }<br>E_{s \sim \rho_{\pi} }[D_\mathrm{KL}(\pi(\cdot\rvert s, \theta_\mathrm{old})  \rvert\rvert \pi(\cdot \rvert s, \theta))] \rvert_{\theta=\theta_\mathrm{old} }$</p>
+<p>업데이트 식은 다음과 같습니다.</p>
+<p>$\theta_\mathrm{new} = \theta_\mathrm{old} +  \color{Red}{\frac{1}{\lambda} } A(\theta_\mathrm{old})^{-1}\nabla_{\theta}L(\theta) \rvert_{\theta=\theta_\mathrm{old} }$</p>
+<p>여기서 step size인 $\frac{1}{\lambda}$ 일반적으로 알고리즘의 파라미터로 취급되지만 TRPO는 각 업데이트 마다 제약식으로 사용한다는 점이 다릅니다. 사소한 차이처럼 보이지만, 큰 차원을 다루는 실험에서 성능을 크게 향상시켰습니다.</p>
+<p>또한 $L^2$ 제약식(혹은 페널티) 를 사용하면 표준 Policy Gradient 업데이트 식을 얻었습니다.</p>
+<ul>
+<li>Equation (18).</li>
+</ul>
+<p>$\underset{\theta}{\max}\quad[\nabla_{\theta} L_{\theta_\mathrm{old} }(\theta) \rvert_{\theta=\theta_\mathrm{old} } \cdot (\theta - \theta_\mathrm{old})]$</p>
+<p>$\mathrm{s.t.}\quad \frac{1}{2} \vert\vert \theta - \theta_\mathrm{old} \vert\vert^2 \leq \delta$</p>
+<p>$L_{\pi}(\tilde\pi) = \eta(\pi) + \underset{s}{\sum}\rho_{\pi}(s) \underset{a}{\sum}\tilde\pi(a\vert s)A_\pi(s,a) $를 이용해서 제약조건없이 $\underset{\pi}{\max}\quad L_{\pi_\mathrm{old} }(\pi)$를 풀면<br>Policy Iteration update를 하는 것과 같습니다.</p>
+<p><br><br></p>
+<h1 id="8-Experiments"><a href="#8-Experiments" class="headerlink" title="8. Experiments"></a>8. Experiments</h1><ul>
+<li><p>다음과 같은 3 가지 궁금증을 해결하기 위하여 실험을 설계하였습니다.</p>
+<ol>
+<li><p>Single-path 와 vine 의 성능면에서 특징을 알고싶음.</p>
+</li>
+<li><p>Fixed penalty coefficient(NPG) 보다 fixed KL divergence를 사용하는 것(TRPO)으로<br>변경한 것이 얼마나 뚜렷한 차이를 보일지, 성능 면에서 어떤 영향을 미치는지 알고싶음.</p>
+</li>
+<li><p>TRPO가 큰 스케일의 문제를 해결할 수 있는지, 기존에 연구/적용되어왔던 방법들과<br>성능, 계산시간, 샘플 복잡도 면에서 비교하고 싶음.</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>1, 2의 궁금증에 대해서 실험 환경에 single path, vine을 비롯한 여러 사전방법들을 함께 실험하였습니다.</p>
+</li>
+<li><p>3에 대해선, robotic locomotion과 Atari game에 TRPO를 실험하였습니다.</p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="8-1-Simulated-Robotic-Locomotion"><a href="#8-1-Simulated-Robotic-Locomotion" class="headerlink" title="8.1 Simulated Robotic Locomotion"></a>8.1 Simulated Robotic Locomotion</h2><ul>
+<li>MuJoCo 시뮬레이터를 활용해 로봇 locomotion 실험 진행하였습니다.</li>
+<li>Robot State: positions and velocities, joint torques</li>
+</ul>
+<p><img src="https://i.imgur.com/bs5ATS3.png" alt=""></p>
+<ul>
+<li><p>수영, 점프, 걷기 행동을 학습시키고자 합니다.</p>
+<ul>
+<li><p>수영: 10 dimensional state space , reward: $r(x,u)=v_x - 10^{-5}\vert \vert u\vert \vert ^2$, quadratic penalty.</p>
+</li>
+<li><p>점프: 12 dimensional state space, episode의 끝은 높이와 각도 threshol로 점프를 판단, non-terminal state에 대해 +1 보상 추가.</p>
+</li>
+<li><p>걷기: 18 dimensional state space, 뜀뛰는 듯한 보법(점프에이전트)보다 부드러운 보법을 유도하기위해 페널티를 추가함.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Detailed Experiment Setup and used parameters, used network model</strong><br><img src="https://i.imgur.com/zgnsbw6.png" alt=""></p>
+<p><img src="https://i.imgur.com/FqdWC53.png" alt=""></p>
+<p>equation (12) : $\max\quad L_{\theta_\mathrm{old}(\theta)}, \ \ \mathrm{s.t.\ }\overline{D}_\mathrm{KL}^{\rho_{\theta_\mathrm{old} }}(\theta_\mathrm{old}, \theta) \leq \delta$</p>
+<p>이 실험에서 $\delta = 0.01$입니다.</p>
+<ul>
+<li><p>비교에 사용된 모델들</p>
+<ul>
+<li>TRPO Single-path</li>
+<li>TRPO vine</li>
+<li>CEM(cross-entropy method)</li>
+<li>CMA(covariance matrix adaptation)</li>
+<li>NPG (Lagrange Multiplier penalty coefficien를 사용하는 것이 차이점)</li>
+<li>Empirical FIM</li>
+<li>maximum KL(cartpole)</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/wSqolvS.png" alt=""></p>
+<ul>
+<li><p>제안한 single path, vine 모두 task를 잘 학습하는 것을 확인할 수 있습니다.</p>
+</li>
+<li><p>페널티를 고정하는 것보다, KL divergenc를 제약하는 것이 step size를 선택하는 부분에서 Robust합니다.</p>
+</li>
+<li><p>CEM/CMA는 derivative free 알고리즘으로, 샘플 복잡도가 네트워크 파라미터수 만큼 확장되어 high dimension 문제에서는 속도와 성능이 약한 모습을 보입니다.</p>
+</li>
+<li><p>maxKL은 제안방법보다 느린 학습성능을 보입니다.</p>
+</li>
+</ul>
+<p>TRPO video link: <a href="https://www.youtube.com/watch?v=jeid0wIrSn4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=jeid0wIrSn4</a></p>
+<ul>
+<li><p>사전지식이 적은 상태에서 여러 액션을 학습하는 실험으로 TRPO의 성능을 보입니다.</p>
+</li>
+<li><p>지금까지의 균형이나 걸음 같은 개념을 명시적으로 인코딩한 robotic locomotion에서의 사전 연구들과 차이를 보였습니다.</p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="8-2-Playing-Games-from-Images"><a href="#8-2-Playing-Games-from-Images" class="headerlink" title="8.2 Playing Games from Images"></a>8.2 Playing Games from Images</h2><ul>
+<li>부분관찰가능하며 복잡한 observation인 환경에서 TRPO를 평가하기위해 raw image를 입력으로 하는 아타리게임 환경에서 실험하였습니다.</li>
+</ul>
+<ul>
+<li>Challenging point :<ul>
+<li>High dimensional space</li>
+<li>delayed reward</li>
+<li>non-stationary image (Enduro는 배경 이미지가 바뀌고, 반전처리가 됨)</li>
+<li>complex action sequence (Q*bert는 21개의 다른 발판에서 점프 해야함)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>ALE(Arcade Learning Environment) 에서 테스트</li>
+<li><p>DQN과 전처리 방식은 동일<br>  210 x 160 pixel -&gt; gray-scaling &amp; down-sampling -&gt; 110 x 84  -&gt; crop -&gt; 84 x 84</p>
+</li>
+<li><p>2 convolution layer ( 16 channels) , stride 2, FC layer with 20 units</p>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/NJBC69d.png" alt=""> </p>
+<p><img src="https://i.imgur.com/wTe1OEW.png" alt=""></p>
+<p><img src="https://i.imgur.com/j22VtNQ.png" alt=""></p>
+<ul>
+<li><p>30시간 동안 500 iteration 학습을 하였습니다.</p>
+</li>
+<li><p>DQN과 MCST를 사용한 모델(UCC-I), 사람이 플레이한 것(Human) 과의 비교하였습니다.</p>
+</li>
+<li><p>이전 방법들에 비해 압도적인 점수를 기록하진 못했으나, 다양한 게임에서 적절한 게임 기록하였습니다.</p>
+</li>
+<li><p>이전 방법들과 다른 점은, 특정 task에 초점을 맞춰 설계하지않았는데 robotics나 game playing Task에도 적절한 성능을 내는 점에서 <strong>TRPO의 일반화 성능</strong>을 확인하였습니다.</p>
+</li>
+</ul>
+<p><br><br></p>
+<h1 id="9-Discussion"><a href="#9-Discussion" class="headerlink" title="9. Discussion"></a>9. Discussion</h1><ul>
+<li><p>Trust Region Policy Optimization 을 제안하였습니다.</p>
+</li>
+<li><p>KL Divergence 페널티로 $\eta(\pi)$를 최적화하는 알고리즘이 monotonically improve 함을 증명하였습니다.</p>
+</li>
+<li><p>Locomotion 도메인에서 여러 행동(수영, 걷기, 점프)을 제어하는 controller를 학습하였습니다.</p>
+</li>
+<li><p>Robotics와 게임 실험을 결합해, 시각정보와 센서데이터를 사용하는 로봇제어 정책을 학습시킬 수 있는 가능성을 보았습니다.</p>
+</li>
+<li><p>샘플의 복잡도를 상당히 줄일 수 있어 실제상황에 적용가능성을 보았습니다.</p>
+</li>
+</ul>
+<p><br><br></p>
+<h1 id="처음으로"><a href="#처음으로" class="headerlink" title="처음으로"></a>처음으로</h1><h2 id="PG-Travel-Guide"><a href="#PG-Travel-Guide" class="headerlink" title="PG Travel Guide"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/29/0_pg-travel-guide/">PG Travel Guide</a></h2><p><br></p>
+<h1 id="이전으로"><a href="#이전으로" class="headerlink" title="이전으로"></a>이전으로</h1><h2 id="NPG-여행하기"><a href="#NPG-여행하기" class="headerlink" title="NPG 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/25/4_npg/">NPG 여행하기</a></h2><h2 id="NPG-Code"><a href="#NPG-Code" class="headerlink" title="NPG Code"></a><a href="https://github.com/reinforcement-learning-kr/pg_travel/blob/master/mujoco/agent/tnpg.py" target="_blank" rel="noopener">NPG Code</a></h2><p><br></p>
+<h1 id="다음으로"><a href="#다음으로" class="headerlink" title="다음으로"></a>다음으로</h1><h2 id="TRPO-Code"><a href="#TRPO-Code" class="headerlink" title="TRPO Code"></a><a href="https://github.com/reinforcement-learning-kr/pg_travel/blob/master/mujoco/agent/trpo_gae.py" target="_blank" rel="noopener">TRPO Code</a></h2><h2 id="GAE-여행하기"><a href="#GAE-여행하기" class="headerlink" title="GAE 여행하기"></a><a href="https://reinforcement-learning-kr.github.io/2018/06/23/6_gae/">GAE 여행하기</a></h2>
+
+				
+			</div>
+
+			<!-- Comments -->
+			
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					
+    <hr />
+    <h3>Comments:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+				</div>
+			
+		</div>
+	</div>
+</article>
+
+<!-- S 디스쿼스 주석처리 웅원이가 꺼달라그럼 2018.05.10 보미 -->
+<div id="disqus_thread"></div>
+<script>
+	
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+// (function() { // DON'T EDIT BELOW THIS LINE
+// var d = document, s = d.createElement('script');
+// s.src = 'https://bomee88.disqus.com/embed.js';
+// s.setAttribute('data-timestamp', +new Date());
+// (d.head || d.body).appendChild(s);
+// })();
+</script>
+<!-- <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
+
+<!-- E 디스쿼스 추가함 2018.04.09 보미-->
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<ul class="list-inline text-center">
+					
+
+					
+
+					
+						<li>
+							<a href="https://github.com/reinforcement-learning-kr" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+
+					
+						<li>
+							<a href="mailto:rlkorea7@gmail.com" target="_blank">
+								<span class="fa-stack fa-lg">
+									<i class="fa fa-circle fa-stack-2x"></i>
+									<i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+								</span>
+							</a>
+						</li>
+					
+
+					
+				</ul>
+				<p class="copyright text-muted">&copy; 2019 Bomi Yu</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/js/customizing.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Highlight -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments //디스쿼스 새로운 js삽입 2018.04.09 보미-->
+<script id="dsq-count-scr" src="//bomee88.disqus.com/count.js" async></script>
+
+<!-- // mathJax 추가 2018.05.29 보미 -->
+<!-- // mathJax 수정 2018.06.15 웅원 -->
+<!--
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$']]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML">
+</script>
+                          
+
+<script type="text/javascript">
+    var disqus_shortname = 'rlkorea';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+</body>
+
+</html>
